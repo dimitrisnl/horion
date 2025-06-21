@@ -1,0 +1,37 @@
+{
+  "name": "horion",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "config/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "db:generate": "turbo -F @horion/api db:generate",
+    "db:migrate": "turbo -F @horion/api db:migrate",
+    "db:push": "turbo -F @horion/api db:push",
+    "db:studio": "turbo -F @horion/api db:studio",
+    "dev": "turbo dev",
+    "format": "turbo run format",
+    "lint": "turbo run lint",
+    "update-deps": "bunx taze --interactive --recursive"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "plugins": [
+      "prettier-plugin-tailwindcss",
+      "prettier-plugin-packagejson"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-packagejson": "^2.5.15",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "react-email": "4.0.16",
+    "turbo": "^2.5.4"
+  },
+  "packageManager": "bun@1.2.17"
+}

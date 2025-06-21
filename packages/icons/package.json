@@ -1,0 +1,15 @@
+{
+  "name": "@horion/icons",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "module": "index.ts",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "lucide-react": "^0.522.0"
+  }
+}

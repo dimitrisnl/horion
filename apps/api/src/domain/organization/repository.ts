@@ -1,0 +1,78 @@
+import {and, eq} from "drizzle-orm";
+
+import {db} from "~/db";
+import * as schema from "~/db/schema";
+import {generateId} from "~/lib/id";
+
+export const organizationRepo = {
+  async findByIdAndUserId({
+    organizationId,
+    userId,
+  }: {
+    organizationId: string;
+    userId: string;
+  }) {
+    const [org = null] = await db
+      .select({
+        id: schema.organizations.id,
+        name: schema.organizations.name,
+        logo: schema.organizations.logo,
+        createdAt: schema.organizations.createdAt,
+        metadata: schema.organizations.metadata,
+      })
+      .from(schema.organizations)
+      .innerJoin(
+        schema.members,
+        eq(schema.organizations.id, schema.members.organizationId),
+      )
+      .where(
+        and(
+          eq(schema.organizations.id, organizationId),
+          eq(schema.members.userId, userId),
+        ),
+      )
+      .limit(1);
+
+    return org;
+  },
+
+  async create({name, userId}: {name: string; userId: string}) {
+    const now = new Date();
+    const orgId = generateId();
+    const memberId = generateId();
+
+    const [org = null] = await db.transaction(async (tx) => {
+      const [newOrg] = await tx
+        .insert(schema.organizations)
+        .values({
+          id: orgId,
+          name,
+          createdAt: now,
+          metadata: null,
+        })
+        .returning();
+
+      await tx.insert(schema.members).values({
+        id: memberId,
+        userId: userId,
+        organizationId: orgId,
+        role: "owner",
+        createdAt: now,
+      });
+
+      return [newOrg];
+    });
+
+    return org;
+  },
+
+  async update({organizationId, name}: {organizationId: string; name: string}) {
+    const [org = null] = await db
+      .update(schema.organizations)
+      .set({name})
+      .where(eq(schema.organizations.id, organizationId))
+      .returning();
+
+    return org;
+  },
+};

@@ -1,0 +1,41 @@
+{
+  "name": "@horion/api",
+  "type": "module",
+  "exports": "./src/routers/index.ts",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "check-types": "tsc --noEmit",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "dev": "bun run --hot src/index.ts",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "start": "bun run dist/src/index.js"
+  },
+  "dependencies": {
+    "@horion/emails": "workspace:*",
+    "@orpc/client": "^1.5.2",
+    "@orpc/server": "^1.5.2",
+    "better-auth": "^1.2.10",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.2",
+    "hono": "^4.8.2",
+    "nanoid": "^5.1.5",
+    "pg": "^8.16.2",
+    "resend": "^4.6.0",
+    "ua-parser-js": "^2.0.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@horion/eslint-config": "workspace:*",
+    "@types/bun": "^1.2.17",
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.30.6",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@horion/emails",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.ts",
+  "module": "index.ts",
+  "scripts": {
+    "dev": "email dev --port 3033",
+    "format": "prettier --write .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-email/components": "0.1.0",
+    "@react-email/render": "1.1.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "react-email": "4.0.16"
+  }
+}

@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "../../../../packages/ui/globals.css";
+@source "../../../../packages/ui/src";
+
+@theme {
+  --font-sans:
+    "InterVariable", "Geist", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}

@@ -1,0 +1,62 @@
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Html,
+  Preview,
+  Section,
+  Tailwind,
+  Text,
+} from "@react-email/components";
+
+interface MagicLinkEmailProps {
+  url?: string;
+}
+
+export const MagicLinkEmail = ({url}: MagicLinkEmailProps) => (
+  <Html>
+    <Head />
+    <Tailwind>
+      <Body style={main}>
+        <Preview>Log in with this magic link.</Preview>
+        <Container className="px-4 py-8 text-center">
+          <Heading className="mt-8 text-xl">
+            Here&apos;s your magic link
+          </Heading>
+          <Section>
+            <Text className="text-sm text-gray-600">
+              <Button
+                className="mx-auto box-border rounded-[8px] bg-zinc-900 px-[12px] py-[12px] text-center font-semibold text-white"
+                href={url}
+              >
+                Click here to sign in
+              </Button>
+            </Text>
+
+            <Text className="text-sm text-gray-600">
+              If you didn&apos;t request this, please ignore this email.
+            </Text>
+          </Section>
+          <Text className="text-sm text-gray-600">
+            Best,
+            <br />- Horion Team
+          </Text>
+        </Container>
+      </Body>
+    </Tailwind>
+  </Html>
+);
+
+MagicLinkEmail.PreviewProps = {
+  magicLink: "",
+} as MagicLinkEmailProps;
+
+export default MagicLinkEmail;
+
+const main = {
+  backgroundColor: "#ffffff",
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+};

@@ -1,0 +1,35 @@
+node_modules
+.turbo
+
+
+# build outputs
+.dist
+dist
+/build
+/out/
+
+# deps
+node_modules/
+/node_modules
+
+# env
+.env*
+.env.production
+!.env.example
+.dev.vars
+
+# logs
+logs/
+*.log
+
+# misc
+.DS_Store
+*.pem
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+
+# lib specific
+.tanstack
