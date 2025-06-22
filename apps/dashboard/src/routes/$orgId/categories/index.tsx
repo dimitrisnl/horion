@@ -1,6 +1,6 @@
-import {PlusCircleIcon} from "@horion/icons";
-import {Button} from "@horion/ui/button";
-import {Heading2, Text} from "@horion/ui/text";
+import {PlusCircleIcon} from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
+import {Heading2, Text} from "@horionos/ui/text";
 
 import {createFileRoute} from "@tanstack/react-router";
 

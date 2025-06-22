@@ -1,6 +1,6 @@
 import type React from "react";
 
-import {CheckIcon} from "@horion/icons";
+import {CheckIcon} from "@horionos/icons";
 
 import {Checkbox as CheckboxPrimitive} from "radix-ui";
 

@@ -1,4 +1,4 @@
-import {SidebarInset, SidebarProvider} from "@horion/ui/sidebar";
+import {SidebarInset, SidebarProvider} from "@horionos/ui/sidebar";
 
 import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 

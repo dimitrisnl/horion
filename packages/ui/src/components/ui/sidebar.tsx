@@ -1,6 +1,6 @@
 import React from "react";
 
-import {PanelLeftIcon} from "@horion/icons";
+import {PanelLeftIcon} from "@horionos/icons";
 
 import {cva, type VariantProps} from "class-variance-authority";
 import {Slot as SlotPrimitive} from "radix-ui";

@@ -1,6 +1,6 @@
 import type React from "react";
 
-import {ChevronRightIcon, MoreHorizontalIcon} from "@horion/icons";
+import {ChevronRightIcon, MoreHorizontalIcon} from "@horionos/icons";
 
 import {Slot as SlotPrimitive} from "radix-ui";
 

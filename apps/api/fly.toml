@@ -1,4 +1,4 @@
-app = 'horion-api'
+app = 'horionos-api'
 primary_region = 'fra'
 
 [build]

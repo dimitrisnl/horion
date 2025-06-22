@@ -1,4 +1,4 @@
-import {MagicLinkEmail} from "@horion/emails";
+import {MagicLinkEmail} from "@horionos/emails";
 
 import {Resend} from "resend";
 

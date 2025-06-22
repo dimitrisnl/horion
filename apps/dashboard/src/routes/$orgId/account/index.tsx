@@ -1,15 +1,15 @@
 import {Suspense} from "react";
 
-import {LoaderCircleIcon} from "@horion/icons";
-import {Badge} from "@horion/ui/badge";
-import {Button} from "@horion/ui/button";
-import {Input} from "@horion/ui/input";
-import {Label} from "@horion/ui/label";
-import {Separator} from "@horion/ui/separator";
-import {Skeleton} from "@horion/ui/skeleton";
-import {toast} from "@horion/ui/sonner";
-import {Table, TableBody, TableCell, TableRow} from "@horion/ui/table";
-import {Heading2, Text} from "@horion/ui/text";
+import {LoaderCircleIcon} from "@horionos/icons";
+import {Badge} from "@horionos/ui/badge";
+import {Button} from "@horionos/ui/button";
+import {Input} from "@horionos/ui/input";
+import {Label} from "@horionos/ui/label";
+import {Separator} from "@horionos/ui/separator";
+import {Skeleton} from "@horionos/ui/skeleton";
+import {toast} from "@horionos/ui/sonner";
+import {Table, TableBody, TableCell, TableRow} from "@horionos/ui/table";
+import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation, useSuspenseQuery} from "@tanstack/react-query";

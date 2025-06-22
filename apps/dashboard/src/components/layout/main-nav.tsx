@@ -1,4 +1,4 @@
-import type {LucideIcon} from "@horion/icons";
+import type {LucideIcon} from "@horionos/icons";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -6,7 +6,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@horion/ui/sidebar";
+} from "@horionos/ui/sidebar";
 
 import {Link} from "@tanstack/react-router";
 

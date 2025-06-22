@@ -20,7 +20,7 @@ app.use(logger());
 app.use(
   "/*",
   cors({
-    origin: envVars.CORS_ORIGIN,
+    origin: envVars.DASHBOARD_URL,
     allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,

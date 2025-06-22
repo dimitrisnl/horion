@@ -23,7 +23,7 @@ export const auth = betterAuth({
     changeEmail: {enabled: false},
     deleteUser: {enabled: false},
   },
-  trustedOrigins: [envVars.CORS_ORIGIN],
+  trustedOrigins: [envVars.DASHBOARD_URL],
   emailAndPassword: {enabled: false},
   secret: envVars.BETTER_AUTH_SECRET,
   baseURL: envVars.BETTER_AUTH_URL,

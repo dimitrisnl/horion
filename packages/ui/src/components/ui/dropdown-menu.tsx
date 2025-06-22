@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-import {CheckIcon, ChevronRightIcon, CircleIcon} from "@horion/icons";
+import {CheckIcon, ChevronRightIcon, CircleIcon} from "@horionos/icons";
 
 import {DropdownMenu as DropdownMenuPrimitive} from "radix-ui";
 

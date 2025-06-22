@@ -3,9 +3,9 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-} from "@horion/ui/breadcrumb";
-import {Separator} from "@horion/ui/separator";
-import {SidebarTrigger} from "@horion/ui/sidebar";
+} from "@horionos/ui/breadcrumb";
+import {Separator} from "@horionos/ui/separator";
+import {SidebarTrigger} from "@horionos/ui/sidebar";
 
 export function SiteHeader({
   title,

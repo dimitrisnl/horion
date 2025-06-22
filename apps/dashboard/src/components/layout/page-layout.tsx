@@ -1,4 +1,4 @@
-import {Separator} from "@horion/ui/separator";
+import {Separator} from "@horionos/ui/separator";
 
 import {SiteHeader} from "./site-header";
 

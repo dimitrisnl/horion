@@ -1,9 +1,9 @@
-import {LoaderCircleIcon} from "@horion/icons";
-import {Button} from "@horion/ui/button";
-import {Input} from "@horion/ui/input";
-import {Label} from "@horion/ui/label";
-import {toast} from "@horion/ui/sonner";
-import {Heading2, Text} from "@horion/ui/text";
+import {LoaderCircleIcon} from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
+import {Input} from "@horionos/ui/input";
+import {Label} from "@horionos/ui/label";
+import {toast} from "@horionos/ui/sonner";
+import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation, useSuspenseQuery} from "@tanstack/react-query";

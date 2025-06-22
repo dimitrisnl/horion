@@ -1,7 +1,7 @@
 import "~/styles/app.css";
 import "~/styles/inter.css";
 
-import {Toaster} from "@horion/ui/sonner";
+import {Toaster} from "@horionos/ui/sonner";
 
 import type {QueryClient} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
@@ -45,7 +45,7 @@ function RootComponent() {
   return (
     <>
       <HeadContent />
-      <ThemeProvider defaultTheme="light" storageKey="horion-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="horionos-ui-theme">
         <div className="grid h-svh grid-rows-[auto_1fr]">
           <Outlet />
         </div>

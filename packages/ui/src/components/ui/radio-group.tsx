@@ -1,6 +1,6 @@
 import type React from "react";
 
-import {CircleIcon} from "@horion/icons";
+import {CircleIcon} from "@horionos/icons";
 
 import {RadioGroup as RadioGroupPrimitive} from "radix-ui";
 

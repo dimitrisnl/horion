@@ -7,25 +7,24 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
-    "@horion/api#build": {
+    "@horionos/api#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"],
       "env": [
-        "CORS_ORIGIN",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_URL",
         "DATABASE_URL",
-        "FRONT_END_URL",
+        "DASHBOARD_URL",
         "RESEND_API_KEY",
         "BUN_ENVIRONMENT"
       ]
     },
-    "@horion/dashboard#build": {
+    "@horionos/dashboard#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"],
-      "env": ["VITE_SERVER_URL"]
+      "env": ["VITE_API_URL"]
     },
     "format": {
       "dependsOn": ["^format"],
@@ -42,12 +41,11 @@
       "cache": false,
       "persistent": true,
       "env": [
-        "VITE_SERVER_URL",
-        "CORS_ORIGIN",
+        "VITE_API_URL",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_URL",
         "DATABASE_URL",
-        "FRONT_END_URL",
+        "DASHBOARD_URL",
         "RESEND_API_KEY",
         "BUN_ENVIRONMENT"
       ]

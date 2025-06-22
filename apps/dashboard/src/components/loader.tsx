@@ -1,4 +1,4 @@
-import {LoaderCircleIcon} from "@horion/icons";
+import {LoaderCircleIcon} from "@horionos/icons";
 
 export default function Loader() {
   return (

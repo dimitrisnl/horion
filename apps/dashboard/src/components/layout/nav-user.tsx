@@ -1,5 +1,5 @@
-import {ChevronUpIcon, LogOutIcon, UserCog2Icon} from "@horion/icons";
-import {Avatar, AvatarFallback} from "@horion/ui/avatar";
+import {ChevronUpIcon, LogOutIcon, UserCog2Icon} from "@horionos/icons";
+import {Avatar, AvatarFallback} from "@horionos/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,13 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@horion/ui/dropdown-menu";
+} from "@horionos/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@horion/ui/sidebar";
+} from "@horionos/ui/sidebar";
 
 import {useQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";

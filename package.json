@@ -1,5 +1,5 @@
 {
-  "name": "horion",
+  "name": "horionos",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -9,10 +9,10 @@
   "scripts": {
     "build": "turbo build",
     "check-types": "turbo check-types",
-    "db:generate": "turbo -F @horion/api db:generate",
-    "db:migrate": "turbo -F @horion/api db:migrate",
-    "db:push": "turbo -F @horion/api db:push",
-    "db:studio": "turbo -F @horion/api db:studio",
+    "db:generate": "turbo -F @horionos/api db:generate",
+    "db:migrate": "turbo -F @horionos/api db:migrate",
+    "db:push": "turbo -F @horionos/api db:push",
+    "db:studio": "turbo -F @horionos/api db:studio",
     "dev": "turbo dev",
     "format": "turbo run format",
     "lint": "turbo run lint",

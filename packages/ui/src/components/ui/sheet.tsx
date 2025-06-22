@@ -1,6 +1,6 @@
 import type React from "react";
 
-import {XIcon} from "@horion/icons";
+import {XIcon} from "@horionos/icons";
 
 import {Dialog as SheetPrimitive} from "radix-ui";
 

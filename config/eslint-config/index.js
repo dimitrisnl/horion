@@ -58,7 +58,7 @@ export default defineConfig([
             ["^\\u0000"],
             ["^node:"],
             ["^react", "^@?react"],
-            ["^@horion"],
+            ["^@horionos"],
             ["^@tanstack"],
             ["^hono"],
             ["^@?\\w"],

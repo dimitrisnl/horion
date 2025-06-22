@@ -1,11 +1,11 @@
-import {LaptopIcon, MoonIcon, SunIcon} from "@horion/icons";
+import {LaptopIcon, MoonIcon, SunIcon} from "@horionos/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@horion/ui/dropdown-menu";
-import {SidebarMenuButton} from "@horion/ui/sidebar";
+} from "@horionos/ui/dropdown-menu";
+import {SidebarMenuButton} from "@horionos/ui/sidebar";
 
 import {useTheme} from "~/components/theme-provider";
 

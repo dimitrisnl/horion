@@ -1,5 +1,5 @@
 {
-  "name": "@horion/api",
+  "name": "@horionos/api",
   "type": "module",
   "exports": "./src/routers/index.ts",
   "main": "src/index.ts",
@@ -17,7 +17,7 @@
     "start": "bun run dist/src/index.js"
   },
   "dependencies": {
-    "@horion/emails": "workspace:*",
+    "@horionos/emails": "workspace:*",
     "@orpc/client": "^1.5.2",
     "@orpc/server": "^1.5.2",
     "better-auth": "^1.2.10",
@@ -31,7 +31,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@horion/eslint-config": "workspace:*",
+    "@horionos/eslint-config": "workspace:*",
     "@types/bun": "^1.2.17",
     "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.30.6",

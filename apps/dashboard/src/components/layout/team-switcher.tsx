@@ -1,6 +1,6 @@
 import {Suspense} from "react";
 
-import {ChevronDownIcon, PlusIcon} from "@horion/icons";
+import {ChevronDownIcon, PlusIcon} from "@horionos/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,13 +8,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@horion/ui/dropdown-menu";
+} from "@horionos/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@horion/ui/sidebar";
+} from "@horionos/ui/sidebar";
 
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
@@ -69,13 +69,13 @@ export function TeamSwitcher() {
 const MembershipsDropdown = () => {
   const {isMobile} = useSidebar();
   const navigate = useNavigate();
-  const {data} = useSuspenseQuery(
+  const {
+    data: {memberships},
+  } = useSuspenseQuery(
     orpc.membership.getAll.queryOptions({
       staleTime: minutes(5),
     }),
   );
-
-  const {memberships} = data;
 
   return (
     <DropdownMenuContent

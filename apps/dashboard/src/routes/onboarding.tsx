@@ -1,15 +1,15 @@
-import {LoaderCircleIcon} from "@horion/icons";
-import {Button} from "@horion/ui/button";
+import {LoaderCircleIcon} from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@horion/ui/card";
-import {Input} from "@horion/ui/input";
-import {Label} from "@horion/ui/label";
-import {toast} from "@horion/ui/sonner";
+} from "@horionos/ui/card";
+import {Input} from "@horionos/ui/input";
+import {Label} from "@horionos/ui/label";
+import {toast} from "@horionos/ui/sonner";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation} from "@tanstack/react-query";

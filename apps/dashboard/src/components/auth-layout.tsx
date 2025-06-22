@@ -1,4 +1,4 @@
-import {GalleryVerticalEndIcon} from "@horion/icons";
+import {GalleryVerticalEndIcon} from "@horionos/icons";
 
 export const AuthLayout = ({children}: {children: React.ReactNode}) => {
   return (

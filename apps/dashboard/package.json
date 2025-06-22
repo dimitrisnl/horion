@@ -1,5 +1,5 @@
 {
-  "name": "@horion/dashboard",
+  "name": "@horionos/dashboard",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@horion/api": "workspace:*",
-    "@horion/emails": "workspace:*",
-    "@horion/eslint-config": "workspace:*",
-    "@horion/icons": "workspace:*",
-    "@horion/ui": "workspace:*",
+    "@horionos/api": "workspace:*",
+    "@horionos/emails": "workspace:*",
+    "@horionos/eslint-config": "workspace:*",
+    "@horionos/icons": "workspace:*",
+    "@horionos/ui": "workspace:*",
     "@orpc/client": "^1.5.2",
     "@orpc/server": "^1.5.2",
     "@orpc/tanstack-query": "^1.5.2",

@@ -1,13 +1,13 @@
 import type React from "react";
 
-import type {LucideIcon} from "@horion/icons";
+import type {LucideIcon} from "@horionos/icons";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@horion/ui/sidebar";
+} from "@horionos/ui/sidebar";
 
 import {ThemeSwitcher} from "../theme-switcher";
 

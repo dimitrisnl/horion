@@ -1,4 +1,4 @@
-import type {appRouter} from "@horion/api";
+import type {appRouter} from "@horionos/api";
 
 import {QueryCache, QueryClient} from "@tanstack/react-query";
 
@@ -12,7 +12,7 @@ export const queryClient = new QueryClient({
 });
 
 export const link = new RPCLink({
-  url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
+  url: `${import.meta.env.VITE_API_URL}/rpc`,
   fetch(url, options) {
     return fetch(url, {
       ...options,

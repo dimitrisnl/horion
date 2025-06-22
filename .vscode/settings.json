@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["horion", "orpc", "sonner"],
+  "cSpell.words": ["horionos", "orpc", "sonner"],
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },

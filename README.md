@@ -2,7 +2,7 @@
 
 This is a [Bun](https://bun.sh/) monorepo, using [Turborepo](https://turborepo.com/), with the following two apps:
 
-- **Dashboard**, using [TanStack Router](https://tanstack.com/router/latest) [^1] 
+- **Dashboard**, using [TanStack Router](https://tanstack.com/router/latest) [^1]
 - **API**, using [Hono](https://hono.dev/)
 
 And a few helper packages:
@@ -20,6 +20,7 @@ I want to try some technologies, form opinions, and maybe blog about them. It's 
 To bridge the gap between them and share types, I'm using [ORPC](https://orpc.unnoq.com/). I particularly like its integration with [TanStack Query](https://tanstack.com/query/latest). Here's an example:
 
 I can pass the query I want to use using `queryOptions`, without the need to set up query keys:
+
 ```tsx
 const {
   data: {memberships},
@@ -37,7 +38,6 @@ queryClient.invalidateQueries(orpc.membership.getAll.queryOptions());
 ```
 
 There are many benefits to using any RPC library, and I'm probably under-selling it, but it works well, and I'm happy. Even when I move the TanStack Start, which has its own RPC-like functionality, I'll keep using it.
-
 
 ## Authentication
 
@@ -66,7 +66,7 @@ I tried [Biome](https://biomejs.dev/) for its excellent monorepo support, but I 
 ## Deployment
 
 I'm using Bun. This means that some serverless providers who run their own JavaScript runtimes have failed me spectacularly, and I can't be bothered to debug the issues.
-A long-lived server from [Fly.io](https://fly.io/) works wonders for the Hono backend. 
+A long-lived server from [Fly.io](https://fly.io/) works wonders for the Hono backend.
 
 The dashboard is now under Netlify, but as I move on to the TanStack Start, I'll move it to Fly.io as well for better performance.
 
@@ -78,6 +78,6 @@ I'm considering the following:
 - [Permix](https://permix.letstri.dev/)
 - An [Astro](https://astro.build/) landing page
 
+[^1]: I'm planning to migrate to TanStack Start soon. [GH Issue](https://github.com/dimitrisnl/horionos/issues/1)
 
-[^1]: I'm planning to migrate to TanStack Start soon. [GH Issue](https://github.com/dimitrisnl/horion/issues/1)
 [^2]: I'm also planning to migrate this to [BaseUI](https://base-ui.com/)

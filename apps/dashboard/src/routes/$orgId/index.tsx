@@ -1,4 +1,4 @@
-import {Heading2, Text} from "@horion/ui/text";
+import {Heading2, Text} from "@horionos/ui/text";
 
 import {createFileRoute} from "@tanstack/react-router";
 

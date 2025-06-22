@@ -1,8 +1,8 @@
 import {useId} from "react";
 
-import {SearchIcon} from "@horion/icons";
-import {Label} from "@horion/ui/label";
-import {SidebarInput} from "@horion/ui/sidebar";
+import {SearchIcon} from "@horionos/icons";
+import {Label} from "@horionos/ui/label";
+import {SidebarInput} from "@horionos/ui/sidebar";
 
 export function SearchForm({...props}: React.ComponentProps<"form">) {
   const id = useId();

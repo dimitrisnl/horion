@@ -5,7 +5,7 @@ import {
   MegaphoneIcon,
   PaperclipIcon,
   SettingsIcon,
-} from "@horion/icons";
+} from "@horionos/icons";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +13,7 @@ import {
   SidebarHeader,
   SidebarRail,
   SidebarSeparator,
-} from "@horion/ui/sidebar";
+} from "@horionos/ui/sidebar";
 
 import {NavMain} from "./main-nav";
 import {NavSecondary} from "./nav-secondary";

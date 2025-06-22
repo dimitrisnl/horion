@@ -4,7 +4,7 @@ import {envVars} from "~/config";
 import {auth} from "~/lib/auth";
 import {publicProcedure} from "~/lib/orpc";
 
-const FRONT_END_URL = envVars.FRONT_END_URL;
+const DASHBOARD_URL = envVars.DASHBOARD_URL;
 
 export const authRouter = {
   getSession: publicProcedure.handler(({context}) => {
@@ -27,7 +27,7 @@ export const authRouter = {
         .signInMagicLink({
           body: {
             email,
-            callbackURL: FRONT_END_URL,
+            callbackURL: DASHBOARD_URL,
           },
           headers: context.headers,
         })

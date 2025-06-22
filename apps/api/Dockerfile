@@ -11,7 +11,7 @@ WORKDIR /app
 # Copy all files
 COPY . .
 # Use turbo CLI from Bun global install to prune workspaces
-RUN turbo prune @horion/api --docker
+RUN turbo prune @horionos/api --docker
 
 # Installer stage
 FROM base AS installer

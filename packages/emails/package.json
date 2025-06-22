@@ -1,5 +1,5 @@
 {
-  "name": "@horion/emails",
+  "name": "@horionos/emails",
   "private": true,
   "sideEffects": false,
   "type": "module",

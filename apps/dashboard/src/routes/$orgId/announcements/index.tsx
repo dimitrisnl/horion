@@ -1,6 +1,6 @@
-import {MegaphoneIcon, PlusCircleIcon} from "@horion/icons";
-import {buttonVariants} from "@horion/ui/button";
-import {Text} from "@horion/ui/text";
+import {MegaphoneIcon, PlusCircleIcon} from "@horionos/icons";
+import {buttonVariants} from "@horionos/ui/button";
+import {Text} from "@horionos/ui/text";
 
 import {createFileRoute, Link} from "@tanstack/react-router";
 

@@ -1,5 +1,5 @@
-import {MapIcon} from "@horion/icons";
-import {buttonVariants} from "@horion/ui/button";
+import {MapIcon} from "@horionos/icons";
+import {buttonVariants} from "@horionos/ui/button";
 
 import {Link} from "@tanstack/react-router";
 
