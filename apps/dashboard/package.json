@@ -13,7 +13,7 @@
     "start": "vite"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.10.0",
+    "@hookform/resolvers": "^5.1.1",
     "@horionos/api": "workspace:*",
     "@horionos/emails": "workspace:*",
     "@horionos/eslint-config": "workspace:*",
@@ -24,18 +24,16 @@
     "@orpc/tanstack-query": "^1.5.2",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-form": "^1.12.3",
-    "@tanstack/react-query": "^5.80.10",
+    "@tanstack/react-query": "^5.81.2",
     "@tanstack/react-router": "^1.121.27",
-    "better-auth": "^1.2.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.80.10",
+    "@tanstack/react-query-devtools": "^5.81.2",
     "@tanstack/react-router-devtools": "^1.121.27",
     "@tanstack/router-plugin": "^1.121.29",
-    "@types/node": "^22.15.32",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
