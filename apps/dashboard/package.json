@@ -12,6 +12,9 @@
     "serve": "vite preview",
     "start": "vite"
   },
+  "overrides": {
+    "@tanstack/query-core": "5.81.2"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@horionos/api": "workspace:*",
@@ -23,6 +26,7 @@
     "@orpc/server": "^1.5.2",
     "@orpc/tanstack-query": "^1.5.2",
     "@tailwindcss/vite": "^4.1.10",
+    "@tanstack/query-core": "^5.81.2",
     "@tanstack/react-form": "^1.12.3",
     "@tanstack/react-query": "^5.81.2",
     "@tanstack/react-router": "^1.121.27",
