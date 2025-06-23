@@ -5,7 +5,28 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./*": "./src/components/ui/*.tsx"
+    "./avatar": "./src/components/ui/avatar/index.ts",
+    "./badge": "./src/components/ui/badge/index.ts",
+    "./breadcrumb": "./src/components/ui/breadcrumb/index.ts",
+    "./button": "./src/components/ui/button/index.ts",
+    "./card": "./src/components/ui/card/index.ts",
+    "./checkbox": "./src/components/ui/checkbox/index.ts",
+    "./collapsible": "./src/components/ui/collapsible/index.ts",
+    "./dropdown-menu": "./src/components/ui/dropdown-menu/index.ts",
+    "./input": "./src/components/ui/input/index.ts",
+    "./label": "./src/components/ui/label/index.ts",
+    "./popover": "./src/components/ui/popover/index.ts",
+    "./radio-group": "./src/components/ui/radio-group/index.ts",
+    "./separator": "./src/components/ui/separator/index.ts",
+    "./sheet": "./src/components/ui/sheet/index.ts",
+    "./sidebar": "./src/components/ui/sidebar/index.ts",
+    "./skeleton": "./src/components/ui/skeleton/index.ts",
+    "./sonner": "./src/components/ui/sonner/index.ts",
+    "./switch": "./src/components/ui/switch/index.ts",
+    "./table": "./src/components/ui/table/index.ts",
+    "./tabs": "./src/components/ui/tabs/index.ts",
+    "./text": "./src/components/ui/text/index.ts",
+    "./tooltip": "./src/components/ui/tooltip/index.ts"
   },
   "files": [
     "globals.css"
