@@ -53,9 +53,12 @@ function RouteComponent() {
 const UpdateNameSection = ({defaultName}: {defaultName: string}) => {
   const updateNameMutation = useMutation(
     orpc.user.updateName.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries(orpc.auth.getSession.queryOptions());
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          orpc.auth.getSession.queryOptions(),
+        );
         toast.success("Your name has been updated");
+        form.reset();
       },
       onError: (error) => {
         toast.error(error.message || "Failed to update your name");

@@ -37,12 +37,18 @@ function RouteComponent() {
 
   const updateOrganizationNameMutation = useMutation(
     orpc.organization.update.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries(
-          orpc.organization.get.queryOptions({input: {organizationId: orgId}}),
-        );
-        queryClient.invalidateQueries(orpc.membership.getAll.queryOptions());
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries(orpc.membership.getAll.queryOptions()),
+          queryClient.invalidateQueries(
+            orpc.organization.get.queryOptions({
+              input: {organizationId: orgId},
+            }),
+          ),
+        ]);
+
         toast.success("Organization name has been updated");
+        form.reset();
       },
       onError: (error) => {
         toast.error(error.message || "Failed to update organization name");
