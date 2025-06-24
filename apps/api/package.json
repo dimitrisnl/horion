@@ -27,14 +27,14 @@
     "nanoid": "^5.1.5",
     "pg": "^8.16.2",
     "resend": "^4.6.0",
-    "ua-parser-js": "^2.0.3",
+    "ua-parser-js": "^2.0.4",
     "zod": "^3.25.67"
   },
   "devDependencies": {
     "@horionos/eslint-config": "workspace:*",
     "@types/bun": "^1.2.17",
     "@types/pg": "^8.15.4",
-    "drizzle-kit": "^0.31.1",
+    "drizzle-kit": "^0.31.2",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.8.3"
   }
