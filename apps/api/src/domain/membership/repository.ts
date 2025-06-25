@@ -30,7 +30,7 @@ export const membershipRepo = {
     organizationId: string;
     userId: string;
   }) {
-    const [membership] = await db
+    const [membership = null] = await db
       .select()
       .from(schema.members)
       .where(
@@ -41,6 +41,6 @@ export const membershipRepo = {
       )
       .limit(1);
 
-    return membership || null;
+    return membership;
   },
 };

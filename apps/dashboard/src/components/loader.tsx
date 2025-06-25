@@ -1,5 +1,7 @@
 import {LoaderCircleIcon} from "@horionos/icons";
 
+import {FocusedLayout} from "./app-skeleton/focused-layout";
+
 export default function Loader() {
   return (
     <div className="flex h-full items-center justify-center pt-8">
@@ -7,3 +9,11 @@ export default function Loader() {
     </div>
   );
 }
+
+export const LoadingSection = () => {
+  return (
+    <FocusedLayout>
+      <Loader />
+    </FocusedLayout>
+  );
+};

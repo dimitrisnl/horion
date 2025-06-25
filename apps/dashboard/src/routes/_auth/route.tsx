@@ -1,6 +1,6 @@
 import {createFileRoute, Outlet} from "@tanstack/react-router";
 
-import {AuthLayout} from "~/components/auth-layout";
+import {AuthLayout} from "~/components/app-skeleton/auth-layout";
 
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,

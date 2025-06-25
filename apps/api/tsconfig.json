@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "baseUrl": "./",
+    "composite": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "strict": true,
+    "outDir": "./dist",
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ESNext",
+    "types": ["bun"],
+    "verbatimModuleSyntax": true,
     "paths": {
       "~/*": ["./src/*"]
-    },
-    "outDir": "./dist",
-    "types": ["bun"],
-    "composite": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    }
   },
   "tsc-alias": {
     "resolveFullPaths": true

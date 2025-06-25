@@ -9,6 +9,7 @@ const DASHBOARD_URL = envVars.DASHBOARD_URL;
 export const authRouter = {
   getSession: publicProcedure.handler(({context}) => {
     const {session} = context;
+
     return {
       user: session?.user,
       session: {
@@ -25,10 +26,7 @@ export const authRouter = {
 
       const {status: ok} = await auth.api
         .signInMagicLink({
-          body: {
-            email,
-            callbackURL: DASHBOARD_URL,
-          },
+          body: {email, callbackURL: DASHBOARD_URL},
           headers: context.headers,
         })
         .catch(() => {

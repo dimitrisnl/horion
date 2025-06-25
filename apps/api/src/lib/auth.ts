@@ -14,6 +14,10 @@ export const auth = betterAuth({
     schema: schema,
     usePlural: true,
   }),
+  advanced: {
+    cookiePrefix: "horionos",
+    cookies: {},
+  },
   rateLimit: {
     window: 60, // seconds
     max: 100, // requests

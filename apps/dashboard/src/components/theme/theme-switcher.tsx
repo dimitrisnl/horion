@@ -7,7 +7,7 @@ import {
 } from "@horionos/ui/dropdown-menu";
 import {SidebarMenuButton} from "@horionos/ui/sidebar";
 
-import {useTheme} from "~/components/theme-provider";
+import {useTheme} from "~/components/theme/theme-provider";
 
 export function ThemeSwitcher() {
   const {setTheme} = useTheme();

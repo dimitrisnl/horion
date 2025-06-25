@@ -2,7 +2,7 @@ import {Heading2, Text} from "@horionos/ui/text";
 
 import {createFileRoute} from "@tanstack/react-router";
 
-import {PageLayout} from "~/components/layout/page-layout";
+import {PageLayout} from "~/components/app-skeleton/page-layout";
 
 export const Route = createFileRoute("/$orgId/announcements/new")({
   component: RouteComponent,

@@ -2,8 +2,7 @@ import {SidebarInset, SidebarProvider} from "@horionos/ui/sidebar";
 
 import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 
-import {AppSidebar} from "~/components/layout/app-sidebar";
-import {orpc} from "~/utils/orpc";
+import {AppSidebar} from "~/components/app-skeleton/app-sidebar";
 
 export const Route = createFileRoute("/$orgId")({
   component: RouteComponent,
@@ -16,8 +15,8 @@ export const Route = createFileRoute("/$orgId")({
     const {orgId} = params;
 
     return context.queryClient
-      .ensureQueryData(
-        orpc.organization.get.queryOptions({
+      .fetchQuery(
+        context.orpc.organization.get.queryOptions({
           input: {organizationId: orgId},
         }),
       )

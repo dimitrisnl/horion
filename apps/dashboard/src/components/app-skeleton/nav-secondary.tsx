@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
 } from "@horionos/ui/sidebar";
 
-import {ThemeSwitcher} from "../theme-switcher";
+// import {ThemeSwitcher} from "../theme-switcher";
 
 interface NavItem {
   title: string;
@@ -37,9 +37,9 @@ export function NavSecondary({
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
-          <SidebarMenuItem>
+          {/* <SidebarMenuItem>
             <ThemeSwitcher />
-          </SidebarMenuItem>
+          </SidebarMenuItem> */}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

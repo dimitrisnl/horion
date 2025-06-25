@@ -1,26 +1,59 @@
 import type {appRouter} from "@horionos/api";
 
 import {QueryCache, QueryClient} from "@tanstack/react-query";
+import {createIsomorphicFn} from "@tanstack/react-start";
+import {getWebRequest} from "@tanstack/react-start/server";
 
 import {createORPCClient} from "@orpc/client";
 import {RPCLink} from "@orpc/client/fetch";
 import type {RouterClient} from "@orpc/server";
 import {createTanstackQueryUtils} from "@orpc/tanstack-query";
 
+import {minutes} from "./minutes";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: minutes(1),
+    },
+  },
   queryCache: new QueryCache(),
 });
 
-export const link = new RPCLink({
-  url: `${import.meta.env.VITE_API_URL}/rpc`,
-  fetch(url, options) {
-    return fetch(url, {
-      ...options,
-      credentials: "include",
-    });
-  },
-});
+const getClientLink = createIsomorphicFn()
+  .client(
+    () =>
+      new RPCLink({
+        url: `${API_URL}/rpc`,
+        fetch(url, options) {
+          return fetch(url, {
+            ...options,
+            credentials: "include",
+          });
+        },
+      }),
+  )
+  .server(() => {
+    return new RPCLink({
+      url: `${API_URL}/rpc`,
+      fetch(url, options) {
+        const request = getWebRequest();
+        const cookie = request.headers.get("cookie");
 
-export const client: RouterClient<typeof appRouter> = createORPCClient(link);
+        return fetch(url, {
+          ...options,
+          headers: {
+            cookie: cookie || "",
+          },
+        });
+      },
+    });
+  });
+
+export const client: RouterClient<typeof appRouter> =
+  createORPCClient(getClientLink());
 
 export const orpc = createTanstackQueryUtils(client);

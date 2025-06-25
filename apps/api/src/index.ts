@@ -5,6 +5,7 @@ import {secureHeaders} from "hono/secure-headers";
 
 import {onError} from "@orpc/server";
 import {RPCHandler} from "@orpc/server/fetch";
+import {ResponseHeadersPlugin} from "@orpc/server/plugins";
 
 import {envVars} from "./config";
 import {auth} from "./lib/auth";
@@ -33,6 +34,7 @@ app.on(["POST", "GET"], "/api/auth/**", (ctx) => auth.handler(ctx.req.raw));
 // TODO: include a more restrictive error handler
 const handler = new RPCHandler(appRouter, {
   clientInterceptors: [onError((error) => zodValidationInterceptor(error))],
+  plugins: [new ResponseHeadersPlugin()],
 });
 
 app.use("/rpc/*", async (ctx, next) => {
@@ -53,7 +55,7 @@ app.get("/", (ctx) => {
 });
 
 export default {
-  port: process.env.PORT ? Number.parseInt(process.env.PORT) : 3000,
-  hostname: "0.0.0.0",
+  port: envVars.PORT,
+  // hostname: "0.0.0.0",
   fetch: app.fetch,
 };

@@ -17,7 +17,7 @@ import {createFileRoute, useNavigate} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
-import {FocusedLayout} from "~/components/focused-layout";
+import {FocusedLayout} from "~/components/app-skeleton/focused-layout";
 import {orpc, queryClient} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 

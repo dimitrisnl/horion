@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "strict": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
+    "isolatedModules": true,
     "jsx": "react-jsx",
-    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "types": ["vite/client"],
     "rootDirs": ["."],
-    "baseUrl": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ESNext",
+    "types": ["vite/client"],
+    "verbatimModuleSyntax": true,
     "paths": {
       "~/*": ["./src/*"]
     }
