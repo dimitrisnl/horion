@@ -3,7 +3,7 @@ import {protectedProcedure} from "~/lib/orpc";
 
 export const sessionRouter = {
   getAll: protectedProcedure.handler(async ({context}) => {
-    const userId = context.session.user.id;
+    const userId = context.session.userId;
 
     const sessions = await SessionService.getAll({userId});
 

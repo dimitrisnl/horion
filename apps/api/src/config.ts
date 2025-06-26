@@ -3,7 +3,7 @@ import "dotenv/config";
 import {z} from "zod/v4";
 
 const envSchema = z.object({
-  BETTER_AUTH_SECRET: z.string(),
+  SECRET: z.string(),
   BETTER_AUTH_URL: z.url(),
   DATABASE_URL: z.string(),
   DASHBOARD_URL: z.url(),

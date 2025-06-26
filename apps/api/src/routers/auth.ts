@@ -10,11 +10,17 @@ export const authRouter = {
   getSession: publicProcedure.handler(({context}) => {
     const {session} = context;
 
+    if (!session) {
+      return {
+        session: null,
+      };
+    }
+
     return {
-      user: session?.user,
       session: {
-        token: session?.session.token,
-        expires: session?.session.expiresAt,
+        token: session.token,
+        userId: session.userId,
+        expiresAt: session.expiresAt,
       },
     };
   }),

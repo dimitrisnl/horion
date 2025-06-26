@@ -13,6 +13,7 @@ import {TanStackRouterDevtools} from "@tanstack/react-router-devtools";
 import {NotFound} from "~/components/not-found";
 import appCss from "~/styles/app.css?url";
 import interCss from "~/styles/inter.css?url";
+import {minutes} from "~/utils/minutes";
 import type {orpc} from "~/utils/orpc";
 // import {ThemeProvider} from "~/components/theme/theme-provider";
 import {basicMeta, favicons, seo} from "~/utils/seo";
@@ -26,13 +27,14 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context}) => {
-    const {user} = await context.queryClient.fetchQuery(
+    const {session} = await context.queryClient.fetchQuery(
       context.orpc.auth.getSession.queryOptions({
-        staleTime: 0,
+        staleTime: minutes(1), // Short stale time for session data
       }),
     );
+    const userId = session?.userId || null;
 
-    return {user};
+    return {userId};
   },
   head: () => ({
     meta: [

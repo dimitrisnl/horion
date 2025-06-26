@@ -28,9 +28,7 @@ function RouteComponent() {
     data: {organization},
   } = useSuspenseQuery(
     orpc.organization.get.queryOptions({
-      input: {
-        organizationId: orgId,
-      },
+      input: {organizationId: orgId},
       staleTime: minutes(5),
     }),
   );

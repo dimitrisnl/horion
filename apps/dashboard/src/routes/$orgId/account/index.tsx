@@ -12,7 +12,7 @@ import {Table, TableBody, TableCell, TableRow} from "@horionos/ui/table";
 import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation, useSuspenseQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useSuspenseQuery} from "@tanstack/react-query";
 import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
@@ -27,35 +27,56 @@ export const Route = createFileRoute("/$orgId/account/")({
 });
 
 function RouteComponent() {
-  const {
-    data: {user, session},
-  } = useSuspenseQuery(
-    orpc.auth.getSession.queryOptions({
-      staleTime: minutes(5),
-    }),
-  );
-
-  if (!user || !session || !session.token) {
-    return null;
-  }
-
   return (
     <PageLayout title="User">
       <div className="mx-auto w-full max-w-5xl px-6 pt-8">
-        <UpdateNameSection defaultName={user.name ?? ""} />
+        <UpdateNameSection />
         <Separator className="my-16" />
-        <SessionsSection activeSessionToken={session.token} />
+        <SessionsSection />
       </div>
     </PageLayout>
   );
 }
 
-const UpdateNameSection = ({defaultName}: {defaultName: string}) => {
+const UpdateNameSection = () => {
+  const userQuery = useQuery(
+    orpc.user.getCurrentUser.queryOptions({staleTime: minutes(5)}),
+  );
+
+  const {data: userData} = userQuery;
+  const {isPending} = userQuery;
+
+  return (
+    <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+      <div className="space-y-2">
+        <Heading2>Change your full name</Heading2>
+        <Text className="max-w-sm">
+          Your full name is used to identify you in the app
+        </Text>
+      </div>
+      <div className="space-y-4">
+        {isPending ? (
+          <div className="grid gap-4">
+            <div className="grid gap-3">
+              <Skeleton className="h-3.5 w-12" />
+              <Skeleton className="h-9 w-full" />
+            </div>
+            <Skeleton className="ml-auto h-9 w-32" />
+          </div>
+        ) : (
+          <UpdateNameForm defaultName={userData?.user?.name ?? ""} />
+        )}
+      </div>
+    </section>
+  );
+};
+
+const UpdateNameForm = ({defaultName}: {defaultName: string}) => {
   const updateNameMutation = useMutation(
     orpc.user.updateName.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          orpc.auth.getSession.queryOptions(),
+          orpc.user.getCurrentUser.queryOptions(),
         );
         toast.success("Your name has been updated");
         form.reset();
@@ -68,6 +89,7 @@ const UpdateNameSection = ({defaultName}: {defaultName: string}) => {
 
   const form = useForm({
     defaultValues: {name: defaultName},
+
     validators: {
       onSubmit: z.object({
         name: z
@@ -83,72 +105,60 @@ const UpdateNameSection = ({defaultName}: {defaultName: string}) => {
   });
 
   return (
-    <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
-      <div className="space-y-2">
-        <Heading2>Change your full name</Heading2>
-        <Text className="max-w-sm">
-          Your full name is used to identify you in the app
-        </Text>
-      </div>
-      <div className="space-y-4">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            form.handleSubmit();
-          }}
-        >
-          <div className="grid gap-4">
-            <form.Field name="name">
-              {(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Name</Label>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(event) => field.handleChange(event.target.value)}
-                  />
-                  {field.state.meta.errors.map((error) => (
-                    <p
-                      key={error?.message}
-                      className="text-destructive text-sm"
-                    >
-                      {error?.message}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </form.Field>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      <div className="grid gap-4">
+        <form.Field name="name">
+          {(field) => (
+            <div className="grid gap-3">
+              <Label htmlFor={field.name}>Name</Label>
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(event) => field.handleChange(event.target.value)}
+              />
+              {field.state.meta.errors.map((error) => (
+                <p key={error?.message} className="text-destructive text-sm">
+                  {error?.message}
+                </p>
+              ))}
+            </div>
+          )}
+        </form.Field>
 
-            <form.Subscribe>
-              {(state) => (
-                <div className="flex justify-end">
-                  <Button
-                    type="submit"
-                    disabled={!state.canSubmit || state.isSubmitting}
-                  >
-                    {state.isSubmitting ? (
-                      <LoaderCircleIcon className="animate-spin" />
-                    ) : null}
-                    {state.isSubmitting ? "Saving..." : "Save Changes"}
-                  </Button>
-                </div>
-              )}
-            </form.Subscribe>
-          </div>
-        </form>
+        <form.Subscribe>
+          {(state) => (
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                disabled={!state.canSubmit || state.isSubmitting}
+              >
+                {state.isSubmitting ? (
+                  <LoaderCircleIcon className="animate-spin" />
+                ) : null}
+                {state.isSubmitting ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
+          )}
+        </form.Subscribe>
       </div>
-    </section>
+    </form>
   );
 };
 
-const SessionsSection = ({
-  activeSessionToken,
-}: {
-  activeSessionToken: string;
-}) => {
+const SessionsSection = () => {
+  const sessionQuery = useQuery(orpc.auth.getSession.queryOptions());
+
+  const {data: sessionData} = sessionQuery;
+  const activeSessionToken = sessionData?.session?.token || "";
+
   const LoadingRow = () => (
     <TableRow>
       <TableCell className="space-y-1 font-medium">

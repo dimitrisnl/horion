@@ -13,7 +13,7 @@ export const organizationRouter = {
     .input(getOrgSchema)
     .handler(async ({context, input}) => {
       const {organizationId} = input;
-      const userId = context.session.user.id;
+      const userId = context.session.userId;
 
       const organization = await organizationService.getOrganization({
         organizationId,
@@ -31,7 +31,7 @@ export const organizationRouter = {
     .input(createOrgSchema)
     .handler(async ({context, input}) => {
       const {name} = input;
-      const userId = context.session.user.id;
+      const userId = context.session.userId;
 
       const organization = await organizationService.createOrganization({
         name,
@@ -53,7 +53,7 @@ export const organizationRouter = {
     .handler(async ({context, input}) => {
       const {organizationId, name} = input;
 
-      const userId = context.session.user.id;
+      const userId = context.session.userId;
 
       const organization = await organizationService.updateOrganization({
         organizationId,

@@ -3,6 +3,23 @@ import {UAParser} from "ua-parser-js";
 import {SessionRepository} from "./repository";
 
 export const SessionService = {
+  getSession: async ({token}: {token: string}) => {
+    const session = await SessionRepository.getOne({token});
+
+    if (!session) {
+      return null;
+    }
+
+    return {
+      id: session.id,
+      token: session.token,
+      userId: session.userId,
+      createdAt: session.createdAt,
+      updatedAt: session.updatedAt,
+      expiresAt: session.expiresAt,
+    };
+  },
+
   getAll: async ({userId}: {userId: string}) => {
     const sessions = await SessionRepository.getAll({userId});
 

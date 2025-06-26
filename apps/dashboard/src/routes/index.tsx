@@ -2,15 +2,13 @@ import {createFileRoute, redirect} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async ({context}) => {
-    const user = context.user;
-
-    if (!user) {
+    if (!context.userId) {
       throw redirect({to: "/login"});
     }
 
     const {memberships} = await context.queryClient.fetchQuery(
       context.orpc.membership.getAll.queryOptions({
-        staleTime: 0,
+        staleTime: 0, // TODO: Set a reasonable stale time
       }),
     );
 

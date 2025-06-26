@@ -28,7 +28,7 @@ export function NavUser() {
   const orgId = useOrgId();
 
   const {data, status} = useQuery(
-    orpc.auth.getSession.queryOptions({
+    orpc.user.getCurrentUser.queryOptions({
       staleTime: minutes(5),
     }),
   );
@@ -41,6 +41,7 @@ export function NavUser() {
   const hasName = user.name && user.name.trim().length > 0;
   const initial = hasName ? user.name[0] : user.email[0];
 
+  // TODO: update logout
   const logout = () => {
     orpc.auth.signOut.call().then(() => {
       queryClient.clear();

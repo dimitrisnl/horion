@@ -16,7 +16,7 @@ import {withValidationErrors} from "~/utils/with-validation-errors";
 export const Route = createFileRoute("/_auth/login")({
   component: RouteComponent,
   beforeLoad: ({context}) => {
-    if (context.user) {
+    if (context.userId) {
       throw redirect({to: "/"});
     }
   },
