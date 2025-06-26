@@ -14,10 +14,7 @@ export const membershipService = {
     organizationId: string;
     userId: string;
   }) => {
-    const membership = await membershipRepo.find({
-      organizationId,
-      userId,
-    });
+    const membership = await membershipRepo.find({organizationId, userId});
 
     return membership;
   },

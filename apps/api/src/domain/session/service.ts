@@ -51,8 +51,8 @@ export const SessionService = {
     const session = await SessionRepository.create({
       token,
       userId,
-      userAgent: "",
-      ipAddress: "", // TODO: remove this, don't store IP address
+      userAgent: "", // Parse and add client-hints
+      ipAddress: "",
       expiresAt,
     });
 

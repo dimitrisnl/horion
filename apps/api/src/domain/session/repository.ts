@@ -56,7 +56,6 @@ export const SessionRepository = {
         token,
         createdAt: now,
         updatedAt: now,
-        activeOrganizationId: null, // TODO: remove this, don't store active organization ID
       })
       .returning();
 

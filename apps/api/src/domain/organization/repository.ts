@@ -18,17 +18,16 @@ export const organizationRepo = {
         name: schema.organizations.name,
         logo: schema.organizations.logo,
         createdAt: schema.organizations.createdAt,
-        metadata: schema.organizations.metadata,
       })
       .from(schema.organizations)
       .innerJoin(
-        schema.members,
-        eq(schema.organizations.id, schema.members.organizationId),
+        schema.memberships,
+        eq(schema.organizations.id, schema.memberships.organizationId),
       )
       .where(
         and(
           eq(schema.organizations.id, organizationId),
-          eq(schema.members.userId, userId),
+          eq(schema.memberships.userId, userId),
         ),
       )
       .limit(1);
@@ -44,15 +43,10 @@ export const organizationRepo = {
     const [org = null] = await db.transaction(async (tx) => {
       const [newOrg] = await tx
         .insert(schema.organizations)
-        .values({
-          id: orgId,
-          name,
-          createdAt: now,
-          metadata: null,
-        })
+        .values({id: orgId, name, createdAt: now})
         .returning();
 
-      await tx.insert(schema.members).values({
+      await tx.insert(schema.memberships).values({
         id: memberId,
         userId: userId,
         organizationId: orgId,

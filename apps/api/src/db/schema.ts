@@ -33,7 +33,6 @@ export const sessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
-    activeOrganizationId: text("active_organization_id"),
   },
   (table) => [
     index("sessions_user_id_idx").on(table.userId),
@@ -87,13 +86,12 @@ export const organizations = pgTable(
     name: text("name").notNull(),
     logo: text("logo"),
     createdAt: timestamp("created_at").notNull(),
-    metadata: text("metadata"),
   },
   (table) => [index("organizations_id_idx").on(table.id)],
 );
 
-export const members = pgTable(
-  "members",
+export const memberships = pgTable(
+  "memberships",
   {
     id: text("id").primaryKey(),
     organizationId: text("organization_id")
@@ -106,9 +104,9 @@ export const members = pgTable(
     createdAt: timestamp("created_at").notNull(),
   },
   (table) => [
-    index("members_organization_id_idx").on(table.organizationId),
-    index("members_user_id_idx").on(table.userId),
-    index("members_user_org_idx").on(table.userId, table.organizationId),
+    index("memberships_organization_id_idx").on(table.organizationId),
+    index("memberships_user_id_idx").on(table.userId),
+    index("memberships_user_org_idx").on(table.userId, table.organizationId),
   ],
 );
 
