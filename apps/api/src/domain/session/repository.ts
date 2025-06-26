@@ -2,6 +2,7 @@ import {eq} from "drizzle-orm";
 
 import {db} from "~/db";
 import * as schema from "~/db/schema";
+import {generateId} from "~/lib/id";
 
 export const SessionRepository = {
   getOne: async ({token}: {token: string}) => {
@@ -26,5 +27,39 @@ export const SessionRepository = {
 
   deleteOne: async ({token}: {token: string}) => {
     await db.delete(schema.sessions).where(eq(schema.sessions.token, token));
+  },
+
+  create: async ({
+    token,
+    userId,
+    userAgent,
+    ipAddress,
+    expiresAt,
+  }: {
+    token: string;
+    userId: string;
+    userAgent: string;
+    ipAddress: string;
+    expiresAt: Date;
+  }) => {
+    const now = new Date();
+    const sessionId = generateId();
+
+    const [newSession = null] = await db
+      .insert(schema.sessions)
+      .values({
+        id: sessionId,
+        userId,
+        userAgent,
+        ipAddress,
+        expiresAt,
+        token,
+        createdAt: now,
+        updatedAt: now,
+        activeOrganizationId: null, // TODO: remove this, don't store active organization ID
+      })
+      .returning();
+
+    return newSession;
   },
 };

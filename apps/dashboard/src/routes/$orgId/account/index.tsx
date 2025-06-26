@@ -154,7 +154,7 @@ const UpdateNameForm = ({defaultName}: {defaultName: string}) => {
 };
 
 const SessionsSection = () => {
-  const sessionQuery = useQuery(orpc.auth.getSession.queryOptions());
+  const sessionQuery = useQuery(orpc.auth.getActiveSession.queryOptions());
 
   const {data: sessionData} = sessionQuery;
   const activeSessionToken = sessionData?.session?.token || "";

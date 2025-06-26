@@ -5,6 +5,7 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
+    "./alert": "./src/components/ui/alert/index.ts",
     "./avatar": "./src/components/ui/avatar/index.ts",
     "./badge": "./src/components/ui/badge/index.ts",
     "./breadcrumb": "./src/components/ui/breadcrumb/index.ts",

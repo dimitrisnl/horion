@@ -1,5 +1,4 @@
 import {buttonVariants} from "@horionos/ui/button";
-import {Card} from "@horionos/ui/card";
 import {Heading1, Text} from "@horionos/ui/text";
 
 import {type ErrorComponentProps, Link} from "@tanstack/react-router";

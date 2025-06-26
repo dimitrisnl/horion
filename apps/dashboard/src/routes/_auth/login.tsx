@@ -1,7 +1,9 @@
 import {LoaderCircleIcon} from "@horionos/icons";
+import {Alert, AlertDescription, AlertTitle} from "@horionos/ui/alert";
 import {Button} from "@horionos/ui/button";
 import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
+import {Separator} from "@horionos/ui/separator";
 import {toast} from "@horionos/ui/sonner";
 
 import {useForm} from "@tanstack/react-form";
@@ -13,8 +15,53 @@ import {z} from "zod/v4";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
+const errorToMessage = {
+  invalid_token: {
+    title: "The magic link is invalid or has expired",
+    description:
+      "Please request a new magic link to log in. If you continue to experience issues, please contact support",
+  },
+  expired_token: {
+    title: "The magic link has expired",
+    description: "Please request a new one to log in",
+  },
+  failed_to_create_user: {
+    title: "An error occurred while creating your account",
+    description:
+      "Please try again later or contact support if the issue persists",
+  },
+  failed_to_create_session: {
+    title: "An error occurred while logging you in",
+    description:
+      "Please try again later or contact support if the issue persists",
+  },
+  default: {
+    title: "An unexpected error occurred",
+    description:
+      "Please try again later or contact support if the issue persists",
+  },
+} as Record<string, {title: string; description: string}>;
+
+const ErrorAlert = ({error}: {error: string}) => {
+  const message = errorToMessage[error] || errorToMessage.default;
+  return (
+    <div>
+      <Alert variant="destructive">
+        <AlertTitle>{message.title}</AlertTitle>
+        <AlertDescription className="text-balance">
+          {message.description}
+        </AlertDescription>
+      </Alert>
+      <Separator className="my-8" />
+    </div>
+  );
+};
+
 export const Route = createFileRoute("/_auth/login")({
   component: RouteComponent,
+  validateSearch: z.object({
+    error: z.string().optional(),
+  }),
   beforeLoad: ({context}) => {
     if (context.userId) {
       throw redirect({to: "/"});
@@ -24,6 +71,7 @@ export const Route = createFileRoute("/_auth/login")({
 
 function RouteComponent() {
   const navigate = useNavigate({from: "/login"});
+  const {error} = Route.useSearch();
 
   const sendMagicLinkMutation = useMutation(
     orpc.auth.sendMagicLink.mutationOptions({
@@ -48,6 +96,7 @@ function RouteComponent() {
 
   return (
     <div className="flex flex-col gap-6">
+      {error ? <ErrorAlert error={error} /> : null}
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Welcome</h1>
         <p className="text-muted-foreground text-sm text-balance">

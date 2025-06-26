@@ -1,5 +1,8 @@
 import {UAParser} from "ua-parser-js";
 
+import {SESSION_DURATION_IN_SECONDS} from "~/constants";
+import {generateToken} from "~/lib/token";
+
 import {SessionRepository} from "./repository";
 
 export const SessionService = {
@@ -39,6 +42,21 @@ export const SessionService = {
     });
 
     return formattedSessions;
+  },
+
+  createSession: async ({userId}: {userId: string}) => {
+    const token = generateToken();
+    const expiresAt = new Date(Date.now() + SESSION_DURATION_IN_SECONDS * 1000); // 30 days
+
+    const session = await SessionRepository.create({
+      token,
+      userId,
+      userAgent: "",
+      ipAddress: "", // TODO: remove this, don't store IP address
+      expiresAt,
+    });
+
+    return session;
   },
 
   deleteSession: async ({token}: {token: string}) => {

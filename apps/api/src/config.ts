@@ -4,7 +4,7 @@ import {z} from "zod/v4";
 
 const envSchema = z.object({
   SECRET: z.string(),
-  BETTER_AUTH_URL: z.url(),
+  BASE_URL: z.url(),
   DATABASE_URL: z.string(),
   DASHBOARD_URL: z.url(),
   RESEND_API_KEY: z.string(),
