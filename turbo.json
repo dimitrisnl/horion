@@ -12,12 +12,13 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"],
       "env": [
-        "BETTER_AUTH_SECRET",
-        "BETTER_AUTH_URL",
+        "SECRET",
+        "BASE_URL",
         "DATABASE_URL",
         "DASHBOARD_URL",
         "RESEND_API_KEY",
-        "BUN_ENVIRONMENT"
+        "BUN_ENVIRONMENT",
+        "PORT"
       ]
     },
     "@horionos/dashboard#build": {
@@ -42,8 +43,8 @@
       "persistent": true,
       "env": [
         "VITE_API_URL",
-        "BETTER_AUTH_SECRET",
-        "BETTER_AUTH_URL",
+        "SECRET",
+        "BASE_URL",
         "DATABASE_URL",
         "DASHBOARD_URL",
         "RESEND_API_KEY",

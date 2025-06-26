@@ -45,4 +45,5 @@ export {
   UserCog2Icon,
   XIcon,
   BriefcaseBusinessIcon,
+  MailCheckIcon,
 } from "lucide-react";

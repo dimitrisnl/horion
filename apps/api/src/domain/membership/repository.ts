@@ -1,7 +1,7 @@
-import {and, eq} from "drizzle-orm";
+import {db} from "@horionos/db";
+import * as schema from "@horionos/db/schema";
 
-import {db} from "~/db";
-import * as schema from "~/db/schema";
+import {and, eq} from "drizzle-orm";
 
 export const membershipRepo = {
   findAll: async ({userId}: {userId: string}) => {

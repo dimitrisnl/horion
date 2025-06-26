@@ -15,6 +15,7 @@
     "apps/api": {
       "name": "@horionos/api",
       "dependencies": {
+        "@horionos/db": "workspace:*",
         "@horionos/emails": "workspace:*",
         "@orpc/client": "^1.5.2",
         "@orpc/server": "^1.5.2",
@@ -91,6 +92,21 @@
         "eslint-plugin-simple-import-sort": "^12.1.1",
         "globals": "^16.2.0",
         "typescript-eslint": "^8.35.0",
+      },
+    },
+    "packages/db": {
+      "name": "@horionos/db",
+      "dependencies": {
+        "dotenv": "^16.5.0",
+        "pg": "^8.16.2",
+        "zod": "^3.25.67",
+      },
+      "devDependencies": {
+        "@horionos/eslint-config": "workspace:*",
+        "@types/bun": "^1.2.17",
+        "@types/pg": "^8.15.4",
+        "drizzle-kit": "^0.31.2",
+        "typescript": "^5.8.3",
       },
     },
     "packages/emails": {
@@ -301,6 +317,8 @@
     "@horionos/api": ["@horionos/api@workspace:apps/api"],
 
     "@horionos/dashboard": ["@horionos/dashboard@workspace:apps/dashboard"],
+
+    "@horionos/db": ["@horionos/db@workspace:packages/db"],
 
     "@horionos/emails": ["@horionos/emails@workspace:packages/emails"],
 

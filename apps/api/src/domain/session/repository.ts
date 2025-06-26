@@ -1,7 +1,8 @@
+import {db} from "@horionos/db";
+import * as schema from "@horionos/db/schema";
+
 import {eq} from "drizzle-orm";
 
-import {db} from "~/db";
-import * as schema from "~/db/schema";
 import {generateId} from "~/lib/id";
 
 export const SessionRepository = {

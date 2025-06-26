@@ -1,4 +1,6 @@
-import {LoaderCircleIcon} from "@horionos/icons";
+import {useState} from "react";
+
+import {LoaderCircleIcon, MailCheckIcon} from "@horionos/icons";
 import {Alert, AlertDescription, AlertTitle} from "@horionos/ui/alert";
 import {Button} from "@horionos/ui/button";
 import {Input} from "@horionos/ui/input";
@@ -8,7 +10,7 @@ import {toast} from "@horionos/ui/sonner";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation} from "@tanstack/react-query";
-import {createFileRoute, redirect, useNavigate} from "@tanstack/react-router";
+import {createFileRoute, redirect} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
@@ -70,13 +72,13 @@ export const Route = createFileRoute("/_auth/login")({
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({from: "/login"});
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const {error} = Route.useSearch();
 
   const sendMagicLinkMutation = useMutation(
     orpc.auth.sendMagicLink.mutationOptions({
       onSuccess: () => {
-        navigate({to: "/magic-link-sent"});
+        setShowSuccessMessage(true);
       },
       onError: (error) => {
         toast.error(error.message || "Failed to send magic link");
@@ -93,6 +95,10 @@ function RouteComponent() {
       onSubmit: z.object({email: z.email("Invalid email address")}),
     },
   });
+
+  if (showSuccessMessage) {
+    return <MagicLinkSentMessage />;
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -155,3 +161,20 @@ function RouteComponent() {
     </div>
   );
 }
+
+const MagicLinkSentMessage = () => (
+  <div>
+    <div className="flex flex-col items-center gap-4">
+      <div className="rounded-full bg-green-500/15 p-3">
+        <MailCheckIcon className="size-7 stroke-green-600" />
+      </div>
+
+      <h1 className="text-2xl font-bold">Email Sent</h1>
+      <div className="text-muted-foreground text-center text-sm leading-relaxed">
+        Please check your email for a magic link to sign in.
+        <br />
+        If you don&apos;t see the email, please check your spam folder.
+      </div>
+    </div>
+  </div>
+);

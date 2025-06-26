@@ -1,0 +1,32 @@
+{
+  "name": "@horionos/db",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    },
+    "./schema": {
+      "import": "./src/schema.ts"
+    }
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "format": "prettier --write .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "pg": "^8.16.2",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@horionos/eslint-config": "workspace:*",
+    "@types/bun": "^1.2.17",
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.2",
+    "typescript": "^5.8.3"
+  }
+}

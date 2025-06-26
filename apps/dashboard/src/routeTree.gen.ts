@@ -14,7 +14,6 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as OrgIdRouteRouteImport } from './routes/$orgId/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrgIdIndexRouteImport } from './routes/$orgId/index'
-import { Route as AuthMagicLinkSentRouteImport } from './routes/_auth/magic-link-sent'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as OrgIdSettingsIndexRouteImport } from './routes/$orgId/settings/index'
 import { Route as OrgIdCategoriesIndexRouteImport } from './routes/$orgId/categories/index'
@@ -45,11 +44,6 @@ const OrgIdIndexRoute = OrgIdIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
-const AuthMagicLinkSentRoute = AuthMagicLinkSentRouteImport.update({
-  id: '/magic-link-sent',
-  path: '/magic-link-sent',
-  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/login',
@@ -87,7 +81,6 @@ export interface FileRoutesByFullPath {
   '/$orgId': typeof OrgIdRouteRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/login': typeof AuthLoginRoute
-  '/magic-link-sent': typeof AuthMagicLinkSentRoute
   '/$orgId/': typeof OrgIdIndexRoute
   '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
   '/$orgId/account': typeof OrgIdAccountIndexRoute
@@ -99,7 +92,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/login': typeof AuthLoginRoute
-  '/magic-link-sent': typeof AuthMagicLinkSentRoute
   '/$orgId': typeof OrgIdIndexRoute
   '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
   '/$orgId/account': typeof OrgIdAccountIndexRoute
@@ -114,7 +106,6 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/_auth/login': typeof AuthLoginRoute
-  '/_auth/magic-link-sent': typeof AuthMagicLinkSentRoute
   '/$orgId/': typeof OrgIdIndexRoute
   '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
   '/$orgId/account/': typeof OrgIdAccountIndexRoute
@@ -129,7 +120,6 @@ export interface FileRouteTypes {
     | '/$orgId'
     | '/onboarding'
     | '/login'
-    | '/magic-link-sent'
     | '/$orgId/'
     | '/$orgId/announcements/new'
     | '/$orgId/account'
@@ -141,7 +131,6 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/login'
-    | '/magic-link-sent'
     | '/$orgId'
     | '/$orgId/announcements/new'
     | '/$orgId/account'
@@ -155,7 +144,6 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/onboarding'
     | '/_auth/login'
-    | '/_auth/magic-link-sent'
     | '/$orgId/'
     | '/$orgId/announcements/new'
     | '/$orgId/account/'
@@ -207,13 +195,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$orgId/'
       preLoaderRoute: typeof OrgIdIndexRouteImport
       parentRoute: typeof OrgIdRouteRoute
-    }
-    '/_auth/magic-link-sent': {
-      id: '/_auth/magic-link-sent'
-      path: '/magic-link-sent'
-      fullPath: '/magic-link-sent'
-      preLoaderRoute: typeof AuthMagicLinkSentRouteImport
-      parentRoute: typeof AuthRouteRoute
     }
     '/_auth/login': {
       id: '/_auth/login'
@@ -284,12 +265,10 @@ const OrgIdRouteRouteWithChildren = OrgIdRouteRoute._addFileChildren(
 
 interface AuthRouteRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
-  AuthMagicLinkSentRoute: typeof AuthMagicLinkSentRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
-  AuthMagicLinkSentRoute: AuthMagicLinkSentRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
