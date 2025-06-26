@@ -157,7 +157,7 @@ const SessionsSection = () => {
   const sessionQuery = useQuery(orpc.auth.getActiveSession.queryOptions());
 
   const {data: sessionData} = sessionQuery;
-  const activeSessionToken = sessionData?.session?.token || "";
+  const activeSessionId = sessionData?.session?.id || "";
 
   const LoadingRow = () => (
     <TableRow>
@@ -188,7 +188,7 @@ const SessionsSection = () => {
                 </>
               }
             >
-              <SessionTableRows activeSessionToken={activeSessionToken} />
+              <SessionTableRows activeSessionId={activeSessionId} />
             </Suspense>
           </TableBody>
         </Table>
@@ -197,17 +197,13 @@ const SessionsSection = () => {
   );
 };
 
-const SessionTableRows = ({
-  activeSessionToken,
-}: {
-  activeSessionToken: string;
-}) => {
+const SessionTableRows = ({activeSessionId}: {activeSessionId: string}) => {
   const {
     data: {sessions},
   } = useSuspenseQuery(orpc.session.getAll.queryOptions());
 
   return sessions.map((session) => (
-    <TableRow key={session.token}>
+    <TableRow key={session.id}>
       <TableCell className="font-medium">
         <div>
           {session.browser} {" on "}
@@ -221,7 +217,7 @@ const SessionTableRows = ({
         </Text>
       </TableCell>
       <TableCell className="text-right">
-        {session.token === activeSessionToken ? (
+        {session.id === activeSessionId ? (
           <Badge variant="secondary">This browser</Badge>
         ) : (
           <> </>

@@ -18,10 +18,19 @@ export const SessionRepository = {
 
   findAll: async ({userId}: {userId: string}) => {
     const sessions = await db
-      .select()
+      .select({
+        id: schema.sessions.id,
+        browser: schema.sessionMetadata.browser,
+        os: schema.sessionMetadata.os,
+        createdAt: schema.sessions.createdAt,
+      })
       .from(schema.sessions)
       .where(eq(schema.sessions.userId, userId))
-      .orderBy(schema.sessions.createdAt);
+      .orderBy(schema.sessions.createdAt)
+      .innerJoin(
+        schema.sessionMetadata,
+        eq(schema.sessions.id, schema.sessionMetadata.sessionId),
+      );
 
     return sessions;
   },
@@ -33,14 +42,10 @@ export const SessionRepository = {
   create: async ({
     token,
     userId,
-    userAgent,
-    ipAddress,
     expiresAt,
   }: {
     token: string;
     userId: string;
-    userAgent: string;
-    ipAddress: string;
     expiresAt: Date;
   }) => {
     const now = new Date();
@@ -51,8 +56,6 @@ export const SessionRepository = {
       .values({
         id: sessionId,
         userId,
-        userAgent,
-        ipAddress,
         expiresAt,
         token,
         createdAt: now,
@@ -61,5 +64,42 @@ export const SessionRepository = {
       .returning();
 
     return newSession;
+  },
+
+  createMetadata: async ({
+    sessionId,
+    userAgent,
+    browser,
+    os,
+    device,
+    engine,
+    model,
+    ipAddress,
+  }: {
+    sessionId: string;
+    userAgent: string;
+    browser: string;
+    os: string;
+    device: string;
+    engine: string;
+    model: string;
+    ipAddress?: string;
+  }) => {
+    const now = new Date();
+    const metadataId = generateId();
+
+    await db.insert(schema.sessionMetadata).values({
+      id: metadataId,
+      sessionId,
+      userAgent,
+      browser,
+      os,
+      device,
+      engine,
+      model,
+      ipAddress: ipAddress || null,
+      createdAt: now,
+      updatedAt: now,
+    });
   },
 };

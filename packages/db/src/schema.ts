@@ -28,8 +28,6 @@ export const sessions = pgTable(
     token: text("token").notNull().unique(),
     createdAt: timestamp("created_at").notNull(),
     updatedAt: timestamp("updated_at").notNull(),
-    ipAddress: text("ip_address"),
-    userAgent: text("user_agent"),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
@@ -38,6 +36,26 @@ export const sessions = pgTable(
     index("sessions_user_id_idx").on(table.userId),
     index("sessions_token_idx").on(table.token),
   ],
+);
+
+export const sessionMetadata = pgTable(
+  "session_metadata",
+  {
+    id: text("id").primaryKey(),
+    sessionId: text("session_id")
+      .notNull()
+      .references(() => sessions.id, {onDelete: "cascade"}),
+    browser: text("browser").notNull(),
+    os: text("os").notNull(),
+    device: text("device").notNull(),
+    engine: text("engine").notNull(),
+    model: text("model").notNull(),
+    userAgent: text("user_agent").notNull(),
+    ipAddress: text("ip_address"),
+    createdAt: timestamp("created_at").notNull(),
+    updatedAt: timestamp("updated_at").notNull(),
+  },
+  (table) => [index("session_metadata_session_id_idx").on(table.sessionId)],
 );
 
 export const accounts = pgTable(

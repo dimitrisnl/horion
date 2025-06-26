@@ -14,10 +14,21 @@ import {userService} from "./domain/user/service";
 import {verificationService} from "./domain/verification/service";
 import {createContext} from "./lib/context";
 import {createCookieService} from "./lib/cookie-service";
+import {
+  clientHints,
+  criticalHints,
+  getSessionFingerPrint,
+} from "./lib/getSessionFingerprint";
 import {zodValidationInterceptor} from "./lib/zod-validation-interceptor";
 import {appRouter} from "./routers/index";
 
 const app = new Hono();
+
+app.use("*", async (ctx, next) => {
+  ctx.header("Accept-CH", clientHints.join(", "));
+  ctx.header("Critical-CH", criticalHints.join(", "));
+  await next();
+});
 
 app.use(secureHeaders());
 app.use(logger());
@@ -53,6 +64,7 @@ app.use("/rpc/*", async (ctx, next) => {
 
 app.get("/auth/verify", async (ctx) => {
   const queryObject = ctx.req.query();
+  const headers = ctx.req.raw.headers;
 
   const validation = z.object({token: z.string()}).safeParse(queryObject);
 
@@ -95,6 +107,19 @@ app.get("/auth/verify", async (ctx) => {
     return ctx.redirect(
       `${envVars.DASHBOARD_URL}/login/?error=failed_to_create_session`,
     );
+  }
+
+  try {
+    // @ts-expect-error Types are messy
+    const sessionFingerPrint = await getSessionFingerPrint(headers);
+
+    await SessionService.createSessionMetadata({
+      sessionId: session.id,
+      ...sessionFingerPrint,
+    });
+  } catch (error) {
+    // We don't care if this fails, we just log it
+    console.error("Failed to create session metadata:", error);
   }
 
   const sessionToken = session.token;

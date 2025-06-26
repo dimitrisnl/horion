@@ -22,7 +22,7 @@ export const authRouter = {
 
     return {
       session: {
-        token: session.token,
+        id: session.id,
         userId: session.userId,
         expiresAt: session.expiresAt,
       },

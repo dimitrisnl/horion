@@ -1,5 +1,3 @@
-import {UAParser} from "ua-parser-js";
-
 import {SESSION_DURATION_IN_SECONDS} from "~/constants";
 import {generateToken} from "~/lib/token";
 
@@ -26,35 +24,14 @@ export const SessionService = {
   getAll: async ({userId}: {userId: string}) => {
     const sessions = await SessionRepository.findAll({userId});
 
-    const formattedSessions = sessions.map((session) => {
-      const {browser, os, device, engine} = UAParser(session.userAgent || "");
-
-      return {
-        id: session.id,
-        token: session.token,
-        os: os.toString(),
-        browser: browser.toString(),
-        device: device.toString(),
-        engine: engine.toString(),
-        createdAt: session.createdAt,
-        updatedAt: session.updatedAt,
-      };
-    });
-
-    return formattedSessions;
+    return sessions;
   },
 
   createSession: async ({userId}: {userId: string}) => {
     const token = generateToken();
     const expiresAt = new Date(Date.now() + SESSION_DURATION_IN_SECONDS * 1000); // 30 days
 
-    const session = await SessionRepository.create({
-      token,
-      userId,
-      userAgent: "", // Parse and add client-hints
-      ipAddress: "",
-      expiresAt,
-    });
+    const session = await SessionRepository.create({token, userId, expiresAt});
 
     return session;
   },
@@ -62,5 +39,38 @@ export const SessionService = {
   deleteSession: async ({token}: {token: string}) => {
     // eslint-disable-next-line
     await SessionRepository.delete({token});
+  },
+
+  createSessionMetadata: async ({
+    sessionId,
+    userAgent,
+    browser,
+    os,
+    device,
+    engine,
+    model,
+    ipAddress,
+  }: {
+    sessionId: string;
+    userAgent: string;
+    browser: string;
+    os: string;
+    device: string;
+    engine: string;
+    model: string;
+    ipAddress?: string;
+  }) => {
+    const sessionMetadata = await SessionRepository.createMetadata({
+      sessionId,
+      userAgent,
+      browser,
+      os,
+      device,
+      engine,
+      model,
+      ipAddress: ipAddress || "",
+    });
+
+    return sessionMetadata;
   },
 };
