@@ -23,4 +23,8 @@ export const SessionRepository = {
 
     return sessions;
   },
+
+  deleteOne: async ({token}: {token: string}) => {
+    await db.delete(schema.sessions).where(eq(schema.sessions.token, token));
+  },
 };

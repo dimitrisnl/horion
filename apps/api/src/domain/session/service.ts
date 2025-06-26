@@ -40,4 +40,8 @@ export const SessionService = {
 
     return formattedSessions;
   },
+
+  deleteSession: async ({token}: {token: string}) => {
+    await SessionRepository.deleteOne({token});
+  },
 };

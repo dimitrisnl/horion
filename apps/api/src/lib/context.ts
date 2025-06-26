@@ -1,47 +1,43 @@
 import type {Context as HonoContext} from "hono";
-import {deleteCookie, getSignedCookie} from "hono/cookie";
 
-import {envVars} from "~/config";
 import {SessionService} from "~/domain/session/service";
 
-const SESSION_COOKIE_NAME = "horionos.session_token";
+import {createCookieService} from "./cookie-service";
 
 export interface CreateContextOptions {
   context: HonoContext;
 }
 
 export async function createContext({context}: CreateContextOptions) {
-  const secret = envVars.SECRET;
-  const isProduction = envVars.BUN_ENVIRONMENT === "production";
+  const cookieService = createCookieService(context);
+  const headers = context.req.raw.headers;
 
-  const sessionToken = await getSignedCookie(
-    context,
-    secret,
-    SESSION_COOKIE_NAME,
-    isProduction ? "secure" : undefined,
-  );
+  const sessionToken = await cookieService.getSessionToken();
 
   if (!sessionToken) {
     return {
       session: null,
-      headers: context.req.raw.headers,
+      headers,
+      cookieService,
     };
   }
 
   const session = await SessionService.getSession({token: sessionToken});
 
   if (!session) {
-    deleteCookie(context, SESSION_COOKIE_NAME);
+    cookieService.deleteSessionCookie();
 
     return {
       session: null,
-      headers: context.req.raw.headers,
+      headers,
+      cookieService,
     };
   }
 
   return {
     session,
-    headers: context.req.raw.headers,
+    headers,
+    cookieService,
   };
 }
 

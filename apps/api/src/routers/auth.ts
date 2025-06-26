@@ -1,10 +1,9 @@
 import {z} from "zod/v4";
 
 import {envVars} from "~/config";
+import {SessionService} from "~/domain/session/service";
 import {auth} from "~/lib/auth";
-import {publicProcedure} from "~/lib/orpc";
-
-const DASHBOARD_URL = envVars.DASHBOARD_URL;
+import {protectedProcedure, publicProcedure} from "~/lib/orpc";
 
 export const authRouter = {
   getSession: publicProcedure.handler(({context}) => {
@@ -32,7 +31,7 @@ export const authRouter = {
 
       const {status: ok} = await auth.api
         .signInMagicLink({
-          body: {email, callbackURL: DASHBOARD_URL},
+          body: {email, callbackURL: envVars.DASHBOARD_URL},
           headers: context.headers,
         })
         .catch(() => {
@@ -46,18 +45,11 @@ export const authRouter = {
       return {message: "Magic link sent successfully"};
     }),
 
-  signOut: publicProcedure.handler(async ({context}) => {
-    const {success: ok} = await auth.api
-      .signOut({
-        headers: context.headers,
-      })
-      .catch(() => {
-        throw new Error("Failed to sign out");
-      });
+  signOut: protectedProcedure.handler(async ({context}) => {
+    const {session, cookieService} = context;
 
-    if (!ok) {
-      throw new Error("Failed to sign out");
-    }
+    await SessionService.deleteSession({token: session.token});
+    cookieService.deleteSessionCookie();
 
     return {message: "Signed out successfully"};
   }),
