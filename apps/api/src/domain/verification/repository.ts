@@ -30,7 +30,7 @@ export const verificationRepo = {
 
     return verification;
   },
-  findByToken: async (token: string) => {
+  find: async ({token}: {token: string}) => {
     const [verification = null] = await db
       .select()
       .from(schema.verifications)
@@ -39,7 +39,7 @@ export const verificationRepo = {
 
     return verification;
   },
-  deleteByToken: async (token: string) => {
+  delete: async ({token}: {token: string}) => {
     await db
       .delete(schema.verifications)
       .where(eq(schema.verifications.identifier, token));

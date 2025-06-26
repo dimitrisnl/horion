@@ -2,7 +2,7 @@ import {membershipRepo} from "~/domain/membership/repository";
 
 export const membershipService = {
   getAllMemberships: async ({userId}: {userId: string}) => {
-    const memberships = await membershipRepo.getUserMemberships({userId});
+    const memberships = await membershipRepo.findAll({userId});
 
     return memberships;
   },
@@ -14,7 +14,7 @@ export const membershipService = {
     organizationId: string;
     userId: string;
   }) => {
-    const membership = await membershipRepo.getUserMembership({
+    const membership = await membershipRepo.find({
       organizationId,
       userId,
     });

@@ -5,7 +5,7 @@ import * as schema from "~/db/schema";
 import {generateId} from "~/lib/id";
 
 export const SessionRepository = {
-  getOne: async ({token}: {token: string}) => {
+  find: async ({token}: {token: string}) => {
     const [session = null] = await db
       .select()
       .from(schema.sessions)
@@ -15,7 +15,7 @@ export const SessionRepository = {
     return session;
   },
 
-  getAll: async ({userId}: {userId: string}) => {
+  findAll: async ({userId}: {userId: string}) => {
     const sessions = await db
       .select()
       .from(schema.sessions)
@@ -25,7 +25,7 @@ export const SessionRepository = {
     return sessions;
   },
 
-  deleteOne: async ({token}: {token: string}) => {
+  delete: async ({token}: {token: string}) => {
     await db.delete(schema.sessions).where(eq(schema.sessions.token, token));
   },
 

@@ -5,7 +5,7 @@ import * as schema from "~/db/schema";
 import {generateId} from "~/lib/id";
 
 export const organizationRepo = {
-  async findByIdAndUserId({
+  async find({
     organizationId,
     userId,
   }: {

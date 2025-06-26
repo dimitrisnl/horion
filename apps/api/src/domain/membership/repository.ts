@@ -4,7 +4,7 @@ import {db} from "~/db";
 import * as schema from "~/db/schema";
 
 export const membershipRepo = {
-  getUserMemberships: async ({userId}: {userId: string}) => {
+  findAll: async ({userId}: {userId: string}) => {
     const memberships = await db
       .select({
         memberId: schema.members.id,
@@ -23,7 +23,7 @@ export const membershipRepo = {
     return memberships;
   },
 
-  async getUserMembership({
+  async find({
     organizationId,
     userId,
   }: {

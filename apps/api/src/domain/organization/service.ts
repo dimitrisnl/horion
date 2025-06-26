@@ -21,7 +21,7 @@ export const organizationService = {
       throw new ORPCError("Organization not found");
     }
 
-    const organization = await organizationRepo.findByIdAndUserId({
+    const organization = await organizationRepo.find({
       organizationId,
       userId,
     });

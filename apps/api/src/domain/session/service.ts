@@ -7,7 +7,7 @@ import {SessionRepository} from "./repository";
 
 export const SessionService = {
   getSession: async ({token}: {token: string}) => {
-    const session = await SessionRepository.getOne({token});
+    const session = await SessionRepository.find({token});
 
     if (!session) {
       return null;
@@ -24,7 +24,7 @@ export const SessionService = {
   },
 
   getAll: async ({userId}: {userId: string}) => {
-    const sessions = await SessionRepository.getAll({userId});
+    const sessions = await SessionRepository.findAll({userId});
 
     const formattedSessions = sessions.map((session) => {
       const {browser, os, device, engine} = UAParser(session.userAgent || "");
@@ -60,6 +60,7 @@ export const SessionService = {
   },
 
   deleteSession: async ({token}: {token: string}) => {
-    await SessionRepository.deleteOne({token});
+    // eslint-disable-next-line
+    await SessionRepository.delete({token});
   },
 };

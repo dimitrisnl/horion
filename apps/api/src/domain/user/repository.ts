@@ -5,7 +5,7 @@ import * as schema from "~/db/schema";
 import {generateId} from "~/lib/id";
 
 export const userRepo = {
-  findById: async (userId: string) => {
+  findById: async ({userId}: {userId: string}) => {
     const [user = null] = await db
       .select()
       .from(schema.users)
@@ -15,7 +15,7 @@ export const userRepo = {
 
     return user;
   },
-  findByEmail: async (email: string) => {
+  findByEmail: async ({email}: {email: string}) => {
     const [user = null] = await db
       .select()
       .from(schema.users)

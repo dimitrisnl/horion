@@ -2,12 +2,12 @@ import {userRepo} from "~/domain/user/repository";
 
 export const userService = {
   getUserById: async ({userId}: {userId: string}) => {
-    const user = await userRepo.findById(userId);
+    const user = await userRepo.findById({userId});
 
     return user;
   },
   getUserByEmail: async ({email}: {email: string}) => {
-    const user = await userRepo.findByEmail(email);
+    const user = await userRepo.findByEmail({email});
 
     return user;
   },

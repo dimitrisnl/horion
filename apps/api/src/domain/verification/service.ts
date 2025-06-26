@@ -18,12 +18,13 @@ export const verificationService = {
     return verification;
   },
   getVerification: async ({token}: {token: string}) => {
-    const verification = await verificationRepo.findByToken(token);
+    const verification = await verificationRepo.find({token});
 
     return verification;
   },
 
   deleteVerification: async ({token}: {token: string}) => {
-    await verificationRepo.deleteByToken(token);
+    // eslint-disable-next-line
+    await verificationRepo.delete({token});
   },
 };
