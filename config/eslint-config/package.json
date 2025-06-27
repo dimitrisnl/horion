@@ -11,7 +11,7 @@
   "module": "index.ts",
   "devDependencies": {
     "@eslint/css": "^0.9.0",
-    "@eslint/js": "^9.29.0",
+    "@eslint/js": "^9.30.0",
     "@eslint/json": "^0.12.0",
     "@tanstack/eslint-plugin-query": "^5.81.2",
     "@tanstack/eslint-plugin-router": "^1.121.21",
