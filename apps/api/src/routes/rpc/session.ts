@@ -1,4 +1,4 @@
-import {protectedProcedure} from "~/app/orpc";
+import {protectedProcedure} from "~/app/orpc-procedures";
 import {getSessions} from "~/core/accounts/queries/get-sessions";
 
 export const sessionRouter = {

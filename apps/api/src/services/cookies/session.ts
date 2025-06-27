@@ -3,6 +3,7 @@ import {deleteCookie, getSignedCookie, setSignedCookie} from "hono/cookie";
 
 import {envVars} from "~/config";
 import {SESSION_COOKIE_NAME, SESSION_DURATION_IN_SECONDS} from "~/constants";
+import {isProduction} from "~/utils/environment";
 
 export function createCookieService(context: HonoContext) {
   return {
@@ -11,7 +12,7 @@ export function createCookieService(context: HonoContext) {
         context,
         envVars.SECRET,
         SESSION_COOKIE_NAME,
-        envVars.BUN_ENVIRONMENT === "production" ? "secure" : undefined,
+        isProduction() ? "secure" : undefined,
       ),
 
     createSessionCookie: (token: string) => {
@@ -22,7 +23,7 @@ export function createCookieService(context: HonoContext) {
         envVars.SECRET,
         {
           httpOnly: true,
-          secure: envVars.BUN_ENVIRONMENT === "production",
+          secure: isProduction(),
           sameSite: "lax",
           path: "/",
           maxAge: SESSION_DURATION_IN_SECONDS, // 30 days

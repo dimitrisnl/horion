@@ -1,4 +1,4 @@
-import {protectedProcedure} from "~/app/orpc";
+import {protectedProcedure} from "~/app/orpc-procedures";
 import {getUserMemberships} from "~/core/accounts/queries/get-user-memberships";
 
 export const membershipRouter = {

@@ -1,6 +1,6 @@
 import {ORPCError} from "@orpc/client";
 
-import {protectedProcedure} from "~/app/orpc";
+import {protectedProcedure} from "~/app/orpc-procedures";
 import {createOrganization} from "~/core/accounts/actions/create-organization";
 import {updateOrganization} from "~/core/accounts/actions/update-organization";
 import {getOrganization} from "~/core/accounts/queries/get-organization";

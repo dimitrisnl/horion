@@ -1,7 +1,7 @@
 import {ORPCError} from "@orpc/client";
 import {z} from "zod/v4";
 
-import {protectedProcedure, publicProcedure} from "~/app/orpc";
+import {protectedProcedure, publicProcedure} from "~/app/orpc-procedures";
 import {envVars} from "~/config";
 import {createVerificationToken} from "~/core/accounts/actions/create-verification-token";
 import {deleteSession} from "~/core/accounts/actions/delete-session";

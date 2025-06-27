@@ -1,6 +1,6 @@
 import {ORPCError} from "@orpc/client";
 
-import {protectedProcedure} from "~/app/orpc";
+import {protectedProcedure} from "~/app/orpc-procedures";
 import {updateUser} from "~/core/accounts/actions/update-user";
 import {getUserById} from "~/core/accounts/queries/get-user-by-id";
 import {updateUserSchema} from "~/core/accounts/schemas/user";
