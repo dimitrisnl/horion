@@ -2,7 +2,7 @@
 
 This is a [Bun](https://bun.sh/) monorepo, using [Turborepo](https://turborepo.com/), with the following two apps:
 
-- **Dashboard**, using [TanStack Router](https://tanstack.com/router/latest) [^1]
+- **Dashboard**, using [TanStack Start](https://tanstack.com/start/latest)
 - **API**, using [Hono](https://hono.dev/)
 
 And a few helper packages:
@@ -15,9 +15,13 @@ And a few helper packages:
 
 I want to try some technologies, form opinions, and maybe blog about them. It's a fun playground.
 
+## Testing
+
+I'm using `bun:test` as test runner, with in-memory `PGlite` from `@electric-sql/pglite`. I've only written tests for the **API** package so far.
+
 ## Communication and type-safety
 
-To bridge the gap between them and share types, I'm using [ORPC](https://orpc.unnoq.com/). I particularly like its integration with [TanStack Query](https://tanstack.com/query/latest). Here's an example:
+To bridge the gap between them and share types, I'm using [ORPC](https://orpc.unnoq.com/)[^1]. I particularly like its integration with [TanStack Query](https://tanstack.com/query/latest). Here's an example:
 
 I can pass the query I want to use using `queryOptions`, without the need to set up query keys:
 
@@ -41,17 +45,13 @@ There are many benefits to using any RPC library, and I'm probably under-selling
 
 ## Authentication
 
-I'm using [BetterAuth](https://www.better-auth.com/) for authentication, but I'll remove it.
+I'm using a simple magic-link flow. Yes, I hand roll my own authentication.
 
-On the surface, it looks good, but I found various warts, and it doesn't suit my needs. For example, I dislike having two clients interact with my backend: the BetterAuth client and ReactQuery/ORPC. So, I never use the frontend client and instead only call BetterAuth methods from my backend. This leads to the annoying need to manually disable all the hidden endpoints it adds.
+1. Creating a session
+2. Saving the session token in a secure cookie
+3. Passing the cookie around
 
-Then, I found some methods to be suboptimal. For example, the `getOrg` method returns the members list as well, which makes it slow. I want only the Org metadata; why make this so unnecessarily slow?
-
-It also makes it hard to properly manage the authentication flow, for example, creating a default organization on sign-up, setting up default resources, and so on. To work around this, I must move business logic to the `hooks` methods they expose in their configuration. And I don't like my business logic scattered around, especially in config files.
-
-Finally, I don't enjoy that it expands in scope outside of authentication. Using plugins like Organizations, Billing, etc., is optional, but I'll be handling updates and major bumps for things I don't care about. I only want session management and magic links. Maybe a social logic in the future.
-
-I have too many opinions on this, and it feels right to part ways.
+Previously I was using [BetterAuth](https://www.better-auth.com/) but it was too opinionated for my taste.
 
 ## Styling
 
@@ -78,6 +78,6 @@ I'm considering the following:
 - [Permix](https://permix.letstri.dev/)
 - An [Astro](https://astro.build/) landing page
 
-[^1]: I'm planning to migrate to TanStack Start soon. [GH Issue](https://github.com/dimitrisnl/horionos/issues/1)
+[^1]: I'm planning to test Hono RPC
 
 [^2]: I'm also planning to migrate this to [BaseUI](https://base-ui.com/)
