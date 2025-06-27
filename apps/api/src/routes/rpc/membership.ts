@@ -3,9 +3,10 @@ import {getUserMemberships} from "~/core/accounts/queries/get-user-memberships";
 
 export const membershipRouter = {
   getAll: protectedProcedure.handler(async ({context}) => {
-    const userId = context.session.userId;
+    const {db, session} = context;
+    const userId = session.userId;
 
-    const memberships = await getUserMemberships({userId});
+    const memberships = await getUserMemberships({db})({userId});
 
     return {memberships};
   }),

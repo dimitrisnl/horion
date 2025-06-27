@@ -34,6 +34,7 @@ export async function createContext({context, db}: CreateContextOptions) {
       session: null,
       headers,
       cookieService,
+      db,
     };
   }
 
@@ -41,6 +42,7 @@ export async function createContext({context, db}: CreateContextOptions) {
     session,
     headers,
     cookieService,
+    db,
   };
 }
 

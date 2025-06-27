@@ -1,5 +1,3 @@
-import {db} from "@horionos/db";
-
 import {ORPCError} from "@orpc/client";
 import {z} from "zod/v4";
 
@@ -34,8 +32,9 @@ export const authRouter = {
 
   sendMagicLink: publicProcedure
     .input(z.object({email: z.email().toLowerCase()}))
-    .handler(async ({input}) => {
+    .handler(async ({input, context}) => {
       const {email} = input;
+      const {db} = context;
 
       const verification = await createVerificationToken({db})({email});
       const url = getMagicLinkUrl(verification.identifier);
@@ -48,7 +47,7 @@ export const authRouter = {
     }),
 
   signOut: protectedProcedure.handler(async ({context}) => {
-    const {session, cookieService} = context;
+    const {session, cookieService, db} = context;
 
     await deleteSession({db})({token: session.token});
     cookieService.deleteSessionCookie();

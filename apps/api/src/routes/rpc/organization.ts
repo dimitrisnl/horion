@@ -14,10 +14,11 @@ export const organizationRouter = {
   get: protectedProcedure
     .input(getOrganizationSchema)
     .handler(async ({context, input}) => {
+      const {db, session} = context;
+      const userId = session.userId;
       const {organizationId} = input;
-      const userId = context.session.userId;
 
-      const organization = await getOrganization({
+      const organization = await getOrganization({db})({
         organizationId,
         userId,
       });
@@ -32,10 +33,11 @@ export const organizationRouter = {
   create: protectedProcedure
     .input(createOrganizationSchema)
     .handler(async ({context, input}) => {
+      const {db, session} = context;
       const {name} = input;
-      const userId = context.session.userId;
+      const userId = session.userId;
 
-      const organization = await createOrganization({
+      const organization = await createOrganization({db})({
         name,
         userId,
       });
@@ -53,11 +55,11 @@ export const organizationRouter = {
   update: protectedProcedure
     .input(updateOrganizationSchema)
     .handler(async ({context, input}) => {
+      const {db, session} = context;
       const {organizationId, name} = input;
+      const userId = session.userId;
 
-      const userId = context.session.userId;
-
-      const organization = await updateOrganization({
+      const organization = await updateOrganization({db})({
         organizationId,
         name,
         userId,

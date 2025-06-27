@@ -7,12 +7,13 @@ import {updateUserSchema} from "~/core/accounts/schemas/user";
 
 export const userRouter = {
   getCurrentUser: protectedProcedure.handler(async ({context}) => {
-    const userId = context.session.userId;
+    const {db, session} = context;
+    const userId = session.userId;
 
     if (!userId) {
       throw new ORPCError("User not authenticated");
     }
-    const user = await getUserById({userId});
+    const user = await getUserById({db})({userId});
 
     if (!user) {
       throw new ORPCError("User not found");
@@ -25,10 +26,11 @@ export const userRouter = {
   updateName: protectedProcedure
     .input(updateUserSchema)
     .handler(async ({context, input}) => {
+      const {db, session} = context;
       const name = input.name;
-      const userId = context.session.userId;
+      const userId = session.userId;
 
-      const updatedUser = await updateUser({userId, name});
+      const updatedUser = await updateUser({db})({userId, name});
 
       return {
         message: "User updated successfully",

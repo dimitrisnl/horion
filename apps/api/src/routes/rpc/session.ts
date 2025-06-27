@@ -3,9 +3,10 @@ import {getSessions} from "~/core/accounts/queries/get-sessions";
 
 export const sessionRouter = {
   getAll: protectedProcedure.handler(async ({context}) => {
-    const userId = context.session.userId;
+    const {db, session} = context;
+    const userId = session.userId;
 
-    const sessions = await getSessions({userId});
+    const sessions = await getSessions({db})({userId});
 
     return {
       sessions,
