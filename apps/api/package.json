@@ -1,7 +1,7 @@
 {
   "name": "@horionos/api",
   "type": "module",
-  "exports": "./src/routes/index.ts",
+  "exports": "./src/routes/rpc/index.ts",
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc && tsc-alias",

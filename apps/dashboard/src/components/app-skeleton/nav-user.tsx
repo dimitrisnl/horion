@@ -41,7 +41,6 @@ export function NavUser() {
   const hasName = user.name && user.name.trim().length > 0;
   const initial = hasName ? user.name[0] : user.email[0];
 
-  // TODO: update logout
   const logout = () => {
     orpc.auth.signOut.call().then(() => {
       queryClient.clear();

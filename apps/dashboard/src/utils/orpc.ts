@@ -1,4 +1,4 @@
-import type {appRouter} from "@horionos/api";
+import type {rpcRouter} from "@horionos/api";
 
 import {QueryCache, QueryClient} from "@tanstack/react-query";
 import {createIsomorphicFn} from "@tanstack/react-start";
@@ -53,7 +53,7 @@ const getClientLink = createIsomorphicFn()
     });
   });
 
-export const client: RouterClient<typeof appRouter> =
+export const client: RouterClient<typeof rpcRouter> =
   createORPCClient(getClientLink());
 
 export const orpc = createTanstackQueryUtils(client);
