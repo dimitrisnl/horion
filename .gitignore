@@ -7,6 +7,9 @@ node_modules
 dist
 /build
 /out/
+.output/
+.nitro/
+.tanstack/
 
 # deps
 node_modules/
@@ -30,6 +33,3 @@ logs/
 .eslintcache
 .cache
 *.tsbuildinfo
-
-# lib specific
-.tanstack

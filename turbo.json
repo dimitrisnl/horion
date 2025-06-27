@@ -24,7 +24,7 @@
     "@horionos/dashboard#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**"],
+      "outputs": [".output/**"],
       "env": ["VITE_API_URL"]
     },
     "format": {
