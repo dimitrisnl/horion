@@ -10,10 +10,10 @@ import {ResponseHeadersPlugin} from "@orpc/server/plugins";
 import {createContext} from "~/app/context";
 import {zodValidationInterceptor} from "~/app/zod-validation-interceptor";
 import {envVars} from "~/config";
-import {appRouter} from "~/routes/index";
 import {clientHints, criticalHints} from "~/utils/fingerprint";
 
-import {verifyMagicLinkRoute} from "./routes/auth";
+import {httpRouter} from "./routes/http";
+import {rpcRouter} from "./routes/rpc";
 
 const app = new Hono();
 
@@ -37,7 +37,7 @@ app.use(
 );
 
 // TODO: include a more restrictive error handler
-const handler = new RPCHandler(appRouter, {
+const handler = new RPCHandler(rpcRouter, {
   clientInterceptors: [onError((error) => zodValidationInterceptor(error))],
   plugins: [new ResponseHeadersPlugin()],
 });
@@ -55,8 +55,8 @@ app.use("/rpc/*", async (ctx, next) => {
   await next();
 });
 
-app.get("/auth/verify", verifyMagicLinkRoute);
-app.get("/", (ctx) => ctx.text("OK"));
+app.get("/auth/verify", httpRouter["/auth/verify"].GET);
+app.get("/", httpRouter["/"].GET);
 
 export default {
   port: envVars.PORT,

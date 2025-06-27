@@ -4,7 +4,7 @@ import {organizationRouter} from "./organization";
 import {sessionRouter} from "./session";
 import {userRouter} from "./user";
 
-export const appRouter = {
+export const rpcRouter = {
   user: userRouter,
   auth: authRouter,
   membership: membershipRouter,
@@ -12,4 +12,4 @@ export const appRouter = {
   session: sessionRouter,
 };
 
-export type AppRouter = typeof appRouter;
+export type RPCRouter = typeof rpcRouter;
