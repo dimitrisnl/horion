@@ -22,6 +22,13 @@
       "when": 1751055937979,
       "tag": "0002_amazing_mephisto",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1751057275626,
+      "tag": "0003_oval_spiral",
+      "breakpoints": true
     }
   ]
 }

@@ -10,12 +10,8 @@ export const users = pgTable(
       .$defaultFn(() => false)
       .notNull(),
     image: text("image"),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [index("users_email_idx").on(table.email)],
 );
@@ -29,12 +25,8 @@ export const sessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
     index("sessions_user_id_idx").on(table.userId),
@@ -56,12 +48,8 @@ export const sessionMetadata = pgTable(
     model: text("model").notNull(),
     userAgent: text("user_agent").notNull(),
     ipAddress: text("ip_address"),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [index("session_metadata_session_id_idx").on(table.sessionId)],
 );
@@ -82,12 +70,8 @@ export const accounts = pgTable(
     refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
     scope: text("scope"),
     password: text("password"),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [index("accounts_user_id_idx").on(table.userId)],
 );
@@ -99,12 +83,8 @@ export const verifications = pgTable(
     identifier: text("identifier").notNull(),
     value: text("value").notNull(),
     expiresAt: timestamp("expires_at").notNull(),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [index("verifications_identifier_idx").on(table.identifier)],
 );
@@ -115,12 +95,8 @@ export const organizations = pgTable(
     id: text("id").primaryKey(),
     name: text("name").notNull(),
     logo: text("logo"),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [index("organizations_id_idx").on(table.id)],
 );
@@ -136,12 +112,8 @@ export const memberships = pgTable(
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
     role: text("role").default("member").notNull(),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
     index("memberships_organization_id_idx").on(table.organizationId),
@@ -164,12 +136,8 @@ export const invitations = pgTable(
     inviterId: text("inviter_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
-    createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
-    updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date(),
-    ),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
     index("invitations_organization_id_idx").on(table.organizationId),
