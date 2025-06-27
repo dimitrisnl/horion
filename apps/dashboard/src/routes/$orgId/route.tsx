@@ -18,6 +18,7 @@ export const Route = createFileRoute("/$orgId")({
       .fetchQuery(
         context.orpc.organization.get.queryOptions({
           input: {organizationId: orgId},
+          staleTime: 0,
         }),
       )
       .catch(() => {

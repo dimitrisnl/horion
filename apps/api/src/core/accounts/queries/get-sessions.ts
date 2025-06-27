@@ -11,8 +11,6 @@ export const getSessions = ({db}: {db: Database}) => {
   return async (props: GetSessionsProps) => {
     const {userId} = props;
 
-    console.log("userId", userId);
-
     const sessions = await db
       .select({
         id: schema.sessions.id,
