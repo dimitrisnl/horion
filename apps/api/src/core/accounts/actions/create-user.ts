@@ -11,7 +11,6 @@ export const createUser = ({db}: {db: Database}) => {
   return async (props: CreateUserProps) => {
     const {email} = props;
 
-    const now = new Date();
     const userId = generateId();
 
     const [newUser = null] = await db
@@ -21,8 +20,6 @@ export const createUser = ({db}: {db: Database}) => {
         name: "",
         email: email.toLowerCase(),
         emailVerified: true,
-        createdAt: now,
-        updatedAt: now,
       })
       .returning();
 

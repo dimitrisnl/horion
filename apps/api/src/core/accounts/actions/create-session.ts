@@ -17,7 +17,6 @@ export const createSession = ({db}: {db: Database}) => {
     const sessionId = generateId();
 
     const expiresAt = new Date(Date.now() + SESSION_DURATION_IN_SECONDS * 1000); // 30 days
-    const now = new Date();
 
     const [newSession = null] = await db
       .insert(schema.sessions)
@@ -26,8 +25,6 @@ export const createSession = ({db}: {db: Database}) => {
         userId,
         expiresAt,
         token,
-        createdAt: now,
-        updatedAt: now,
       })
       .returning();
 

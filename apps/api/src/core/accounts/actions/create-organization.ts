@@ -12,14 +12,13 @@ export const createOrganization = ({db}: {db: Database}) => {
   return async (props: CreateOrganizationProps) => {
     const {name, userId} = props;
 
-    const now = new Date();
     const orgId = generateId();
     const memberId = generateId();
 
     const [org = null] = await db.transaction(async (tx) => {
       const [newOrg] = await tx
         .insert(schema.organizations)
-        .values({id: orgId, name, createdAt: now})
+        .values({id: orgId, name})
         .returning();
 
       await tx.insert(schema.memberships).values({
@@ -27,7 +26,6 @@ export const createOrganization = ({db}: {db: Database}) => {
         userId: userId,
         organizationId: orgId,
         role: "owner",
-        createdAt: now,
       });
 
       return [newOrg];

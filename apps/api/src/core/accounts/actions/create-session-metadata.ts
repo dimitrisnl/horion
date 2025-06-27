@@ -27,7 +27,6 @@ export const createSessionMetadata = ({db}: {db: Database}) => {
       ipAddress,
     } = props;
 
-    const now = new Date();
     const metadataId = generateId();
 
     const [metadata = null] = await db
@@ -42,8 +41,6 @@ export const createSessionMetadata = ({db}: {db: Database}) => {
         engine,
         model,
         ipAddress: ipAddress || null,
-        createdAt: now,
-        updatedAt: now,
       })
       .returning();
 
