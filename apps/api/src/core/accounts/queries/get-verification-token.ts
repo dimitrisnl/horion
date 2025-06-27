@@ -1,14 +1,22 @@
-import {db} from "@horionos/db";
+import type {Database} from "@horionos/db";
 import * as schema from "@horionos/db/schema";
 
 import {eq} from "drizzle-orm";
 
-export const getVerificationToken = async ({token}: {token: string}) => {
-  const [verification = null] = await db
-    .select()
-    .from(schema.verifications)
-    .where(eq(schema.verifications.identifier, token))
-    .limit(1);
+interface GetVerificationTokenProps {
+  token: string;
+}
 
-  return verification;
+export const getVerificationToken = ({db}: {db: Database}) => {
+  return async (props: GetVerificationTokenProps) => {
+    const {token} = props;
+
+    const [verification = null] = await db
+      .select()
+      .from(schema.verifications)
+      .where(eq(schema.verifications.identifier, token))
+      .limit(1);
+
+    return verification;
+  };
 };

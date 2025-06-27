@@ -1,3 +1,5 @@
+import {db} from "@horionos/db";
+
 import type {Context, Next} from "hono";
 import {cors} from "hono/cors";
 
@@ -35,7 +37,7 @@ export function setupRPC() {
   });
 
   return async (ctx: Context, next: Next) => {
-    const context = await createContext({context: ctx});
+    const context = await createContext({context: ctx, db});
     const {matched, response} = await handler.handle(ctx.req.raw, {
       prefix: "/rpc",
       context,

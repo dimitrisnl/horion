@@ -1,10 +1,18 @@
-import {db} from "@horionos/db";
+import type {Database} from "@horionos/db";
 import * as schema from "@horionos/db/schema";
 
 import {eq} from "drizzle-orm";
 
-export const deleteVerificationToken = async ({token}: {token: string}) => {
-  await db
-    .delete(schema.verifications)
-    .where(eq(schema.verifications.identifier, token));
+interface DeleteVerificationTokenProps {
+  token: string;
+}
+
+export const deleteVerificationToken = ({db}: {db: Database}) => {
+  return async (props: DeleteVerificationTokenProps) => {
+    const {token} = props;
+
+    await db
+      .delete(schema.verifications)
+      .where(eq(schema.verifications.identifier, token));
+  };
 };

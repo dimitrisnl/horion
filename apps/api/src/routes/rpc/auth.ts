@@ -1,3 +1,5 @@
+import {db} from "@horionos/db";
+
 import {ORPCError} from "@orpc/client";
 import {z} from "zod/v4";
 
@@ -35,7 +37,7 @@ export const authRouter = {
     .handler(async ({input}) => {
       const {email} = input;
 
-      const verification = await createVerificationToken({email});
+      const verification = await createVerificationToken({db})({email});
       const url = getMagicLinkUrl(verification.identifier);
 
       return sendMagicLinkEmail({to: email, url})
@@ -48,7 +50,7 @@ export const authRouter = {
   signOut: protectedProcedure.handler(async ({context}) => {
     const {session, cookieService} = context;
 
-    await deleteSession({token: session.token});
+    await deleteSession({db})({token: session.token});
     cookieService.deleteSessionCookie();
 
     return {message: "Signed out successfully"};

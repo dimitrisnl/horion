@@ -1,18 +1,9 @@
-import {db} from "@horionos/db";
+import type {Database} from "@horionos/db";
 import * as schema from "@horionos/db/schema";
 
 import {generateId} from "~/utils/id/generate-id";
 
-export const createSessionMetadata = async ({
-  sessionId,
-  userAgent,
-  browser,
-  os,
-  device,
-  engine,
-  model,
-  ipAddress,
-}: {
+interface CreateSessionMetadataProps {
   sessionId: string;
   userAgent: string;
   browser: string;
@@ -21,21 +12,36 @@ export const createSessionMetadata = async ({
   engine: string;
   model: string;
   ipAddress?: string;
-}) => {
-  const now = new Date();
-  const metadataId = generateId();
+}
 
-  await db.insert(schema.sessionMetadata).values({
-    id: metadataId,
-    sessionId,
-    userAgent,
-    browser,
-    os,
-    device,
-    engine,
-    model,
-    ipAddress: ipAddress || null,
-    createdAt: now,
-    updatedAt: now,
-  });
+export const createSessionMetadata = ({db}: {db: Database}) => {
+  return async (props: CreateSessionMetadataProps) => {
+    const {
+      sessionId,
+      userAgent,
+      browser,
+      os,
+      device,
+      engine,
+      model,
+      ipAddress,
+    } = props;
+
+    const now = new Date();
+    const metadataId = generateId();
+
+    await db.insert(schema.sessionMetadata).values({
+      id: metadataId,
+      sessionId,
+      userAgent,
+      browser,
+      os,
+      device,
+      engine,
+      model,
+      ipAddress: ipAddress || null,
+      createdAt: now,
+      updatedAt: now,
+    });
+  };
 };

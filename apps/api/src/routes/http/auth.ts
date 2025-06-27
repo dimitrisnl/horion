@@ -1,3 +1,5 @@
+import {db} from "@horionos/db";
+
 import type {Context as HonoContext} from "hono";
 
 import {z} from "zod/v4";
@@ -30,7 +32,7 @@ export const verifyMagicLinkRoute = async (ctx: HonoContext) => {
   const fingerprintMetadata = await getSessionFingerprint(incomingHeaders);
   const {token} = validation.data;
 
-  const result = await verifyMagicLink({token, fingerprintMetadata});
+  const result = await verifyMagicLink({db})({token, fingerprintMetadata});
 
   if (result.type === "error") {
     return ctx.redirect(redirectTo({type: "error", error: result.error}));

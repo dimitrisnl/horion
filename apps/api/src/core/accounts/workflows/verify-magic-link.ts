@@ -1,3 +1,5 @@
+import type {Database} from "@horionos/db";
+
 import {getSessionFingerprint} from "~/utils/fingerprint";
 
 import {createSession} from "../actions/create-session";
@@ -10,48 +12,49 @@ type SessionFingerprintMetadata = Awaited<
   ReturnType<typeof getSessionFingerprint>
 >;
 
-export const verifyMagicLink = async ({
-  token,
-  fingerprintMetadata,
-}: {
+interface VerifyMagicLinkArgs {
   token: string;
   fingerprintMetadata: SessionFingerprintMetadata;
-}) => {
-  const verificationToken = await getVerificationToken({token});
+}
 
-  if (!verificationToken) {
-    return {type: "error", error: "invalid_token"} as const;
-  }
+export const verifyMagicLink = ({db}: {db: Database}) => {
+  return async ({token, fingerprintMetadata}: VerifyMagicLinkArgs) => {
+    const verificationToken = await getVerificationToken({db})({token});
 
-  if (verificationToken.expiresAt < new Date()) {
-    return {type: "error", error: "expired_token"} as const;
-  }
+    if (!verificationToken) {
+      return {type: "error", error: "invalid_token"} as const;
+    }
 
-  let user = await getUserByEmail({email: verificationToken.value});
+    if (verificationToken.expiresAt < new Date()) {
+      return {type: "error", error: "expired_token"} as const;
+    }
 
-  if (!user) {
-    user = await createUser({email: verificationToken.value});
+    let user = await getUserByEmail({db})({email: verificationToken.value});
 
     if (!user) {
-      return {type: "error", error: "failed_to_create_user"} as const;
+      user = await createUser({db})({email: verificationToken.value});
+
+      if (!user) {
+        return {type: "error", error: "failed_to_create_user"} as const;
+      }
     }
-  }
 
-  const session = await createSession({userId: user.id});
+    const session = await createSession({db})({userId: user.id});
 
-  if (!session) {
-    return {type: "error", error: "failed_to_create_session"} as const;
-  }
+    if (!session) {
+      return {type: "error", error: "failed_to_create_session"} as const;
+    }
 
-  try {
-    await createSessionMetadata({
-      sessionId: session.id,
-      ...fingerprintMetadata,
-    });
-  } catch (error) {
-    // We don't care if this fails, we just log it
-    console.error("Failed to create session metadata:", error);
-  }
+    try {
+      await createSessionMetadata({db})({
+        sessionId: session.id,
+        ...fingerprintMetadata,
+      });
+    } catch (error) {
+      // We don't care if this fails, we just log it
+      console.error("Failed to create session metadata:", error);
+    }
 
-  return {type: "success", session} as const;
+    return {type: "success", session} as const;
+  };
 };

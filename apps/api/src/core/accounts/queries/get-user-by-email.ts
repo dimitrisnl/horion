@@ -1,14 +1,22 @@
-import {db} from "@horionos/db";
-import * as schema from "@horionos/db/schema";
+import type {Database} from "@horionos/db";
+import {users} from "@horionos/db/schema";
 
 import {eq} from "drizzle-orm";
 
-export const getUserByEmail = async ({email}: {email: string}) => {
-  const [user = null] = await db
-    .select()
-    .from(schema.users)
-    .where(eq(schema.users.email, email))
-    .limit(1);
+interface GetUserByEmailProps {
+  email: string;
+}
 
-  return user;
+export const getUserByEmail = ({db}: {db: Database}) => {
+  return async (props: GetUserByEmailProps) => {
+    const {email} = props;
+
+    const [user = null] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    return user;
+  };
 };
