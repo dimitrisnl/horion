@@ -19,7 +19,7 @@ export const createUser = ({db}: {db: Database}) => {
       .values({
         id: userId,
         name: "",
-        email,
+        email: email.toLowerCase(),
         emailVerified: true,
         createdAt: now,
         updatedAt: now,

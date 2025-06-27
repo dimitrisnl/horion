@@ -30,18 +30,23 @@ export const createSessionMetadata = ({db}: {db: Database}) => {
     const now = new Date();
     const metadataId = generateId();
 
-    await db.insert(schema.sessionMetadata).values({
-      id: metadataId,
-      sessionId,
-      userAgent,
-      browser,
-      os,
-      device,
-      engine,
-      model,
-      ipAddress: ipAddress || null,
-      createdAt: now,
-      updatedAt: now,
-    });
+    const [metadata = null] = await db
+      .insert(schema.sessionMetadata)
+      .values({
+        id: metadataId,
+        sessionId,
+        userAgent,
+        browser,
+        os,
+        device,
+        engine,
+        model,
+        ipAddress: ipAddress || null,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .returning();
+
+    return metadata;
   };
 };

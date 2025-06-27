@@ -11,6 +11,8 @@ export const getSessions = ({db}: {db: Database}) => {
   return async (props: GetSessionsProps) => {
     const {userId} = props;
 
+    console.log("userId", userId);
+
     const sessions = await db
       .select({
         id: schema.sessions.id,
@@ -21,7 +23,7 @@ export const getSessions = ({db}: {db: Database}) => {
       .from(schema.sessions)
       .where(eq(schema.sessions.userId, userId))
       .orderBy(schema.sessions.createdAt)
-      .innerJoin(
+      .leftJoin(
         schema.sessionMetadata,
         eq(schema.sessions.id, schema.sessionMetadata.sessionId),
       );

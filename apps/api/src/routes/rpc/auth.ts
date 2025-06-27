@@ -33,7 +33,7 @@ export const authRouter = {
   }),
 
   sendMagicLink: publicProcedure
-    .input(z.object({email: z.email()}))
+    .input(z.object({email: z.email().toLowerCase()}))
     .handler(async ({input}) => {
       const {email} = input;
 

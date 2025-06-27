@@ -10,6 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "lucide-react": "^0.523.0"
+    "lucide-react": "^0.525.0"
   }
 }
