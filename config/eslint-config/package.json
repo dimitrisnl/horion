@@ -11,11 +11,11 @@
   "module": "index.ts",
   "devDependencies": {
     "@eslint/css": "^0.9.0",
-    "@eslint/js": "^9.30.0",
+    "@eslint/js": "^9.30.1",
     "@eslint/json": "^0.12.0",
     "@tanstack/eslint-plugin-query": "^5.81.2",
     "@tanstack/eslint-plugin-router": "^1.121.21",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-drizzle": "^0.2.3",
     "eslint-plugin-import": "^2.32.0",
@@ -24,8 +24,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^16.2.0",
-    "typescript-eslint": "^8.35.0"
+    "globals": "^16.3.0",
+    "typescript-eslint": "^8.35.1"
   },
   "peerDependencies": {}
 }

@@ -20,7 +20,7 @@
   "dependencies": {
     "dotenv": "^16.6.1",
     "pg": "^8.16.3",
-    "zod": "^3.25.67"
+    "zod": "^3.25.68"
   },
   "devDependencies": {
     "@horionos/eslint-config": "workspace:*",
