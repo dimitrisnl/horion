@@ -15,13 +15,14 @@ import {
   useSidebar,
 } from "@horionos/ui/sidebar";
 
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
 
-import {orpc, queryClient} from "~/utils/orpc";
+import {orpc} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 
 export function NavUser() {
+  const queryClient = useQueryClient();
   const {isMobile} = useSidebar();
   const navigate = useNavigate();
   const orgId = useOrgId();

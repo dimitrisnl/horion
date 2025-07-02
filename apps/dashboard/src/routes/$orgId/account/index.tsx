@@ -12,13 +12,18 @@ import {Table, TableBody, TableCell, TableRow} from "@horionos/ui/table";
 import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation, useQuery, useSuspenseQuery} from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
 import {PageLayout} from "~/components/app-skeleton/page-layout";
-import {orpc, queryClient} from "~/utils/orpc";
+import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
 export const Route = createFileRoute("/$orgId/account/")({
@@ -74,6 +79,8 @@ const UpdateNameSection = () => {
 };
 
 const UpdateNameForm = ({defaultName}: {defaultName: string}) => {
+  const queryClient = useQueryClient();
+
   const updateNameMutation = useMutation(
     orpc.user.updateName.mutationOptions({
       onSuccess: async () => {

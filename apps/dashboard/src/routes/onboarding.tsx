@@ -12,13 +12,13 @@ import {Label} from "@horionos/ui/label";
 import {toast} from "@horionos/ui/sonner";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {createFileRoute, useNavigate} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
 import {FocusedLayout} from "~/components/app-skeleton/focused-layout";
-import {orpc, queryClient} from "~/utils/orpc";
+import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
 export const Route = createFileRoute("/onboarding")({
@@ -27,6 +27,7 @@ export const Route = createFileRoute("/onboarding")({
 
 function RouteComponent() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const createOrganizationMutation = useMutation(
     orpc.organization.create.mutationOptions({

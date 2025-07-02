@@ -7,13 +7,13 @@ import {toast} from "@horionos/ui/sonner";
 import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
 import {PageLayout} from "~/components/app-skeleton/page-layout";
-import {orpc, queryClient} from "~/utils/orpc";
+import {orpc} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
@@ -71,17 +71,24 @@ export const OrganizationNameForm = ({
   defaultName: string;
   organizationId: string;
 }) => {
+  const queryClient = useQueryClient();
+
   const updateOrganizationNameMutation = useMutation(
     orpc.organization.update.mutationOptions({
       onSuccess: async () => {
-        await Promise.all([
-          queryClient.invalidateQueries(orpc.membership.getAll.queryOptions()),
-          queryClient.invalidateQueries(
-            orpc.organization.get.queryOptions({
-              input: {organizationId},
-            }),
-          ),
-        ]);
+        await queryClient.invalidateQueries(
+          orpc.organization.get.queryOptions({
+            input: {organizationId},
+          }),
+        );
+        // await Promise.all([
+        //  ,
+        //   queryClient.invalidateQueries(
+        //     orpc.organization.get.queryOptions({
+        //       input: {organizationId},
+        //     }),
+        //   ),
+        // ]);
 
         toast.success("Organization name has been updated");
         form.reset();
