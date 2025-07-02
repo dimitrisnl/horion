@@ -18,12 +18,16 @@ import {createFileRoute} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {PageLayout} from "~/components/app-skeleton/page-layout";
-import {minutes} from "~/utils/minutes";
 import {orpc, queryClient} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
 export const Route = createFileRoute("/$orgId/account/")({
   component: RouteComponent,
+  loader({context}) {
+    context.queryClient.prefetchQuery(orpc.session.getAll.queryOptions());
+    context.queryClient.prefetchQuery(orpc.user.getCurrentUser.queryOptions());
+    return;
+  },
 });
 
 function RouteComponent() {
@@ -39,9 +43,7 @@ function RouteComponent() {
 }
 
 const UpdateNameSection = () => {
-  const userQuery = useQuery(
-    orpc.user.getCurrentUser.queryOptions({staleTime: minutes(5)}),
-  );
+  const userQuery = useQuery(orpc.user.getCurrentUser.queryOptions());
 
   const {data: userData} = userQuery;
   const {isPending} = userQuery;

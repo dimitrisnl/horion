@@ -19,7 +19,6 @@ import {
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
 
-import {minutes} from "~/utils/minutes";
 import {orpc} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 
@@ -31,7 +30,6 @@ export function TeamSwitcher() {
   } = useSuspenseQuery(
     orpc.organization.get.queryOptions({
       input: {organizationId: orgId!},
-      staleTime: minutes(5),
     }),
   );
 
@@ -71,11 +69,7 @@ const MembershipsDropdown = () => {
   const navigate = useNavigate();
   const {
     data: {memberships},
-  } = useSuspenseQuery(
-    orpc.membership.getAll.queryOptions({
-      staleTime: minutes(5),
-    }),
-  );
+  } = useSuspenseQuery(orpc.membership.getAll.queryOptions());
 
   return (
     <DropdownMenuContent

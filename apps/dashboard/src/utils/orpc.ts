@@ -19,7 +19,7 @@ export const queryClient = new QueryClient({
       refetchOnWindowFocus: true,
       refetchOnMount: true,
       refetchOnReconnect: true,
-      staleTime: minutes(1),
+      staleTime: minutes(2),
     },
   },
   queryCache: new QueryCache(),

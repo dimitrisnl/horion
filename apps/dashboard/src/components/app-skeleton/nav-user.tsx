@@ -18,7 +18,6 @@ import {
 import {useQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
 
-import {minutes} from "~/utils/minutes";
 import {orpc, queryClient} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 
@@ -27,11 +26,7 @@ export function NavUser() {
   const navigate = useNavigate();
   const orgId = useOrgId();
 
-  const {data, status} = useQuery(
-    orpc.user.getCurrentUser.queryOptions({
-      staleTime: minutes(5),
-    }),
-  );
+  const {data, status} = useQuery(orpc.user.getCurrentUser.queryOptions());
 
   if (status === "pending" || !data || !data.user) {
     return null;

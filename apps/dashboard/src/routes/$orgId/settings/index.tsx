@@ -13,7 +13,6 @@ import {createFileRoute} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {PageLayout} from "~/components/app-skeleton/page-layout";
-import {minutes} from "~/utils/minutes";
 import {orpc, queryClient} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 import {withValidationErrors} from "~/utils/with-validation-errors";
@@ -28,7 +27,6 @@ function RouteComponent() {
   const {data, isPending} = useQuery(
     orpc.organization.get.queryOptions({
       input: {organizationId: orgId},
-      staleTime: minutes(5),
     }),
   );
 
