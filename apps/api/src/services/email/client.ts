@@ -19,5 +19,5 @@ export const sendEmail = async ({
     return resendClient.emails.send({from: FROM_EMAIL, to, subject, react});
   }
 
-  console.log("Email (mock):", {to, subject});
+  console.log("Email (mock):", {to, subject, react});
 };

@@ -12,12 +12,13 @@ import {Label} from "@horionos/ui/label";
 import {toast} from "@horionos/ui/sonner";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import {createFileRoute, useNavigate} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
 import {FocusedLayout} from "~/components/app-skeleton/focused-layout";
+import {useLogout} from "~/utils/log-out";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
@@ -26,8 +27,87 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 function RouteComponent() {
+  const {logOut} = useLogout();
+
+  return (
+    <FocusedLayout>
+      <div className="absolute top-4 right-4 flex items-center justify-center">
+        <Button variant="link" onClick={logOut}>
+          Log out
+        </Button>
+      </div>
+      <div className="flex w-full max-w-lg flex-col gap-6 p-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Let&apos;s create your Organization</CardTitle>
+            <CardDescription>
+              To get started, please enter your organization name. Don&apos;t
+              worry, you can change it later.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CreateOrganizationForm />
+          </CardContent>
+        </Card>
+      </div>
+    </FocusedLayout>
+  );
+}
+
+const CreateOrganizationForm = () => {
+  const {form} = useOrganizationCreateForm();
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      <div className="grid gap-4">
+        <form.Field name="name">
+          {(field) => (
+            <div className="grid gap-3">
+              <Label htmlFor={field.name}>Organization Name</Label>
+              <Input
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(event) => field.handleChange(event.target.value)}
+              />
+              {field.state.meta.errors.map((error) => (
+                <p key={error?.message} className="text-destructive text-sm">
+                  {error?.message}
+                </p>
+              ))}
+            </div>
+          )}
+        </form.Field>
+
+        <form.Subscribe>
+          {(state) => (
+            <Button
+              type="submit"
+              disabled={!state.canSubmit || state.isSubmitting}
+            >
+              {state.isSubmitting ? (
+                <LoaderCircleIcon className="animate-spin" />
+              ) : null}
+              {state.isSubmitting ? "Saving..." : "Create and Continue"}
+            </Button>
+          )}
+        </form.Subscribe>
+      </div>
+    </form>
+  );
+};
+
+const useOrganizationCreateForm = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const createOrganizationMutation = useMutation(
     orpc.organization.create.mutationOptions({
@@ -59,87 +139,5 @@ function RouteComponent() {
     },
   });
 
-  const logout = () => {
-    orpc.auth.signOut.call().then(() => {
-      queryClient.clear();
-      navigate({to: "/login", replace: true});
-    });
-  };
-
-  return (
-    <FocusedLayout>
-      <div className="absolute top-4 right-4 flex items-center justify-center">
-        <Button variant="link" onClick={logout}>
-          Log out
-        </Button>
-      </div>
-      <div className="flex w-full max-w-lg flex-col gap-6 p-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Let&apos;s create your Organization</CardTitle>
-            <CardDescription>
-              To get started, please enter your organization name. Don&apos;t
-              worry, you can change it later.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  form.handleSubmit();
-                }}
-              >
-                <div className="grid gap-4">
-                  <form.Field name="name">
-                    {(field) => (
-                      <div className="grid gap-3">
-                        <Label htmlFor={field.name}>Organization Name</Label>
-                        <Input
-                          // eslint-disable-next-line jsx-a11y/no-autofocus
-                          autoFocus
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(event) =>
-                            field.handleChange(event.target.value)
-                          }
-                        />
-                        {field.state.meta.errors.map((error) => (
-                          <p
-                            key={error?.message}
-                            className="text-destructive text-sm"
-                          >
-                            {error?.message}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </form.Field>
-
-                  <form.Subscribe>
-                    {(state) => (
-                      <Button
-                        type="submit"
-                        disabled={!state.canSubmit || state.isSubmitting}
-                      >
-                        {state.isSubmitting ? (
-                          <LoaderCircleIcon className="animate-spin" />
-                        ) : null}
-                        {state.isSubmitting
-                          ? "Saving..."
-                          : "Create and Continue"}
-                      </Button>
-                    )}
-                  </form.Subscribe>
-                </div>
-              </form>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </FocusedLayout>
-  );
-}
+  return {form};
+};

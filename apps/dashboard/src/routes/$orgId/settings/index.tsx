@@ -1,3 +1,5 @@
+import {Suspense} from "react";
+
 import {LoaderCircleIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
 import {Input} from "@horionos/ui/input";
@@ -7,7 +9,11 @@ import {toast} from "@horionos/ui/sonner";
 import {Heading2, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
@@ -24,12 +30,6 @@ export const Route = createFileRoute("/$orgId/settings/")({
 function RouteComponent() {
   const orgId = useOrgId();
 
-  const {data, isPending} = useQuery(
-    orpc.organization.get.queryOptions({
-      input: {organizationId: orgId},
-    }),
-  );
-
   return (
     <PageLayout title="Settings">
       <div className="mx-auto w-full max-w-5xl px-6 pt-8">
@@ -43,20 +43,19 @@ function RouteComponent() {
             </Text>
           </div>
           <div className="space-y-4">
-            {isPending ? (
-              <div className="grid gap-4">
-                <div className="grid gap-3">
-                  <Skeleton className="h-3.5 w-12" />
-                  <Skeleton className="h-9 w-full" />
+            <Suspense
+              fallback={
+                <div className="grid gap-4">
+                  <div className="grid gap-3">
+                    <Skeleton className="h-3.5 w-12" />
+                    <Skeleton className="h-9 w-full" />
+                  </div>
+                  <Skeleton className="ml-auto h-9 w-32" />
                 </div>
-                <Skeleton className="ml-auto h-9 w-32" />
-              </div>
-            ) : (
-              <OrganizationNameForm
-                defaultName={data?.organization?.name ?? ""}
-                organizationId={orgId}
-              />
-            )}
+              }
+            >
+              <OrganizationNameForm organizationId={orgId} />
+            </Suspense>
           </div>
         </section>
       </div>
@@ -65,60 +64,11 @@ function RouteComponent() {
 }
 
 export const OrganizationNameForm = ({
-  defaultName,
   organizationId,
 }: {
-  defaultName: string;
   organizationId: string;
 }) => {
-  const queryClient = useQueryClient();
-
-  const updateOrganizationNameMutation = useMutation(
-    orpc.organization.update.mutationOptions({
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(
-          orpc.organization.get.queryOptions({
-            input: {organizationId},
-          }),
-        );
-        // await Promise.all([
-        //  ,
-        //   queryClient.invalidateQueries(
-        //     orpc.organization.get.queryOptions({
-        //       input: {organizationId},
-        //     }),
-        //   ),
-        // ]);
-
-        toast.success("Organization name has been updated");
-        form.reset();
-      },
-      onError: (error) => {
-        toast.error(error.message || "Failed to update organization name");
-      },
-    }),
-  );
-
-  const form = useForm({
-    defaultValues: {name: defaultName},
-    validators: {
-      onSubmit: z.object({
-        name: z
-          .string()
-          .trim()
-          .min(2, "Name must be at least 2 characters")
-          .max(100, "Name must be less than 100 characters"),
-      }),
-      onSubmitAsync: ({value: {name}}) => {
-        return withValidationErrors(
-          updateOrganizationNameMutation.mutateAsync({
-            name,
-            organizationId,
-          }),
-        );
-      },
-    },
-  });
+  const {form} = useOrganizationNameForm({organizationId});
 
   return (
     <form
@@ -169,4 +119,66 @@ export const OrganizationNameForm = ({
       </div>
     </form>
   );
+};
+
+const useOrganizationNameForm = ({
+  organizationId,
+}: {
+  organizationId: string;
+}) => {
+  const queryClient = useQueryClient();
+
+  const {
+    data: {organization},
+  } = useSuspenseQuery(
+    orpc.organization.get.queryOptions({
+      input: {organizationId},
+    }),
+  );
+
+  const updateOrganizationNameMutation = useMutation(
+    orpc.organization.update.mutationOptions({
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries(
+            orpc.organization.get.queryOptions({
+              input: {organizationId},
+            }),
+          ),
+          queryClient.invalidateQueries(orpc.membership.getAll.queryOptions()),
+        ]);
+
+        toast.success("Organization name has been updated");
+        form.reset();
+      },
+      onError: (error) => {
+        toast.error(error.message || "Failed to update organization name");
+      },
+    }),
+  );
+
+  const form = useForm({
+    defaultValues: {name: organization.name},
+    validators: {
+      onSubmit: z.object({
+        name: z
+          .string()
+          .trim()
+          .min(2, "Name must be at least 2 characters")
+          .max(100, "Name must be less than 100 characters"),
+      }),
+      onSubmitAsync: ({value: {name}}) => {
+        return withValidationErrors(
+          updateOrganizationNameMutation.mutateAsync({
+            name,
+            organizationId,
+          }),
+        );
+      },
+    },
+  });
+
+  return {
+    form,
+  };
 };

@@ -1,13 +1,25 @@
-import {QueryClientProvider} from "@tanstack/react-query";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {createRouter as createTanStackRouter} from "@tanstack/react-router";
 import {routerWithQueryClient} from "@tanstack/react-router-with-query";
 
 import {DefaultCatchBoundary} from "./components/default-catch-boundary";
 import {LoadingSection} from "./components/loader";
 import {routeTree} from "./routeTree.gen";
-import {orpc, queryClient} from "./utils/orpc";
+import {minutes} from "./utils/minutes";
+import {orpc} from "./utils/orpc";
 
 export function createRouter() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        staleTime: minutes(2),
+      },
+    },
+  });
+
   const router = createTanStackRouter({
     routeTree,
     context: {orpc, queryClient},

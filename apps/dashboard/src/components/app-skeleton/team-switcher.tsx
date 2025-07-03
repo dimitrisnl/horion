@@ -23,14 +23,12 @@ import {orpc} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 
 export function TeamSwitcher() {
-  const orgId = useOrgId();
+  const organizationId = useOrgId();
 
   const {
     data: {organization},
   } = useSuspenseQuery(
-    orpc.organization.get.queryOptions({
-      input: {organizationId: orgId!},
-    }),
+    orpc.organization.get.queryOptions({input: {organizationId}}),
   );
 
   const initial = organization.name[0];

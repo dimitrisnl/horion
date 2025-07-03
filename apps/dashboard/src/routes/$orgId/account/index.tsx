@@ -14,7 +14,6 @@ import {Heading2, Text} from "@horionos/ui/text";
 import {useForm} from "@tanstack/react-form";
 import {
   useMutation,
-  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
@@ -48,11 +47,6 @@ function RouteComponent() {
 }
 
 const UpdateNameSection = () => {
-  const userQuery = useQuery(orpc.user.getCurrentUser.queryOptions());
-
-  const {data: userData} = userQuery;
-  const {isPending} = userQuery;
-
   return (
     <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
       <div className="space-y-2">
@@ -62,56 +56,26 @@ const UpdateNameSection = () => {
         </Text>
       </div>
       <div className="space-y-4">
-        {isPending ? (
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Skeleton className="h-3.5 w-12" />
-              <Skeleton className="h-9 w-full" />
+        <Suspense
+          fallback={
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Skeleton className="h-3.5 w-12" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+              <Skeleton className="ml-auto h-9 w-32" />
             </div>
-            <Skeleton className="ml-auto h-9 w-32" />
-          </div>
-        ) : (
-          <UpdateNameForm defaultName={userData?.user?.name ?? ""} />
-        )}
+          }
+        >
+          <UpdateNameForm />
+        </Suspense>
       </div>
     </section>
   );
 };
 
-const UpdateNameForm = ({defaultName}: {defaultName: string}) => {
-  const queryClient = useQueryClient();
-
-  const updateNameMutation = useMutation(
-    orpc.user.updateName.mutationOptions({
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(
-          orpc.user.getCurrentUser.queryOptions(),
-        );
-        toast.success("Your name has been updated");
-        form.reset();
-      },
-      onError: (error) => {
-        toast.error(error.message || "Failed to update your name");
-      },
-    }),
-  );
-
-  const form = useForm({
-    defaultValues: {name: defaultName},
-
-    validators: {
-      onSubmit: z.object({
-        name: z
-          .string()
-          .trim()
-          .min(1, "Name is required")
-          .max(50, "Name must be less than 50 characters"),
-      }),
-      onSubmitAsync: ({value: {name}}) => {
-        return withValidationErrors(updateNameMutation.mutateAsync({name}));
-      },
-    },
-  });
+const UpdateNameForm = () => {
+  const {form} = useUpdateNameForm();
 
   return (
     <form
@@ -162,12 +126,48 @@ const UpdateNameForm = ({defaultName}: {defaultName: string}) => {
   );
 };
 
+const useUpdateNameForm = () => {
+  const queryClient = useQueryClient();
+  const {
+    data: {user},
+  } = useSuspenseQuery(orpc.user.getCurrentUser.queryOptions());
+
+  const updateNameMutation = useMutation(
+    orpc.user.updateName.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          orpc.user.getCurrentUser.queryOptions(),
+        );
+        toast.success("Your name has been updated");
+        form.reset();
+      },
+      onError: (error) => {
+        toast.error(error.message || "Failed to update your name");
+      },
+    }),
+  );
+
+  const form = useForm({
+    defaultValues: {name: user.name || ""},
+
+    validators: {
+      onSubmit: z.object({
+        name: z
+          .string()
+          .trim()
+          .min(1, "Name is required")
+          .max(50, "Name must be less than 50 characters"),
+      }),
+      onSubmitAsync: ({value: {name}}) => {
+        return withValidationErrors(updateNameMutation.mutateAsync({name}));
+      },
+    },
+  });
+
+  return {form};
+};
+
 const SessionsSection = () => {
-  const sessionQuery = useQuery(orpc.auth.getActiveSession.queryOptions());
-
-  const {data: sessionData} = sessionQuery;
-  const activeSessionId = sessionData?.session?.id || "";
-
   const LoadingRow = () => (
     <TableRow>
       <TableCell className="space-y-1 font-medium">
@@ -197,7 +197,7 @@ const SessionsSection = () => {
                 </>
               }
             >
-              <SessionTableRows activeSessionId={activeSessionId} />
+              <SessionTableRows />
             </Suspense>
           </TableBody>
         </Table>
@@ -206,10 +206,15 @@ const SessionsSection = () => {
   );
 };
 
-const SessionTableRows = ({activeSessionId}: {activeSessionId: string}) => {
+const SessionTableRows = () => {
   const {
     data: {sessions},
   } = useSuspenseQuery(orpc.session.getAll.queryOptions());
+  const {
+    data: {session},
+  } = useSuspenseQuery(orpc.auth.getActiveSession.queryOptions());
+
+  const activeSessionId = session?.id || "";
 
   return sessions.map((session) => (
     <TableRow key={session.id}>

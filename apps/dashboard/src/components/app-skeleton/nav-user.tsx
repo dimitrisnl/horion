@@ -15,34 +15,27 @@ import {
   useSidebar,
 } from "@horionos/ui/sidebar";
 
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {Link, useNavigate} from "@tanstack/react-router";
+import {useQuery} from "@tanstack/react-query";
+import {Link} from "@tanstack/react-router";
 
+import {useLogout} from "~/utils/log-out";
 import {orpc} from "~/utils/orpc";
 import {useOrgId} from "~/utils/use-org-id";
 
 export function NavUser() {
-  const queryClient = useQueryClient();
-  const {isMobile} = useSidebar();
-  const navigate = useNavigate();
   const orgId = useOrgId();
+  const {isMobile} = useSidebar();
+  const {logOut} = useLogout();
 
   const {data, status} = useQuery(orpc.user.getCurrentUser.queryOptions());
 
-  if (status === "pending" || !data || !data.user) {
+  if (status === "pending" || status === "error") {
     return null;
   }
 
   const {user} = data;
   const hasName = user.name && user.name.trim().length > 0;
   const initial = hasName ? user.name[0] : user.email[0];
-
-  const logout = () => {
-    orpc.auth.signOut.call().then(() => {
-      queryClient.clear();
-      navigate({to: "/login", replace: true});
-    });
-  };
 
   return (
     <SidebarMenu>
@@ -84,7 +77,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout}>
+            <DropdownMenuItem onClick={logOut}>
               <LogOutIcon />
               Log out
             </DropdownMenuItem>

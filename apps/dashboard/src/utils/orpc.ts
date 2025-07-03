@@ -1,6 +1,5 @@
 import type {rpcRouter} from "@horionos/api";
 
-import {QueryCache, QueryClient} from "@tanstack/react-query";
 import {createIsomorphicFn} from "@tanstack/react-start";
 import {getWebRequest} from "@tanstack/react-start/server";
 
@@ -9,21 +8,7 @@ import {RPCLink} from "@orpc/client/fetch";
 import type {RouterClient} from "@orpc/server";
 import {createTanstackQueryUtils} from "@orpc/tanstack-query";
 
-import {minutes} from "./minutes";
-
 const API_URL = import.meta.env.VITE_API_URL;
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: true,
-      refetchOnMount: true,
-      refetchOnReconnect: true,
-      staleTime: minutes(2),
-    },
-  },
-  queryCache: new QueryCache(),
-});
 
 const getClientLink = createIsomorphicFn()
   .client(
