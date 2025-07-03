@@ -1,7 +1,7 @@
 import {Suspense} from "react";
 
 import {
-  ChevronDownIcon,
+  ChevronsUpDownIcon,
   CircleSmallIcon,
   PlusCircleIcon,
   SettingsIcon,
@@ -35,14 +35,16 @@ export function TeamDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
+          <Button variant="ghost" size="sm">
             <div
-              className="max-w-[120px] min-w-[70px] truncate text-left"
+              className="max-w-[120px] truncate text-left"
               title={organization.name}
             >
-              {organization.name}
+              <div className="text-xl font-bold tracking-tight">
+                {organization.name}
+              </div>
             </div>
-            <ChevronDownIcon />
+            <ChevronsUpDownIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
       </DropdownMenuTrigger>

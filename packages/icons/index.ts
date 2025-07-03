@@ -52,4 +52,7 @@ export {
   TagsIcon,
   TagIcon,
   PlusSquareIcon,
+  MessageCircleIcon,
+  User2Icon,
+  UserIcon,
 } from "lucide-react";

@@ -26,20 +26,20 @@ export const MagicLinkEmail = ({url}: MagicLinkEmailProps) => (
             Here&apos;s your magic link
           </Heading>
           <Section>
-            <Text className="text-sm text-gray-600">
+            <Text className="text-sm text-slate-600">
               <Button
-                className="mx-auto box-border rounded-[8px] bg-gray-900 px-[12px] py-[12px] text-center font-semibold text-white"
+                className="mx-auto box-border rounded-[8px] bg-slate-900 px-[12px] py-[12px] text-center font-semibold text-white"
                 href={url}
               >
                 Click here to sign in
               </Button>
             </Text>
 
-            <Text className="text-sm text-gray-600">
+            <Text className="text-sm text-slate-600">
               If you didn&apos;t request this, please ignore this email.
             </Text>
           </Section>
-          <Text className="text-sm text-gray-600">
+          <Text className="text-sm text-slate-600">
             Best,
             <br />- Horion Team
           </Text>

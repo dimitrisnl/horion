@@ -1,9 +1,11 @@
 import {
   AudioWaveformIcon,
   MegaphoneIcon,
+  MessageCircleIcon,
   SquareChartGanttIcon,
   TagIcon,
 } from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -50,7 +52,7 @@ const Navigation = () => {
                   to={item.url}
                   className="flex"
                 >
-                  <item.icon className="size-5 md:size-4" />
+                  <item.icon className="stroke-1.5 size-4.5 md:hidden" />
                   <span className="hidden md:inline">{item.title}</span>
                 </Link>
               </NavigationMenuLink>
@@ -64,17 +66,27 @@ const Navigation = () => {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 flex h-14 w-full items-center border-b bg-white">
-      <div className="flex w-full items-center gap-2 px-3">
-        <div className="flex w-full items-center gap-3">
-          <div>
-            <TeamDropdown />
-          </div>
-          <div className="flex items-center gap-2 md:gap-3">
+    <header className="sticky top-0 z-50 border-b">
+      <div className="mx-auto flex h-14 w-full max-w-6xl items-center px-6">
+        <div className="flex w-full items-center gap-2">
+          <div className="flex w-full items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <div className="bg-primary text-primary-foreground flex size-7.5 items-center justify-center rounded-md">
+                <AudioWaveformIcon className="size-4" />
+              </div>
+              <div>
+                <TeamDropdown />
+              </div>
+            </div>
             <Navigation />
           </div>
+
+          <Button variant="tertiary" size="sm">
+            <MessageCircleIcon />
+            <div className="hidden lg:inline">Need help?</div>
+          </Button>
+          <UserDropdown />
         </div>
-        <UserDropdown />
       </div>
     </header>
   );

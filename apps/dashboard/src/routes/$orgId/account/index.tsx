@@ -9,7 +9,7 @@ import {Separator} from "@horionos/ui/separator";
 import {Skeleton} from "@horionos/ui/skeleton";
 import {toast} from "@horionos/ui/sonner";
 import {Table, TableBody, TableCell, TableRow} from "@horionos/ui/table";
-import {Heading2, Text} from "@horionos/ui/text";
+import {Strong, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {
@@ -41,7 +41,7 @@ function RouteComponent() {
       subtitle="Manage your account settings"
     >
       <UpdateNameSection />
-      <Separator className="my-16" />
+      <Separator className="my-8" />
       <SessionsSection />
     </ContentLayout>
   );
@@ -51,7 +51,7 @@ const UpdateNameSection = () => {
   return (
     <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
       <div className="space-y-2">
-        <Heading2>Change your full name</Heading2>
+        <Strong>Change your full name</Strong>
         <Text className="max-w-sm">
           Your full name is used to identify you in the app
         </Text>
@@ -182,7 +182,7 @@ const SessionsSection = () => {
   return (
     <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
       <div className="space-y-2">
-        <Heading2>Your sessions</Heading2>
+        <Strong>Your sessions</Strong>
         <Text className="max-w-sm">
           Here&apos;s everywhere you&apos;ve logged in from
         </Text>
@@ -219,8 +219,8 @@ const SessionTableRows = () => {
 
   return sessions.map((session) => (
     <TableRow key={session.id}>
-      <TableCell className="font-medium">
-        <div>
+      <TableCell className="space-y-0.5">
+        <div className="font-medium">
           {session.browser} {" on "}
           {session.os}
         </div>
@@ -233,7 +233,10 @@ const SessionTableRows = () => {
       </TableCell>
       <TableCell className="text-right">
         {session.id === activeSessionId ? (
-          <Badge variant="secondary">This browser</Badge>
+          <Badge variant="outline">
+            <div className="mr-1 inline-block size-2 rounded-full bg-emerald-500" />
+            Active now
+          </Badge>
         ) : (
           <> </>
         )}

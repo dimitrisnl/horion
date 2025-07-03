@@ -20,11 +20,11 @@ function RouteComponent() {
         </Text>
         <div className="flex flex-1 flex-col gap-4">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="bg-muted aspect-video rounded-xl" />
-            <div className="bg-muted aspect-video rounded-xl" />
-            <div className="bg-muted aspect-video rounded-xl" />
-            <div className="bg-muted col-span-2 rounded-xl" />
-            <div className="bg-muted aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 rounded-xl md:col-span-2" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
           </div>
         </div>
       </div>

@@ -14,15 +14,15 @@ export const ContentLayout = ({
   return (
     <>
       <div className="flex flex-1 flex-col">
-        <div className="mx-auto w-full max-w-5xl px-6">
-          <div className="mx-auto mt-12 mb-16 flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 border-b pb-8">
-            <div className="space-y-1">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <div className="mt-12 mb-12 flex w-full flex-wrap items-center justify-between gap-2 border-b pb-4">
+            <div className="space-y-0.5">
               <Heading1>{title}</Heading1>
               {subtitle && <Text>{subtitle}</Text>}
             </div>
             {actions && <div>{actions}</div>}
           </div>
-          <div className="">{children}</div>
+          <div>{children}</div>
         </div>
       </div>
     </>

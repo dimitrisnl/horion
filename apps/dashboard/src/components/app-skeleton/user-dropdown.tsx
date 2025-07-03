@@ -1,4 +1,4 @@
-import {LogOutIcon, UserCog2Icon} from "@horionos/icons";
+import {LogOutIcon, SettingsIcon, UserIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
 import {
   DropdownMenu,
@@ -9,32 +9,20 @@ import {
   DropdownMenuTrigger,
 } from "@horionos/ui/dropdown-menu";
 
-import {useQuery} from "@tanstack/react-query";
 import {Link} from "@tanstack/react-router";
 
 import {useLogout} from "~/hooks/use-log-out";
 import {useOrgId} from "~/hooks/use-org-id";
-import {orpc} from "~/utils/orpc";
 
 export function UserDropdown() {
   const orgId = useOrgId();
   const {logOut} = useLogout();
 
-  const {data, status} = useQuery(orpc.user.getCurrentUser.queryOptions());
-
-  if (status === "pending" || status === "error") {
-    return <div className="size-9.5" />;
-  }
-
-  const {user} = data;
-  const hasName = user.name && user.name.trim().length > 0;
-  const initial = hasName ? user.name[0] : user.email[0];
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="size-8 select-none" size="icon">
-          {initial}
+        <Button variant="outline" className="select-none" size="sm">
+          <UserIcon /> <div className="hidden lg:inline">My Account</div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -49,8 +37,8 @@ export function UserDropdown() {
               params={{orgId: orgId!}}
               preload="intent"
             >
-              <UserCog2Icon className="size-4" />
-              Account
+              <SettingsIcon className="size-4" />
+              Account Settings
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

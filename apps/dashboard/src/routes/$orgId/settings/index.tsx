@@ -6,7 +6,7 @@ import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
 import {Skeleton} from "@horionos/ui/skeleton";
 import {toast} from "@horionos/ui/sonner";
-import {Heading2, Text} from "@horionos/ui/text";
+import {Strong, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {
@@ -37,11 +37,9 @@ function RouteComponent() {
     >
       <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
         <div className="space-y-2">
-          <Heading2>Update your organization&apos;s name</Heading2>
+          <Strong>Update your organization&apos;s name</Strong>
           <Text className="max-w-sm">
-            This name will be displayed to all members of your organization . It
-            can be changed at any time, but it is recommended to keep it
-            consistent to avoid confusion.
+            This name will be displayed to all members of your organization.
           </Text>
         </div>
         <div className="space-y-4">
