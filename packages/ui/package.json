@@ -41,9 +41,9 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "radix-ui": "^1.4.2",
-    "sonner": "^2.0.5",
+    "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.3.4"
+    "tw-animate-css": "^1.3.5"
   },
   "devDependencies": {
     "@horionos/eslint-config": "workspace:*",

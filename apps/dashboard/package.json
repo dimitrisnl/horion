@@ -22,9 +22,9 @@
     "@horionos/eslint-config": "workspace:*",
     "@horionos/icons": "workspace:*",
     "@horionos/ui": "workspace:*",
-    "@orpc/client": "^1.6.3",
-    "@orpc/server": "^1.6.3",
-    "@orpc/tanstack-query": "^1.6.3",
+    "@orpc/client": "^1.6.4",
+    "@orpc/server": "^1.6.4",
+    "@orpc/tanstack-query": "^1.6.4",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/query-core": "^5.81.5",
     "@tanstack/react-form": "^1.12.4",
@@ -36,7 +36,7 @@
     "@tanstack/react-start": "^1.124.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "zod": "^3.25.68"
+    "zod": "^3.25.71"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
