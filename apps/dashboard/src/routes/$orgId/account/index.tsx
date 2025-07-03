@@ -21,7 +21,7 @@ import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
-import {PageLayout} from "~/components/app-skeleton/page-layout";
+import {ContentLayout} from "~/components/app-skeleton/content-layout";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
@@ -36,13 +36,14 @@ export const Route = createFileRoute("/$orgId/account/")({
 
 function RouteComponent() {
   return (
-    <PageLayout title="User">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-8">
-        <UpdateNameSection />
-        <Separator className="my-16" />
-        <SessionsSection />
-      </div>
-    </PageLayout>
+    <ContentLayout
+      title="Account Settings"
+      subtitle="Manage your account settings"
+    >
+      <UpdateNameSection />
+      <Separator className="my-16" />
+      <SessionsSection />
+    </ContentLayout>
   );
 }
 

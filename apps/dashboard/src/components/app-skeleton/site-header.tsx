@@ -1,37 +1,73 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-} from "@horionos/ui/breadcrumb";
-import {Separator} from "@horionos/ui/separator";
-import {SidebarTrigger} from "@horionos/ui/sidebar";
+import {MegaphoneIcon, SquareChartGanttIcon, TagsIcon} from "@horionos/icons";
+import {buttonVariants} from "@horionos/ui/button";
 
-export function SiteHeader({
-  title,
-  actions,
-}: {
-  title: string;
-  actions?: React.ReactNode;
-}) {
+import {Link} from "@tanstack/react-router";
+
+import {SearchForm} from "./search-form";
+import {TeamDropdown} from "./team-dropdown";
+import {UserDropdown} from "./user-dropdown";
+
+const nav = [
+  {
+    title: "Dashboard",
+    url: "/$orgId",
+    icon: SquareChartGanttIcon,
+    activeOptions: {exact: true},
+  },
+  {
+    title: "Announcements",
+    url: "/$orgId/announcements",
+    icon: MegaphoneIcon,
+    activeOptions: {exact: false},
+  },
+  {
+    title: "Categories",
+    url: "/$orgId/categories",
+    icon: TagsIcon,
+    activeOptions: {exact: false},
+  },
+];
+
+const Logo = () => (
+  <div className="bg-primary text-background flex size-7 items-center justify-center rounded-full font-bold tracking-tight">
+    h
+  </div>
+);
+
+const Navigation = () => {
+  return nav.map((item) => {
+    return (
+      <div key={item.title + item.url}>
+        <Link
+          inactiveProps={{className: "text-muted-foreground/75 font-semibold!"}}
+          activeProps={{className: "font-semibold!"}}
+          activeOptions={item.activeOptions}
+          className={buttonVariants({variant: "ghost", size: "sm"})}
+          to={item.url}
+        >
+          <item.icon className="h-4 w-4" />
+          {item.title}
+        </Link>
+      </div>
+    );
+  });
+};
+
+export function SiteHeader() {
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-      <div className="flex w-full items-center justify-between gap-2 px-4">
-        <div className="flex w-full items-center gap-2">
-          <SidebarTrigger className="-ml-1" />
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
-          <Breadcrumb className="hidden sm:block">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink>{title}</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+    <header className="bg-accent sticky top-0 z-50 flex h-14 w-full items-center border-b">
+      <div className="flex w-full items-center gap-2 px-3">
+        <div className="flex w-full items-center gap-3">
+          <Logo />
+          <div>
+            <TeamDropdown />
+          </div>
+          <div className="flex items-center gap-3">
+            <Navigation />
+          </div>
         </div>
-        <div>{actions}</div>
+        <SearchForm className="ml-auto w-64" />
+        <UserDropdown />
       </div>
     </header>
   );

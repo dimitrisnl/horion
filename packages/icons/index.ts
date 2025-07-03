@@ -46,4 +46,10 @@ export {
   XIcon,
   BriefcaseBusinessIcon,
   MailCheckIcon,
+  MinusIcon,
+  CircleSmallIcon,
+  SquareChartGanttIcon,
+  TagsIcon,
+  TagIcon,
+  PlusSquareIcon,
 } from "lucide-react";

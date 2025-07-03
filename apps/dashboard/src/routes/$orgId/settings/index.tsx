@@ -18,7 +18,7 @@ import {createFileRoute} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
-import {PageLayout} from "~/components/app-skeleton/page-layout";
+import {ContentLayout} from "~/components/app-skeleton/content-layout";
 import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
@@ -31,35 +31,36 @@ function RouteComponent() {
   const orgId = useOrgId();
 
   return (
-    <PageLayout title="Settings">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-8">
-        <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Heading2>Change your organization name</Heading2>
-            <Text className="max-w-sm">
-              This name will be displayed to all members of your organization .
-              It can be changed at any time, but it is recommended to keep it
-              consistent to avoid confusion.
-            </Text>
-          </div>
-          <div className="space-y-4">
-            <Suspense
-              fallback={
-                <div className="grid gap-4">
-                  <div className="grid gap-3">
-                    <Skeleton className="h-3.5 w-12" />
-                    <Skeleton className="h-9 w-full" />
-                  </div>
-                  <Skeleton className="ml-auto h-9 w-32" />
+    <ContentLayout
+      title="Organization Settings"
+      subtitle="Manage your organization settings"
+    >
+      <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Heading2>Update your organization&apos;s name</Heading2>
+          <Text className="max-w-sm">
+            This name will be displayed to all members of your organization . It
+            can be changed at any time, but it is recommended to keep it
+            consistent to avoid confusion.
+          </Text>
+        </div>
+        <div className="space-y-4">
+          <Suspense
+            fallback={
+              <div className="grid gap-4">
+                <div className="grid gap-3">
+                  <Skeleton className="h-3.5 w-12" />
+                  <Skeleton className="h-9 w-full" />
                 </div>
-              }
-            >
-              <OrganizationNameForm organizationId={orgId} />
-            </Suspense>
-          </div>
-        </section>
-      </div>
-    </PageLayout>
+                <Skeleton className="ml-auto h-9 w-32" />
+              </div>
+            }
+          >
+            <OrganizationNameForm organizationId={orgId} />
+          </Suspense>
+        </div>
+      </section>
+    </ContentLayout>
   );
 }
 

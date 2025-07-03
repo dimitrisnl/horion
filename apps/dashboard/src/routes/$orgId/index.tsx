@@ -1,8 +1,8 @@
-import {Heading2, Text} from "@horionos/ui/text";
+import {Text} from "@horionos/ui/text";
 
 import {createFileRoute} from "@tanstack/react-router";
 
-import {PageLayout} from "~/components/app-skeleton/page-layout";
+import {ContentLayout} from "~/components/app-skeleton/content-layout";
 
 export const Route = createFileRoute("/$orgId/")({
   component: RouteComponent,
@@ -10,16 +10,24 @@ export const Route = createFileRoute("/$orgId/")({
 
 function RouteComponent() {
   return (
-    <PageLayout title="Dashboard">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-8">
-        <div className="space-y-2">
-          <Heading2>Dashboard</Heading2>
-          <Text className="max-w-sm">
-            This is the dashboard for your organization . Here you can manage
-            tasks, view announcements, and access settings.
-          </Text>
+    <ContentLayout
+      title="Dashboard"
+      subtitle="Welcome to your organization's dashboard"
+    >
+      <div className="space-y-4">
+        <Text className="max-w-lg">
+          This is the main dashboard for your organization.
+        </Text>
+        <div className="flex flex-1 flex-col gap-4">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+            <div className="bg-muted/50 col-span-2 rounded-xl" />
+            <div className="bg-muted/50 aspect-video rounded-xl" />
+          </div>
         </div>
       </div>
-    </PageLayout>
+    </ContentLayout>
   );
 }

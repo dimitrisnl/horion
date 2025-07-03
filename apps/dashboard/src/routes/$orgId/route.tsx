@@ -1,16 +1,11 @@
-import {SidebarInset, SidebarProvider} from "@horionos/ui/sidebar";
-
 import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 
-import {AppSidebar} from "~/components/app-skeleton/app-sidebar";
+import {SiteHeader} from "~/components/app-skeleton/site-header";
+import {NotFound} from "~/components/not-found";
 
 export const Route = createFileRoute("/$orgId")({
   component: RouteComponent,
-  notFoundComponent: () => (
-    <div className="flex min-h-svh items-center justify-center p-6 text-sm">
-      Page not found
-    </div>
-  ),
+  notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context, params}) => {
     const {orgId} = params;
 
@@ -28,11 +23,9 @@ export const Route = createFileRoute("/$orgId")({
 
 function RouteComponent() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <Outlet />
-      </SidebarInset>
-    </SidebarProvider>
+    <>
+      <SiteHeader />
+      <Outlet />
+    </>
   );
 }

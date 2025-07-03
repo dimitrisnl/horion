@@ -7,6 +7,7 @@ import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
 import {Separator} from "@horionos/ui/separator";
 import {toast} from "@horionos/ui/sonner";
+import {Heading1, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation} from "@tanstack/react-query";
@@ -101,13 +102,17 @@ function RouteComponent() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       {error ? <ErrorAlert error={error} /> : null}
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Welcome</h1>
-        <p className="text-muted-foreground text-sm text-balance">
-          New here or coming back? Just enter your email to get started.
-        </p>
+      <div className="space-y-2">
+        <Heading1>Welcome</Heading1>
+        <div>
+          <Text>We&apos;ll send you an email with a magic link to log in.</Text>
+          <Text>
+            If you don&apos;t have an account, don&apos;t worry! We will create
+            one for you.
+          </Text>
+        </div>
       </div>
       <form
         onSubmit={(event) => {
@@ -145,6 +150,7 @@ function RouteComponent() {
           <form.Subscribe>
             {(state) => (
               <Button
+                size="lg"
                 type="submit"
                 className="w-full"
                 disabled={!state.canSubmit || state.isSubmitting}
@@ -164,17 +170,16 @@ function RouteComponent() {
 
 const MagicLinkSentMessage = () => (
   <div>
-    <div className="flex flex-col items-center gap-4">
-      <div className="rounded-full bg-green-500/15 p-3">
-        <MailCheckIcon className="size-7 stroke-green-600" />
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <MailCheckIcon className="size-6 stroke-green-600" />
+        <Heading1>Email Sent</Heading1>
       </div>
-
-      <h1 className="text-2xl font-bold">Email Sent</h1>
-      <div className="text-muted-foreground text-center text-sm leading-relaxed">
+      <Text>
         Please check your email for a magic link to sign in.
         <br />
         If you don&apos;t see the email, please check your spam folder.
-      </div>
+      </Text>
     </div>
   </div>
 );

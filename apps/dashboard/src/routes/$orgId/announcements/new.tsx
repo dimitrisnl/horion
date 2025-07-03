@@ -1,8 +1,6 @@
-import {Heading2, Text} from "@horionos/ui/text";
-
 import {createFileRoute} from "@tanstack/react-router";
 
-import {PageLayout} from "~/components/app-skeleton/page-layout";
+import {ContentLayout} from "~/components/app-skeleton/content-layout";
 
 export const Route = createFileRoute("/$orgId/announcements/new")({
   component: RouteComponent,
@@ -10,14 +8,11 @@ export const Route = createFileRoute("/$orgId/announcements/new")({
 
 function RouteComponent() {
   return (
-    <PageLayout title="New Announcement">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-8">
-        <Heading2 className="mb-4">New Announcement</Heading2>
-        <Text className="max-w-lg">
-          This page is under construction. Please check back later for the
-          ability to create new announcements.
-        </Text>
-      </div>
-    </PageLayout>
+    <ContentLayout
+      title="New Announcement"
+      subtitle="Create a new announcement for your organization"
+    >
+      {" "}
+    </ContentLayout>
   );
 }

@@ -10,6 +10,7 @@ import {
 import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
 import {toast} from "@horionos/ui/sonner";
+import {Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
 import {useMutation} from "@tanstack/react-query";
@@ -41,8 +42,8 @@ function RouteComponent() {
           <CardHeader>
             <CardTitle>Let&apos;s create your Organization</CardTitle>
             <CardDescription>
-              To get started, please enter your organization name. Don&apos;t
-              worry, you can change it later.
+              <Text>To get started, please enter your organization name.</Text>
+              <Text>Don&apos;t worry, you can change it later.</Text>
             </CardDescription>
           </CardHeader>
           <CardContent>
