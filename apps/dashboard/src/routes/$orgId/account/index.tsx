@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$orgId/account/")({
   loader({context}) {
     context.queryClient.prefetchQuery(orpc.session.getAll.queryOptions());
     context.queryClient.prefetchQuery(orpc.user.getCurrentUser.queryOptions());
-    return;
+    return {};
   },
 });
 

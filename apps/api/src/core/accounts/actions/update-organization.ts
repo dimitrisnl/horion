@@ -22,6 +22,11 @@ export const updateOrganization = ({db}: {db: Database}) => {
       throw new ORPCError("Organization not found");
     }
 
+    // TODO: Authorize this query in a more robust way
+    if (membership.role !== "admin" && membership.role !== "owner") {
+      throw new ORPCError("Only admins and owners can update organizations.");
+    }
+
     const [org = null] = await db
       .update(schema.organizations)
       .set({name})

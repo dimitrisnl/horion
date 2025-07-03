@@ -29,6 +29,20 @@
       "when": 1751057275626,
       "tag": "0003_oval_spiral",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1751620402529,
+      "tag": "0004_skinny_nekra",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1751620900174,
+      "tag": "0005_shocking_lady_mastermind",
+      "breakpoints": true
     }
   ]
 }

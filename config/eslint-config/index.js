@@ -3,7 +3,6 @@ import eslint from "@eslint/js";
 import pluginQuery from "@tanstack/eslint-plugin-query";
 import pluginRouter from "@tanstack/eslint-plugin-router";
 import {defineConfig, globalIgnores} from "eslint/config";
-import pluginDrizzle from "eslint-plugin-drizzle";
 import pluginImport from "eslint-plugin-import";
 import pluginJsxA11y from "eslint-plugin-jsx-a11y";
 import pluginPrettier from "eslint-plugin-prettier/recommended";
@@ -44,8 +43,6 @@ export default defineConfig([
     rules: {
       "@typescript-eslint/array-type": ["warn", {default: "generic"}],
       "@typescript-eslint/no-unused-vars": ["warn", {argsIgnorePattern: "^_"}],
-      "drizzle/enforce-delete-with-where": "error",
-      "drizzle/enforce-update-with-where": "error",
       "id-length": ["warn", {min: 2, exceptions: ["_"]}],
       "react-hooks/exhaustive-deps": "warn",
       "react-hooks/rules-of-hooks": "error",

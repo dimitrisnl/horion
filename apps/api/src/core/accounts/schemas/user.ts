@@ -1,5 +1,9 @@
 import {z} from "zod/v4";
 
+export const userIdSchema = z.string().length(12, {
+  error: "Invalid user ID",
+});
+
 export const userNameSchema = z
   .string()
   .min(1, "Name must be at least 1 characters")

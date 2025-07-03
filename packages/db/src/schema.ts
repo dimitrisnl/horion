@@ -1,4 +1,21 @@
-import {boolean, index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
+
+export const membershipRoleEnum = pgEnum("membership_role", [
+  "admin",
+  "member",
+  "owner",
+]);
+export const invitationRoleEnum = pgEnum("invitation_role", [
+  "admin",
+  "member",
+]);
 
 export const users = pgTable(
   "users",
@@ -111,7 +128,7 @@ export const memberships = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
-    role: text("role").default("member").notNull(),
+    role: membershipRoleEnum("role").notNull().default("member"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
@@ -130,12 +147,12 @@ export const invitations = pgTable(
       .notNull()
       .references(() => organizations.id, {onDelete: "cascade"}),
     email: text("email").notNull(),
-    role: text("role"),
+    role: invitationRoleEnum("role").notNull().default("member"),
     status: text("status").default("pending").notNull(),
     expiresAt: timestamp("expires_at").notNull(),
-    inviterId: text("inviter_id")
-      .notNull()
-      .references(() => users.id, {onDelete: "cascade"}),
+    inviterId: text("inviter_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
