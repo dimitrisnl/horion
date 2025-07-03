@@ -33,6 +33,7 @@ export const verifyMagicLink = ({db}: {db: Database}) => {
 
     if (!user) {
       user = await createUser({db})({email: verificationToken.value});
+      console.log(user);
 
       if (!user) {
         return {type: "error", error: "failed_to_create_user"} as const;

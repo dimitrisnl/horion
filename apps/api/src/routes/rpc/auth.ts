@@ -5,6 +5,7 @@ import {protectedProcedure, publicProcedure} from "~/app/orpc-procedures";
 import {envVars} from "~/config";
 import {createVerificationToken} from "~/core/accounts/actions/create-verification-token";
 import {deleteSession} from "~/core/accounts/actions/delete-session";
+import {emailSchema} from "~/core/accounts/schemas/email";
 import {sendMagicLinkEmail} from "~/services/email";
 
 const getMagicLinkUrl = (token: string) => {
@@ -31,7 +32,7 @@ export const authRouter = {
   }),
 
   sendMagicLink: publicProcedure
-    .input(z.object({email: z.email().toLowerCase()}))
+    .input(z.object({email: emailSchema}))
     .handler(async ({input, context}) => {
       const {email} = input;
       const {db} = context;
