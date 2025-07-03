@@ -24,14 +24,6 @@
   --input: var(--color-gray-200);
   --ring: var(--color-gray-700);
   --radius: 0.65rem;
-  --sidebar: var(--color-gray-50);
-  --sidebar-foreground: var(--color-gray-900);
-  --sidebar-primary: var(--color-gray-900);
-  --sidebar-primary-foreground: var(--color-gray-200);
-  --sidebar-accent: var(--color-gray-200);
-  --sidebar-accent-foreground: var(--color-gray-900);
-  --sidebar-border: var(--color-gray-200);
-  --sidebar-ring: var(--color-gray-700);
 }
 
 .dark {
@@ -54,14 +46,6 @@
   --border: var(--color-gray-800);
   --input: var(--color-gray-800);
   --ring: var(--color-gray-700);
-  --sidebar: var(--color-gray-900);
-  --sidebar-foreground: var(--color-gray-200);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: var(--color-gray-200);
-  --sidebar-accent: var(--color-gray-800);
-  --sidebar-accent-foreground: var(--color-gray-200);
-  --sidebar-border: var(--color-gray-800);
-  --sidebar-ring: var(--color-gray-700);
 }
 
 @theme inline {
@@ -88,14 +72,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {

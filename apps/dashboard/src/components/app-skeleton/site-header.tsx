@@ -2,9 +2,14 @@ import {
   AudioWaveformIcon,
   MegaphoneIcon,
   SquareChartGanttIcon,
-  TagsIcon,
+  TagIcon,
 } from "@horionos/icons";
-import {buttonVariants} from "@horionos/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@horionos/ui/navigation-menu";
 
 import {Link} from "@tanstack/react-router";
 
@@ -27,33 +32,39 @@ const nav = [
   {
     title: "Categories",
     url: "/$orgId/categories",
-    icon: TagsIcon,
+    icon: TagIcon,
     activeOptions: {exact: false},
   },
 ];
 
 const Navigation = () => {
-  return nav.map((item) => {
-    return (
-      <div key={item.title + item.url}>
-        <Link
-          inactiveProps={{className: "text-muted-foreground/75 font-semibold!"}}
-          activeProps={{className: "font-semibold!"}}
-          activeOptions={item.activeOptions}
-          className={buttonVariants({variant: "ghost", size: "sm"})}
-          to={item.url}
-        >
-          <item.icon className="size-5 md:size-4" />
-          <span className="hidden md:inline">{item.title}</span>
-        </Link>
-      </div>
-    );
-  });
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        {nav.map((item) => {
+          return (
+            <NavigationMenuItem key={item.title + item.url}>
+              <NavigationMenuLink asChild>
+                <Link
+                  activeOptions={item.activeOptions}
+                  to={item.url}
+                  className="flex"
+                >
+                  <item.icon className="size-5 md:size-4" />
+                  <span className="hidden md:inline">{item.title}</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          );
+        })}
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
 };
 
 export function SiteHeader() {
   return (
-    <header className="bg-muted sticky top-0 z-50 flex h-14 w-full items-center border-b">
+    <header className="sticky top-0 z-50 flex h-14 w-full items-center border-b bg-white">
       <div className="flex w-full items-center gap-2 px-3">
         <div className="flex w-full items-center gap-3">
           <div className="bg-primary text-primary-foreground flex size-7.5 items-center justify-center rounded-md">

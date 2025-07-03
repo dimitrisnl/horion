@@ -35,7 +35,9 @@ function RouteComponent() {
       // actions={<Actions />}
     >
       <div className="flex w-full flex-col items-center gap-3 rounded border border-dashed p-6 md:p-12">
-        <MegaphoneIcon className="mx-auto h-12 w-12 stroke-1" />
+        <div className="bg-accent text-accent-foreground rounded-full p-3">
+          <MegaphoneIcon className="mx-auto size-8 stroke-1" />
+        </div>
         <Text className="mt-2 text-center text-balance">
           You don&apos;t have any announcements yet.{" "}
           <div>Let&apos;s start by creating one!</div>
