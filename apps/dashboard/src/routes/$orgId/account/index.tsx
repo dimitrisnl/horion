@@ -28,9 +28,11 @@ import {withValidationErrors} from "~/utils/with-validation-errors";
 export const Route = createFileRoute("/$orgId/account/")({
   component: RouteComponent,
   loader({context}) {
-    context.queryClient.prefetchQuery(orpc.session.getAll.queryOptions());
-    context.queryClient.prefetchQuery(orpc.user.getCurrentUser.queryOptions());
-    return;
+    context.queryClient.prefetchQuery(orpc.account.getSessions.queryOptions());
+    context.queryClient.prefetchQuery(
+      orpc.account.getCurrentUser.queryOptions(),
+    );
+    return {};
   },
 });
 
@@ -131,13 +133,13 @@ const useUpdateNameForm = () => {
   const queryClient = useQueryClient();
   const {
     data: {user},
-  } = useSuspenseQuery(orpc.user.getCurrentUser.queryOptions());
+  } = useSuspenseQuery(orpc.account.getCurrentUser.queryOptions());
 
   const updateNameMutation = useMutation(
-    orpc.user.updateName.mutationOptions({
+    orpc.account.updateName.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          orpc.user.getCurrentUser.queryOptions(),
+          orpc.account.getCurrentUser.queryOptions(),
         );
         toast.success("Your name has been updated");
         form.reset();
@@ -210,10 +212,10 @@ const SessionsSection = () => {
 const SessionTableRows = () => {
   const {
     data: {sessions},
-  } = useSuspenseQuery(orpc.session.getAll.queryOptions());
+  } = useSuspenseQuery(orpc.account.getSessions.queryOptions());
   const {
     data: {session},
-  } = useSuspenseQuery(orpc.auth.getActiveSession.queryOptions());
+  } = useSuspenseQuery(orpc.account.getSession.queryOptions());
 
   const activeSessionId = session?.id || "";
 

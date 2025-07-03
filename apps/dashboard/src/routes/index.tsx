@@ -1,5 +1,7 @@
 import {createFileRoute, redirect} from "@tanstack/react-router";
 
+import {minutesToMs} from "~/utils/minutes-to-ms";
+
 export const Route = createFileRoute("/")({
   beforeLoad: async ({context}) => {
     if (!context.userId) {
@@ -7,8 +9,8 @@ export const Route = createFileRoute("/")({
     }
 
     const {memberships} = await context.queryClient.fetchQuery(
-      context.orpc.membership.getAll.queryOptions({
-        staleTime: 0, // TODO: Set a reasonable stale time
+      context.orpc.account.getMemberships.queryOptions({
+        staleTime: minutesToMs(5), // Cache memberships for 5 minutes
       }),
     );
 

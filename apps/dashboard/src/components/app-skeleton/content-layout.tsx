@@ -13,7 +13,7 @@ export const ContentLayout = ({
 }) => {
   return (
     <>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col pb-12">
         <div className="mx-auto w-full max-w-6xl px-6">
           <div className="mt-12 mb-12 flex w-full flex-wrap items-center justify-between gap-2 border-b pb-4">
             <div className="space-y-0.5">

@@ -27,7 +27,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context}) => {
     const {session} = await context.queryClient.fetchQuery(
-      context.orpc.auth.getActiveSession.queryOptions(),
+      context.orpc.account.getSession.queryOptions(),
     );
     const userId = session?.userId || null;
 

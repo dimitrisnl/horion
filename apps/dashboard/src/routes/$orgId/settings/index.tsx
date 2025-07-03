@@ -28,8 +28,6 @@ export const Route = createFileRoute("/$orgId/settings/")({
 });
 
 function RouteComponent() {
-  const orgId = useOrgId();
-
   return (
     <ContentLayout
       title="Organization Settings"
@@ -54,7 +52,7 @@ function RouteComponent() {
               </div>
             }
           >
-            <OrganizationNameForm organizationId={orgId} />
+            <OrganizationNameForm />
           </Suspense>
         </div>
       </section>
@@ -62,11 +60,8 @@ function RouteComponent() {
   );
 }
 
-export const OrganizationNameForm = ({
-  organizationId,
-}: {
-  organizationId: string;
-}) => {
+export const OrganizationNameForm = () => {
+  const organizationId = useOrgId();
   const {form} = useOrganizationNameForm({organizationId});
 
   return (
@@ -131,7 +126,7 @@ const useOrganizationNameForm = ({
     data: {organization},
   } = useSuspenseQuery(
     orpc.organization.get.queryOptions({
-      input: {organizationId},
+      input: {id: organizationId},
     }),
   );
 
@@ -141,10 +136,12 @@ const useOrganizationNameForm = ({
         await Promise.all([
           queryClient.invalidateQueries(
             orpc.organization.get.queryOptions({
-              input: {organizationId},
+              input: {id: organizationId},
             }),
           ),
-          queryClient.invalidateQueries(orpc.membership.getAll.queryOptions()),
+          queryClient.invalidateQueries(
+            orpc.account.getMemberships.queryOptions(),
+          ),
         ]);
 
         toast.success("Organization name has been updated");
@@ -170,7 +167,7 @@ const useOrganizationNameForm = ({
         return withValidationErrors(
           updateOrganizationNameMutation.mutateAsync({
             name,
-            organizationId,
+            id: organizationId,
           }),
         );
       },

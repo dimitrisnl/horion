@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$orgId")({
     return context.queryClient
       .ensureQueryData(
         context.orpc.organization.get.queryOptions({
-          input: {organizationId: orgId},
+          input: {id: orgId},
         }),
       )
       .catch(() => {

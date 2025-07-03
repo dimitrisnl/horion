@@ -28,16 +28,6 @@ const errorToMessage = {
     title: "The magic link has expired",
     description: "Please request a new one to log in",
   },
-  failed_to_create_user: {
-    title: "An error occurred while creating your account",
-    description:
-      "Please try again later or contact support if the issue persists",
-  },
-  failed_to_create_session: {
-    title: "An error occurred while logging you in",
-    description:
-      "Please try again later or contact support if the issue persists",
-  },
   default: {
     title: "An unexpected error occurred",
     description:

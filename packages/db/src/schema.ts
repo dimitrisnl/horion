@@ -1,4 +1,22 @@
-import {boolean, index, pgTable, text, timestamp} from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  unique,
+} from "drizzle-orm/pg-core";
+
+export const membershipRoleEnum = pgEnum("membership_role", [
+  "admin",
+  "member",
+  "owner",
+]);
+export const invitationRoleEnum = pgEnum("invitation_role", [
+  "admin",
+  "member",
+]);
 
 export const users = pgTable(
   "users",
@@ -73,7 +91,13 @@ export const accounts = pgTable(
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => [index("accounts_user_id_idx").on(table.userId)],
+  (table) => [
+    index("accounts_user_id_idx").on(table.userId),
+    unique("accounts_account_provider_unique").on(
+      table.accountId,
+      table.providerId,
+    ),
+  ],
 );
 
 export const verifications = pgTable(
@@ -111,37 +135,46 @@ export const memberships = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, {onDelete: "cascade"}),
-    role: text("role").default("member").notNull(),
+    role: membershipRoleEnum("role").notNull().default("member"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
     index("memberships_organization_id_idx").on(table.organizationId),
     index("memberships_user_id_idx").on(table.userId),
-    index("memberships_user_org_idx").on(table.userId, table.organizationId),
+    unique("memberships_user_org_idx_unique").on(
+      table.userId,
+      table.organizationId,
+    ),
   ],
 );
 
+// Email + organization combo should be unique
 export const invitations = pgTable(
   "invitations",
   {
     id: text("id").primaryKey(),
+    token: text("token").notNull().unique(),
     organizationId: text("organization_id")
       .notNull()
       .references(() => organizations.id, {onDelete: "cascade"}),
     email: text("email").notNull(),
-    role: text("role"),
+    role: invitationRoleEnum("role").notNull().default("member"),
     status: text("status").default("pending").notNull(),
     expiresAt: timestamp("expires_at").notNull(),
-    inviterId: text("inviter_id")
-      .notNull()
-      .references(() => users.id, {onDelete: "cascade"}),
+    inviterId: text("inviter_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
     index("invitations_organization_id_idx").on(table.organizationId),
     index("invitations_email_idx").on(table.email),
-    index("invitations_email_org_idx").on(table.email, table.organizationId),
+    index("invitations_token_idx").on(table.token),
+    unique("invitations_email_org_unique").on(
+      table.email,
+      table.organizationId,
+    ),
   ],
 );

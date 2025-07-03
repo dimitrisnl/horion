@@ -66,7 +66,7 @@ const Navigation = () => {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b">
+    <header className="bg-background sticky top-0 z-50 border-b">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center px-6">
         <div className="flex w-full items-center gap-2">
           <div className="flex w-full items-center gap-3">
@@ -83,7 +83,7 @@ export function SiteHeader() {
 
           <Button variant="tertiary" size="sm">
             <MessageCircleIcon />
-            <div className="hidden lg:inline">Need help?</div>
+            <div className="hidden lg:inline">Support</div>
           </Button>
           <UserDropdown />
         </div>

@@ -1,11 +1,11 @@
 import {LaptopIcon, MoonIcon, SunIcon} from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@horionos/ui/dropdown-menu";
-import {SidebarMenuButton} from "@horionos/ui/sidebar";
 
 import {useTheme} from "~/components/theme/theme-provider";
 
@@ -15,11 +15,11 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuButton size="sm">
+        <Button size="sm">
           <SunIcon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           <span>Theme</span>
-        </SidebarMenuButton>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"

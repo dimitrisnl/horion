@@ -38,7 +38,7 @@ export function UserDropdown() {
               preload="intent"
             >
               <SettingsIcon className="size-4" />
-              Account Settings
+              Settings
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
