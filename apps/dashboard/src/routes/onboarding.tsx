@@ -18,7 +18,7 @@ import {createFileRoute, useNavigate} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {FocusedLayout} from "~/components/app-skeleton/focused-layout";
-import {useLogout} from "~/utils/log-out";
+import {useLogout} from "~/hooks/use-log-out";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
