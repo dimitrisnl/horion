@@ -18,9 +18,9 @@ import {
 import {useQuery} from "@tanstack/react-query";
 import {Link} from "@tanstack/react-router";
 
-import {useLogout} from "~/utils/log-out";
+import {useLogout} from "~/hooks/use-log-out";
+import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
-import {useOrgId} from "~/utils/use-org-id";
 
 export function NavUser() {
   const orgId = useOrgId();

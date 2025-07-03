@@ -19,8 +19,8 @@ import {createFileRoute} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {PageLayout} from "~/components/app-skeleton/page-layout";
+import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
-import {useOrgId} from "~/utils/use-org-id";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
 export const Route = createFileRoute("/$orgId/settings/")({

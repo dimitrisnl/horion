@@ -19,8 +19,8 @@ import {
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
 
+import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
-import {useOrgId} from "~/utils/use-org-id";
 
 export function TeamSwitcher() {
   const organizationId = useOrgId();
