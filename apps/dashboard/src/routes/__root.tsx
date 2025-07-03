@@ -49,11 +49,9 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 function RootComponent() {
   return (
     <RootDocument>
-      {/* <ThemeProvider defaultTheme="light" storageKey="horionos-ui-theme"> */}
       <div className="grid h-svh grid-rows-[auto_1fr]">
         <Outlet />
       </div>
-      {/* </ThemeProvider> */}
     </RootDocument>
   );
 }

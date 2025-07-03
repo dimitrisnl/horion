@@ -1,5 +1,4 @@
 import {LogOutIcon, UserCog2Icon} from "@horionos/icons";
-import {Avatar, AvatarFallback} from "@horionos/ui/avatar";
 import {Button} from "@horionos/ui/button";
 import {
   DropdownMenu,
@@ -34,10 +33,8 @@ export function UserDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="size-8" size="icon">
-          <Avatar>
-            <AvatarFallback>{initial}</AvatarFallback>
-          </Avatar>
+        <Button variant="outline" className="size-8 select-none" size="icon">
+          {initial}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

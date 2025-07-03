@@ -1,9 +1,13 @@
-import {MegaphoneIcon, SquareChartGanttIcon, TagsIcon} from "@horionos/icons";
+import {
+  AudioWaveformIcon,
+  MegaphoneIcon,
+  SquareChartGanttIcon,
+  TagsIcon,
+} from "@horionos/icons";
 import {buttonVariants} from "@horionos/ui/button";
 
 import {Link} from "@tanstack/react-router";
 
-import {SearchForm} from "./search-form";
 import {TeamDropdown} from "./team-dropdown";
 import {UserDropdown} from "./user-dropdown";
 
@@ -28,12 +32,6 @@ const nav = [
   },
 ];
 
-const Logo = () => (
-  <div className="bg-primary text-background flex size-7 items-center justify-center rounded-full font-bold tracking-tight">
-    h
-  </div>
-);
-
 const Navigation = () => {
   return nav.map((item) => {
     return (
@@ -45,8 +43,8 @@ const Navigation = () => {
           className={buttonVariants({variant: "ghost", size: "sm"})}
           to={item.url}
         >
-          <item.icon className="h-4 w-4" />
-          {item.title}
+          <item.icon className="size-5 md:size-4" />
+          <span className="hidden md:inline">{item.title}</span>
         </Link>
       </div>
     );
@@ -55,18 +53,19 @@ const Navigation = () => {
 
 export function SiteHeader() {
   return (
-    <header className="bg-accent sticky top-0 z-50 flex h-14 w-full items-center border-b">
+    <header className="bg-muted sticky top-0 z-50 flex h-14 w-full items-center border-b">
       <div className="flex w-full items-center gap-2 px-3">
         <div className="flex w-full items-center gap-3">
-          <Logo />
+          <div className="bg-primary text-primary-foreground flex size-7.5 items-center justify-center rounded-md">
+            <AudioWaveformIcon className="size-4" />
+          </div>
           <div>
             <TeamDropdown />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Navigation />
           </div>
         </div>
-        <SearchForm className="ml-auto w-64" />
         <UserDropdown />
       </div>
     </header>
