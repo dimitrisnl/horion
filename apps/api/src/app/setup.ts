@@ -3,12 +3,10 @@ import {db} from "@horionos/db";
 import type {Context, Next} from "hono";
 import {cors} from "hono/cors";
 
-import {onError} from "@orpc/server";
 import {RPCHandler} from "@orpc/server/fetch";
 import {ResponseHeadersPlugin} from "@orpc/server/plugins";
 
 import {createContext} from "~/app/context";
-import {zodValidationInterceptor} from "~/app/orpc-interceptors";
 import {envVars} from "~/config";
 import {rpcRouter} from "~/routes/rpc";
 import {clientHints, criticalHints} from "~/utils/fingerprint";
@@ -32,7 +30,6 @@ export function setupCors() {
 
 export function setupRPC() {
   const handler = new RPCHandler(rpcRouter, {
-    clientInterceptors: [onError((error) => zodValidationInterceptor(error))],
     plugins: [new ResponseHeadersPlugin()],
   });
 

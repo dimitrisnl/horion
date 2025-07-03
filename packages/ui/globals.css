@@ -29,27 +29,27 @@
 }
 
 .dark {
-  --background: var(--color-slate-900);
-  --foreground: var(--color-slate-50);
-  --card: var(--color-slate-900);
-  --card-foreground: var(--color-slate-50);
-  --popover: var(--color-slate-900);
-  --popover-foreground: var(--color-slate-50);
-  --primary: var(--color-slate-50);
-  --primary-foreground: var(--color-slate-900);
-  --secondary: var(--color-slate-700);
-  --secondary-foreground: var(--color-slate-50);
-  --tertiary: var(--color-slate-300);
-  --tertiary-foreground: var(--color-slate-900);
-  --muted: var(--color-slate-900);
-  --muted-foreground: var(--color-slate-400);
-  --accent: var(--color-slate-800);
-  --accent-foreground: var(--color-slate-50);
+  --background: var(--color-neutral-950);
+  --foreground: var(--color-neutral-50);
+  --card: var(--color-neutral-900);
+  --card-foreground: var(--color-neutral-50);
+  --popover: var(--color-neutral-900);
+  --popover-foreground: var(--color-neutral-50);
+  --primary: var(--color-neutral-50);
+  --primary-foreground: var(--color-neutral-900);
+  --secondary: var(--color-neutral-700);
+  --secondary-foreground: var(--color-neutral-50);
+  --tertiary: var(--color-neutral-500);
+  --tertiary-foreground: var(--color-neutral-50);
+  --muted: var(--color-neutral-900);
+  --muted-foreground: var(--color-neutral-400);
+  --accent: var(--color-neutral-800);
+  --accent-foreground: var(--color-neutral-50);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: #db3f3f;
-  --border: var(--color-slate-800);
-  --input: var(--color-slate-800);
-  --ring: var(--color-slate-700);
+  --border: var(--color-neutral-800);
+  --input: var(--color-neutral-800);
+  --ring: var(--color-neutral-700);
 }
 
 @theme inline {

@@ -5,7 +5,11 @@ import type {Context as HonoContext} from "hono";
 import {z} from "zod/v4";
 
 import {envVars} from "~/config";
-import {verifyMagicLink} from "~/core/accounts/workflows/verify-magic-link";
+import {AccountContext} from "~/core/contexts/account";
+import {
+  InvalidVerificationTokenError,
+  VerificationExpiredError,
+} from "~/core/errors/error-types";
 import {createCookieService} from "~/services/cookies";
 import {getSessionFingerprint} from "~/utils/fingerprint";
 
@@ -32,15 +36,25 @@ export const verifyMagicLinkRoute = async (ctx: HonoContext) => {
   const fingerprintMetadata = await getSessionFingerprint(incomingHeaders);
   const {token} = validation.data;
 
-  const result = await verifyMagicLink({db})({token, fingerprintMetadata});
+  try {
+    const result = await AccountContext.validateTokenAndCreateUser({
+      db,
+      token,
+      fingerprintMetadata,
+    });
 
-  if (result.type === "error") {
-    return ctx.redirect(redirectTo({type: "error", error: result.error}));
+    const sessionToken = result.session.token;
+    const cookieService = createCookieService(ctx);
+    await cookieService.createSessionCookie(sessionToken);
+
+    return ctx.redirect(redirectTo({type: "success"}));
+  } catch (error) {
+    if (error instanceof InvalidVerificationTokenError) {
+      return ctx.redirect(redirectTo({type: "error", error: "invalid_token"}));
+    } else if (error instanceof VerificationExpiredError) {
+      return ctx.redirect(redirectTo({type: "error", error: "expired_token"}));
+    }
+
+    return ctx.redirect(redirectTo({type: "error", error: "unexpected_error"}));
   }
-
-  const sessionToken = result.session.token;
-  const cookieService = createCookieService(ctx);
-  await cookieService.createSessionCookie(sessionToken);
-
-  return ctx.redirect(redirectTo({type: "success"}));
 };

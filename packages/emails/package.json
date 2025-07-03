@@ -17,6 +17,7 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@horionos/eslint-config": "workspace:*",
     "react-email": "4.0.16"
   }
 }

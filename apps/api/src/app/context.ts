@@ -1,13 +1,12 @@
-import type {Database} from "@horionos/db";
-
 import type {Context as HonoContext} from "hono";
 
-import {getSession} from "~/core/accounts/queries/get-session";
+import {Session} from "~/core/models/session";
 import {createCookieService} from "~/services/cookies";
+import type {DatabaseConnection} from "~/types/database";
 
 export interface CreateContextOptions {
   context: HonoContext;
-  db: Database;
+  db: DatabaseConnection;
 }
 
 export async function createContext({context, db}: CreateContextOptions) {
@@ -25,7 +24,10 @@ export async function createContext({context, db}: CreateContextOptions) {
     };
   }
 
-  const session = await getSession({db})({token: sessionToken});
+  const session = await Session.findByToken({
+    db,
+    token: sessionToken,
+  });
 
   if (!session) {
     cookieService.deleteSessionCookie();

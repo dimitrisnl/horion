@@ -27,8 +27,6 @@ export function createCookieService(context: HonoContext) {
           sameSite: "lax",
           path: "/",
           maxAge: SESSION_DURATION_IN_SECONDS, // 30 days
-          //  TODO: should I add this?
-          // "domain"
         },
       );
     },

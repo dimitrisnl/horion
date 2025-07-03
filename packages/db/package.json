@@ -14,13 +14,14 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "dev": "drizzle-kit studio",
     "format": "prettier --write .",
     "lint": "eslint ."
   },
   "dependencies": {
-    "dotenv": "^16.6.1",
+    "dotenv": "^17.2.0",
     "pg": "^8.16.3",
-    "zod": "^3.25.71"
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@horionos/eslint-config": "workspace:*",

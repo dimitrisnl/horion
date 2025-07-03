@@ -3,7 +3,7 @@ import {Heading1, Text} from "@horionos/ui/text";
 
 import {type ErrorComponentProps, Link} from "@tanstack/react-router";
 
-import {FocusedLayout} from "./app-skeleton/focused-layout";
+import {FocusedLayout} from "./focused-layout";
 
 export function DefaultCatchBoundary({error}: ErrorComponentProps) {
   console.log("Error caught in DefaultCatchBoundary:", error);

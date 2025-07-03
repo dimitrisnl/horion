@@ -1,15 +1,13 @@
+import {accountRouter} from "./account";
 import {authRouter} from "./auth";
-import {membershipRouter} from "./membership";
+import {invitationRouter} from "./invitation";
 import {organizationRouter} from "./organization";
-import {sessionRouter} from "./session";
-import {userRouter} from "./user";
 
 export const rpcRouter = {
-  user: userRouter,
+  account: accountRouter,
   auth: authRouter,
-  membership: membershipRouter,
   organization: organizationRouter,
-  session: sessionRouter,
+  invitation: invitationRouter,
 };
 
 export type RPCRouter = typeof rpcRouter;
