@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: var(--color-white);
+  --background: var(--color-gray-50);
   --foreground: var(--color-gray-950);
   --card: var(--color-white);
   --card-foreground: var(--color-gray-950);
@@ -12,9 +12,9 @@
   --popover-foreground: var(--color-gray-950);
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-gray-100);
-  --secondary: var(--color-gray-200);
+  --secondary: var(--color-gray-100);
   --secondary-foreground: var(--color-gray-900);
-  --muted: var(--color-gray-100);
+  --muted: var(--color-gray-200);
   --muted-foreground: var(--color-gray-600);
   --accent: var(--color-gray-100);
   --accent-foreground: var(--color-gray-900);

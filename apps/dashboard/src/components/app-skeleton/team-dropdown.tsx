@@ -37,7 +37,7 @@ export function TeamDropdown() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <div
-              className="max-w-[120px] min-w-[80px] truncate text-left"
+              className="max-w-[120px] min-w-[70px] truncate text-left"
               title={organization.name}
             >
               {organization.name}

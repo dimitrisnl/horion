@@ -34,7 +34,7 @@ function RouteComponent() {
       subtitle="Preview and manage your organization's announcements"
       // actions={<Actions />}
     >
-      <div className="flex w-full flex-col items-center gap-3 rounded border border-dashed p-6 md:p-12">
+      <div className="bg-card flex w-full flex-col items-center gap-3 rounded border border-dashed p-6 md:p-12">
         <div className="bg-accent text-accent-foreground rounded-full p-3">
           <MegaphoneIcon className="mx-auto size-8 stroke-1" />
         </div>

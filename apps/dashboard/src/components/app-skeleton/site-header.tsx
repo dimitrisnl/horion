@@ -67,9 +67,6 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 flex h-14 w-full items-center border-b bg-white">
       <div className="flex w-full items-center gap-2 px-3">
         <div className="flex w-full items-center gap-3">
-          <div className="bg-primary text-primary-foreground flex size-7.5 items-center justify-center rounded-md">
-            <AudioWaveformIcon className="size-4" />
-          </div>
           <div>
             <TeamDropdown />
           </div>

@@ -19,7 +19,7 @@ function RouteComponent() {
       subtitle="Manage your organization's categories"
       actions={<Actions />}
     >
-      <div className="flex w-full flex-col items-center gap-3 rounded border border-dashed p-6 md:p-12">
+      <div className="bg-card flex w-full flex-col items-center gap-3 rounded border border-dashed p-6 md:p-12">
         <div className="bg-accent text-accent-foreground rounded-full p-3">
           <TagIcon className="mx-auto size-8 stroke-1" />
         </div>
