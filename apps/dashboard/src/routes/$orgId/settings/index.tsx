@@ -126,7 +126,7 @@ const useOrganizationNameForm = ({
     data: {organization},
   } = useSuspenseQuery(
     orpc.organization.get.queryOptions({
-      input: {organizationId},
+      input: {id: organizationId},
     }),
   );
 
@@ -136,7 +136,7 @@ const useOrganizationNameForm = ({
         await Promise.all([
           queryClient.invalidateQueries(
             orpc.organization.get.queryOptions({
-              input: {organizationId},
+              input: {id: organizationId},
             }),
           ),
           queryClient.invalidateQueries(orpc.membership.getAll.queryOptions()),
@@ -165,7 +165,7 @@ const useOrganizationNameForm = ({
         return withValidationErrors(
           updateOrganizationNameMutation.mutateAsync({
             name,
-            organizationId,
+            id: organizationId,
           }),
         );
       },

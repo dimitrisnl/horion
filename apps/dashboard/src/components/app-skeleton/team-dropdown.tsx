@@ -29,7 +29,7 @@ export function TeamDropdown() {
   const {
     data: {organization},
   } = useSuspenseQuery(
-    orpc.organization.get.queryOptions({input: {organizationId}}),
+    orpc.organization.get.queryOptions({input: {id: organizationId}}),
   );
 
   return (
