@@ -3,6 +3,9 @@ import * as schema from "@horionos/db/schema";
 
 import {nanoid} from "nanoid";
 
+import {generateId} from "~/utils/id/generate-id";
+import {generateToken} from "~/utils/id/generate-token";
+
 export const createTestUser = async ({
   db,
   overrides = {},
@@ -10,20 +13,22 @@ export const createTestUser = async ({
   db: Database;
   overrides?: Partial<typeof schema.users.$inferInsert>;
 }) => {
-  const identifier = nanoid();
+  const identifier = generateId();
   const defaultUser = {
-    id: `user_${identifier}`,
+    id: identifier,
     name: "Test User",
-    email: `test-${identifier}@example.com`,
+    email: `test-${identifier}@example.com`.toLowerCase(),
     emailVerified: true,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  const userData = {...defaultUser, ...overrides};
-  await db.insert(schema.users).values(userData);
+  const [user] = await db
+    .insert(schema.users)
+    .values({...defaultUser, ...overrides})
+    .returning();
 
-  return userData;
+  return user;
 };
 
 export const createTestSession = async ({
@@ -33,21 +38,21 @@ export const createTestSession = async ({
   db: Database;
   overrides?: Partial<typeof schema.sessions.$inferInsert>;
 }) => {
-  const identifier = nanoid();
-
   const defaultSession = {
-    id: `session_${identifier}`,
-    token: `token_${identifier}`,
-    userId: `user_${identifier}`,
+    id: generateId(),
+    token: generateToken(),
+    userId: generateId(),
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  const sessionData = {...defaultSession, ...overrides};
-  await db.insert(schema.sessions).values(sessionData);
+  const [session] = await db
+    .insert(schema.sessions)
+    .values({...defaultSession, ...overrides})
+    .returning();
 
-  return sessionData;
+  return session;
 };
 
 export const createTestOrganization = async ({
@@ -57,18 +62,20 @@ export const createTestOrganization = async ({
   db: Database;
   overrides?: Partial<typeof schema.organizations.$inferInsert>;
 }) => {
-  const identifier = nanoid();
+  const identifier = generateId();
 
   const defaultOrg = {
-    id: `org_${identifier}`,
+    id: identifier,
     name: `Test Organization ${identifier}`,
     createdAt: new Date(),
   };
 
-  const orgData = {...defaultOrg, ...overrides};
-  await db.insert(schema.organizations).values(orgData);
+  const [organization] = await db
+    .insert(schema.organizations)
+    .values({...defaultOrg, ...overrides})
+    .returning();
 
-  return orgData;
+  return organization;
 };
 
 export const createTestMembership = async ({
@@ -78,20 +85,20 @@ export const createTestMembership = async ({
   db: Database;
   overrides?: Partial<typeof schema.memberships.$inferInsert>;
 }) => {
-  const identifier = nanoid();
-
   const defaultMembership = {
-    id: `membership_${identifier}`,
-    userId: `user_${identifier}`,
-    organizationId: `org_${identifier}`,
+    id: generateId(),
+    userId: generateId(),
+    organizationId: generateId(),
     role: "owner",
     createdAt: new Date(),
   };
 
-  const membershipData = {...defaultMembership, ...overrides};
-  await db.insert(schema.memberships).values(membershipData);
+  const [membership] = await db
+    .insert(schema.memberships)
+    .values({...defaultMembership, ...overrides})
+    .returning();
 
-  return membershipData;
+  return membership;
 };
 
 export const createTestSessionMetadata = async ({
@@ -101,11 +108,9 @@ export const createTestSessionMetadata = async ({
   db: Database;
   overrides?: Partial<typeof schema.sessionMetadata.$inferInsert>;
 }) => {
-  const identifier = nanoid();
-
   const defaultSessionMetadata = {
-    id: `session_metadata_${identifier}`,
-    sessionId: `session_${identifier}`,
+    id: generateId(),
+    sessionId: generateId(),
     createdAt: new Date(),
     updatedAt: new Date(),
     browser: "Chrome",
@@ -117,10 +122,12 @@ export const createTestSessionMetadata = async ({
     ipAddress: "127.0.0.1",
   };
 
-  const sessionMetadataData = {...defaultSessionMetadata, ...overrides};
-  await db.insert(schema.sessionMetadata).values(sessionMetadataData);
+  const [sessionMetadata] = await db
+    .insert(schema.sessionMetadata)
+    .values({...defaultSessionMetadata, ...overrides})
+    .returning();
 
-  return sessionMetadataData;
+  return sessionMetadata;
 };
 
 export const createTestVerificationToken = async ({
@@ -133,18 +140,20 @@ export const createTestVerificationToken = async ({
   const identifier = nanoid();
 
   const defaultVerificationToken = {
-    id: `verification_id_${identifier}`,
-    identifier: `verification_identifier_${identifier}`,
-    value: `verification_value_${identifier}`,
+    id: identifier,
+    identifier: generateToken(),
+    value: `email_${identifier}@example.com`.toLowerCase(),
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  const verificationTokenData = {...defaultVerificationToken, ...overrides};
-  await db.insert(schema.verifications).values(verificationTokenData);
+  const [verification] = await db
+    .insert(schema.verifications)
+    .values({...defaultVerificationToken, ...overrides})
+    .returning();
 
-  return verificationTokenData;
+  return verification;
 };
 
 export const setupTestMembership = async ({
@@ -168,4 +177,33 @@ export const setupTestMembership = async ({
   });
 
   return {user, org, membership};
+};
+
+export const createTestInvitation = async ({
+  db,
+  overrides = {},
+}: {
+  db: Database;
+  overrides?: Partial<typeof schema.invitations.$inferInsert>;
+}) => {
+  const identifier = generateId();
+
+  const defaultInvitation = {
+    id: identifier,
+    email: `email_${identifier}@example.com`.toLowerCase(),
+    organizationId: generateId(),
+    inviterId: generateId(),
+    role: "member",
+    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  const invitationData = {...defaultInvitation, ...overrides};
+  const [invitation] = await db
+    .insert(schema.invitations)
+    .values(invitationData)
+    .returning();
+
+  return invitation;
 };

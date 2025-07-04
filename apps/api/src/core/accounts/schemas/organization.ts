@@ -22,15 +22,23 @@ export const organizationNameSchema = z
   .min(2, {error: "Organization name must be at least 2 characters"})
   .max(100, {error: "Organization name must be less than 100 characters"});
 
-export const getOrganizationSchema = z.object({
-  organizationId: organizationIdSchema,
+export const organizationDomainSchema = z.object({
+  id: organizationIdSchema,
+  name: organizationNameSchema,
+  logo: z.string().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
 });
 
-export const createOrganizationSchema = z.object({
-  name: organizationNameSchema,
+export const getOrganizationInputSchema = organizationDomainSchema.pick({
+  id: true,
 });
 
-export const updateOrganizationSchema = z.object({
-  organizationId: organizationIdSchema,
-  name: organizationNameSchema,
+export const createOrganizationInputSchema = organizationDomainSchema.pick({
+  name: true,
+});
+
+export const updateOrganizationInputSchema = organizationDomainSchema.pick({
+  id: true,
+  name: true,
 });

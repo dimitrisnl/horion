@@ -20,6 +20,7 @@ import { Route as OrgIdCategoriesIndexRouteImport } from './routes/$orgId/catego
 import { Route as OrgIdAnnouncementsIndexRouteImport } from './routes/$orgId/announcements/index'
 import { Route as OrgIdAccountIndexRouteImport } from './routes/$orgId/account/index'
 import { Route as OrgIdAnnouncementsNewRouteImport } from './routes/$orgId/announcements/new'
+import { Route as OrgIdSettingsInvitationsIndexRouteImport } from './routes/$orgId/settings/invitations/index'
 
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
@@ -75,6 +76,12 @@ const OrgIdAnnouncementsNewRoute = OrgIdAnnouncementsNewRouteImport.update({
   path: '/announcements/new',
   getParentRoute: () => OrgIdRouteRoute,
 } as any)
+const OrgIdSettingsInvitationsIndexRoute =
+  OrgIdSettingsInvitationsIndexRouteImport.update({
+    id: '/settings/invitations/',
+    path: '/settings/invitations/',
+    getParentRoute: () => OrgIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/$orgId/announcements': typeof OrgIdAnnouncementsIndexRoute
   '/$orgId/categories': typeof OrgIdCategoriesIndexRoute
   '/$orgId/settings': typeof OrgIdSettingsIndexRoute
+  '/$orgId/settings/invitations': typeof OrgIdSettingsInvitationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
   '/$orgId/announcements': typeof OrgIdAnnouncementsIndexRoute
   '/$orgId/categories': typeof OrgIdCategoriesIndexRoute
   '/$orgId/settings': typeof OrgIdSettingsIndexRoute
+  '/$orgId/settings/invitations': typeof OrgIdSettingsInvitationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,6 +121,7 @@ export interface FileRoutesById {
   '/$orgId/announcements/': typeof OrgIdAnnouncementsIndexRoute
   '/$orgId/categories/': typeof OrgIdCategoriesIndexRoute
   '/$orgId/settings/': typeof OrgIdSettingsIndexRoute
+  '/$orgId/settings/invitations/': typeof OrgIdSettingsInvitationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/$orgId/announcements'
     | '/$orgId/categories'
     | '/$orgId/settings'
+    | '/$orgId/settings/invitations'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/$orgId/announcements'
     | '/$orgId/categories'
     | '/$orgId/settings'
+    | '/$orgId/settings/invitations'
   id:
     | '__root__'
     | '/'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
     | '/$orgId/announcements/'
     | '/$orgId/categories/'
     | '/$orgId/settings/'
+    | '/$orgId/settings/invitations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -238,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrgIdAnnouncementsNewRouteImport
       parentRoute: typeof OrgIdRouteRoute
     }
+    '/$orgId/settings/invitations/': {
+      id: '/$orgId/settings/invitations/'
+      path: '/settings/invitations'
+      fullPath: '/$orgId/settings/invitations'
+      preLoaderRoute: typeof OrgIdSettingsInvitationsIndexRouteImport
+      parentRoute: typeof OrgIdRouteRoute
+    }
   }
 }
 
@@ -248,6 +268,7 @@ interface OrgIdRouteRouteChildren {
   OrgIdAnnouncementsIndexRoute: typeof OrgIdAnnouncementsIndexRoute
   OrgIdCategoriesIndexRoute: typeof OrgIdCategoriesIndexRoute
   OrgIdSettingsIndexRoute: typeof OrgIdSettingsIndexRoute
+  OrgIdSettingsInvitationsIndexRoute: typeof OrgIdSettingsInvitationsIndexRoute
 }
 
 const OrgIdRouteRouteChildren: OrgIdRouteRouteChildren = {
@@ -257,6 +278,7 @@ const OrgIdRouteRouteChildren: OrgIdRouteRouteChildren = {
   OrgIdAnnouncementsIndexRoute: OrgIdAnnouncementsIndexRoute,
   OrgIdCategoriesIndexRoute: OrgIdCategoriesIndexRoute,
   OrgIdSettingsIndexRoute: OrgIdSettingsIndexRoute,
+  OrgIdSettingsInvitationsIndexRoute: OrgIdSettingsInvitationsIndexRoute,
 }
 
 const OrgIdRouteRouteWithChildren = OrgIdRouteRoute._addFileChildren(

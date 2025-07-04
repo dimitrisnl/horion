@@ -3,6 +3,7 @@ import {Suspense} from "react";
 import {
   ChevronsUpDownIcon,
   CircleSmallIcon,
+  MailIcon,
   PlusCircleIcon,
   SettingsIcon,
 } from "@horionos/icons";
@@ -28,7 +29,7 @@ export function TeamDropdown() {
   const {
     data: {organization},
   } = useSuspenseQuery(
-    orpc.organization.get.queryOptions({input: {organizationId}}),
+    orpc.organization.get.queryOptions({input: {id: organizationId}}),
   );
 
   return (
@@ -105,9 +106,19 @@ const MembershipsDropdown = () => {
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
+        <Link
+          to="/$orgId/settings/invitations"
+          params={{orgId: organizationId}}
+        >
+          <MailIcon className="size-4" />
+          <div>Invite teammates</div>
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem asChild>
         <Link to="/onboarding">
           <PlusCircleIcon className="size-4" />
-          <div>Create new</div>
+          <div>Create new organization</div>
         </Link>
       </DropdownMenuItem>
     </DropdownMenuContent>

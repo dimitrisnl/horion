@@ -5,18 +5,18 @@ import {createOrganization} from "~/core/accounts/actions/create-organization";
 import {updateOrganization} from "~/core/accounts/actions/update-organization";
 import {getOrganization} from "~/core/accounts/queries/get-organization";
 import {
-  createOrganizationSchema,
-  getOrganizationSchema,
-  updateOrganizationSchema,
+  createOrganizationInputSchema,
+  getOrganizationInputSchema,
+  updateOrganizationInputSchema,
 } from "~/core/accounts/schemas/organization";
 
 export const organizationRouter = {
   get: protectedProcedure
-    .input(getOrganizationSchema)
+    .input(getOrganizationInputSchema)
     .handler(async ({context, input}) => {
       const {db, session} = context;
       const userId = session.userId;
-      const {organizationId} = input;
+      const {id: organizationId} = input;
 
       const organization = await getOrganization({db})({
         organizationId,
@@ -31,7 +31,7 @@ export const organizationRouter = {
     }),
 
   create: protectedProcedure
-    .input(createOrganizationSchema)
+    .input(createOrganizationInputSchema)
     .handler(async ({context, input}) => {
       const {db, session} = context;
       const {name} = input;
@@ -53,10 +53,10 @@ export const organizationRouter = {
     }),
 
   update: protectedProcedure
-    .input(updateOrganizationSchema)
+    .input(updateOrganizationInputSchema)
     .handler(async ({context, input}) => {
       const {db, session} = context;
-      const {organizationId, name} = input;
+      const {id: organizationId, name} = input;
       const userId = session.userId;
 
       const organization = await updateOrganization({db})({

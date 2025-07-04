@@ -55,4 +55,5 @@ export {
   MessageCircleIcon,
   User2Icon,
   UserIcon,
+  Repeat2Icon,
 } from "lucide-react";

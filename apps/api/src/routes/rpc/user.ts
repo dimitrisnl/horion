@@ -3,7 +3,7 @@ import {ORPCError} from "@orpc/client";
 import {protectedProcedure} from "~/app/orpc-procedures";
 import {updateUser} from "~/core/accounts/actions/update-user";
 import {getUserById} from "~/core/accounts/queries/get-user-by-id";
-import {updateUserSchema} from "~/core/accounts/schemas/user";
+import {updateUserNameInputSchema} from "~/core/accounts/schemas/user";
 
 export const userRouter = {
   getCurrentUser: protectedProcedure.handler(async ({context}) => {
@@ -24,7 +24,7 @@ export const userRouter = {
   }),
 
   updateName: protectedProcedure
-    .input(updateUserSchema)
+    .input(updateUserNameInputSchema)
     .handler(async ({context, input}) => {
       const {db, session} = context;
       const name = input.name;
