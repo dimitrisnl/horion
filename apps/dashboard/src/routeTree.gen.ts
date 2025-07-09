@@ -8,267 +8,267 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as AuthRouteRouteImport } from './routes/_auth/route'
-import { Route as OrgIdRouteRouteImport } from './routes/$orgId/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as OrgIdIndexRouteImport } from './routes/$orgId/index'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
-import { Route as OrgIdSettingsIndexRouteImport } from './routes/$orgId/settings/index'
-import { Route as OrgIdCategoriesIndexRouteImport } from './routes/$orgId/categories/index'
-import { Route as OrgIdAnnouncementsIndexRouteImport } from './routes/$orgId/announcements/index'
-import { Route as OrgIdAccountIndexRouteImport } from './routes/$orgId/account/index'
-import { Route as OrgIdAnnouncementsNewRouteImport } from './routes/$orgId/announcements/new'
-import { Route as OrgIdSettingsInvitationsIndexRouteImport } from './routes/$orgId/settings/invitations/index'
+import {Route as rootRouteImport} from "./routes/__root";
+import {Route as OnboardingRouteImport} from "./routes/onboarding";
+import {Route as AuthRouteRouteImport} from "./routes/_auth/route";
+import {Route as OrgIdRouteRouteImport} from "./routes/$orgId/route";
+import {Route as IndexRouteImport} from "./routes/index";
+import {Route as OrgIdIndexRouteImport} from "./routes/$orgId/index";
+import {Route as AuthLoginRouteImport} from "./routes/_auth/login";
+import {Route as OrgIdSettingsIndexRouteImport} from "./routes/$orgId/settings/index";
+import {Route as OrgIdCategoriesIndexRouteImport} from "./routes/$orgId/categories/index";
+import {Route as OrgIdAnnouncementsIndexRouteImport} from "./routes/$orgId/announcements/index";
+import {Route as OrgIdAccountIndexRouteImport} from "./routes/$orgId/account/index";
+import {Route as OrgIdAnnouncementsNewRouteImport} from "./routes/$orgId/announcements/new";
+import {Route as OrgIdSettingsInvitationsIndexRouteImport} from "./routes/$orgId/settings/invitations/index";
 
 const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
+  id: "/onboarding",
+  path: "/onboarding",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AuthRouteRoute = AuthRouteRouteImport.update({
-  id: '/_auth',
+  id: "/_auth",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const OrgIdRouteRoute = OrgIdRouteRouteImport.update({
-  id: '/$orgId',
-  path: '/$orgId',
+  id: "/$orgId",
+  path: "/$orgId",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const OrgIdIndexRoute = OrgIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+  id: "/login",
+  path: "/login",
   getParentRoute: () => AuthRouteRoute,
-} as any)
+} as any);
 const OrgIdSettingsIndexRoute = OrgIdSettingsIndexRouteImport.update({
-  id: '/settings/',
-  path: '/settings/',
+  id: "/settings/",
+  path: "/settings/",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const OrgIdCategoriesIndexRoute = OrgIdCategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
+  id: "/categories/",
+  path: "/categories/",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const OrgIdAnnouncementsIndexRoute = OrgIdAnnouncementsIndexRouteImport.update({
-  id: '/announcements/',
-  path: '/announcements/',
+  id: "/announcements/",
+  path: "/announcements/",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const OrgIdAccountIndexRoute = OrgIdAccountIndexRouteImport.update({
-  id: '/account/',
-  path: '/account/',
+  id: "/account/",
+  path: "/account/",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const OrgIdAnnouncementsNewRoute = OrgIdAnnouncementsNewRouteImport.update({
-  id: '/announcements/new',
-  path: '/announcements/new',
+  id: "/announcements/new",
+  path: "/announcements/new",
   getParentRoute: () => OrgIdRouteRoute,
-} as any)
+} as any);
 const OrgIdSettingsInvitationsIndexRoute =
   OrgIdSettingsInvitationsIndexRouteImport.update({
-    id: '/settings/invitations/',
-    path: '/settings/invitations/',
+    id: "/settings/invitations/",
+    path: "/settings/invitations/",
     getParentRoute: () => OrgIdRouteRoute,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/$orgId': typeof OrgIdRouteRouteWithChildren
-  '/onboarding': typeof OnboardingRoute
-  '/login': typeof AuthLoginRoute
-  '/$orgId/': typeof OrgIdIndexRoute
-  '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
-  '/$orgId/account': typeof OrgIdAccountIndexRoute
-  '/$orgId/announcements': typeof OrgIdAnnouncementsIndexRoute
-  '/$orgId/categories': typeof OrgIdCategoriesIndexRoute
-  '/$orgId/settings': typeof OrgIdSettingsIndexRoute
-  '/$orgId/settings/invitations': typeof OrgIdSettingsInvitationsIndexRoute
+  "/": typeof IndexRoute;
+  "/$orgId": typeof OrgIdRouteRouteWithChildren;
+  "/onboarding": typeof OnboardingRoute;
+  "/login": typeof AuthLoginRoute;
+  "/$orgId/": typeof OrgIdIndexRoute;
+  "/$orgId/announcements/new": typeof OrgIdAnnouncementsNewRoute;
+  "/$orgId/account": typeof OrgIdAccountIndexRoute;
+  "/$orgId/announcements": typeof OrgIdAnnouncementsIndexRoute;
+  "/$orgId/categories": typeof OrgIdCategoriesIndexRoute;
+  "/$orgId/settings": typeof OrgIdSettingsIndexRoute;
+  "/$orgId/settings/invitations": typeof OrgIdSettingsInvitationsIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/onboarding': typeof OnboardingRoute
-  '/login': typeof AuthLoginRoute
-  '/$orgId': typeof OrgIdIndexRoute
-  '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
-  '/$orgId/account': typeof OrgIdAccountIndexRoute
-  '/$orgId/announcements': typeof OrgIdAnnouncementsIndexRoute
-  '/$orgId/categories': typeof OrgIdCategoriesIndexRoute
-  '/$orgId/settings': typeof OrgIdSettingsIndexRoute
-  '/$orgId/settings/invitations': typeof OrgIdSettingsInvitationsIndexRoute
+  "/": typeof IndexRoute;
+  "/onboarding": typeof OnboardingRoute;
+  "/login": typeof AuthLoginRoute;
+  "/$orgId": typeof OrgIdIndexRoute;
+  "/$orgId/announcements/new": typeof OrgIdAnnouncementsNewRoute;
+  "/$orgId/account": typeof OrgIdAccountIndexRoute;
+  "/$orgId/announcements": typeof OrgIdAnnouncementsIndexRoute;
+  "/$orgId/categories": typeof OrgIdCategoriesIndexRoute;
+  "/$orgId/settings": typeof OrgIdSettingsIndexRoute;
+  "/$orgId/settings/invitations": typeof OrgIdSettingsInvitationsIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/$orgId': typeof OrgIdRouteRouteWithChildren
-  '/_auth': typeof AuthRouteRouteWithChildren
-  '/onboarding': typeof OnboardingRoute
-  '/_auth/login': typeof AuthLoginRoute
-  '/$orgId/': typeof OrgIdIndexRoute
-  '/$orgId/announcements/new': typeof OrgIdAnnouncementsNewRoute
-  '/$orgId/account/': typeof OrgIdAccountIndexRoute
-  '/$orgId/announcements/': typeof OrgIdAnnouncementsIndexRoute
-  '/$orgId/categories/': typeof OrgIdCategoriesIndexRoute
-  '/$orgId/settings/': typeof OrgIdSettingsIndexRoute
-  '/$orgId/settings/invitations/': typeof OrgIdSettingsInvitationsIndexRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/$orgId": typeof OrgIdRouteRouteWithChildren;
+  "/_auth": typeof AuthRouteRouteWithChildren;
+  "/onboarding": typeof OnboardingRoute;
+  "/_auth/login": typeof AuthLoginRoute;
+  "/$orgId/": typeof OrgIdIndexRoute;
+  "/$orgId/announcements/new": typeof OrgIdAnnouncementsNewRoute;
+  "/$orgId/account/": typeof OrgIdAccountIndexRoute;
+  "/$orgId/announcements/": typeof OrgIdAnnouncementsIndexRoute;
+  "/$orgId/categories/": typeof OrgIdCategoriesIndexRoute;
+  "/$orgId/settings/": typeof OrgIdSettingsIndexRoute;
+  "/$orgId/settings/invitations/": typeof OrgIdSettingsInvitationsIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/$orgId'
-    | '/onboarding'
-    | '/login'
-    | '/$orgId/'
-    | '/$orgId/announcements/new'
-    | '/$orgId/account'
-    | '/$orgId/announcements'
-    | '/$orgId/categories'
-    | '/$orgId/settings'
-    | '/$orgId/settings/invitations'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/$orgId"
+    | "/onboarding"
+    | "/login"
+    | "/$orgId/"
+    | "/$orgId/announcements/new"
+    | "/$orgId/account"
+    | "/$orgId/announcements"
+    | "/$orgId/categories"
+    | "/$orgId/settings"
+    | "/$orgId/settings/invitations";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/onboarding'
-    | '/login'
-    | '/$orgId'
-    | '/$orgId/announcements/new'
-    | '/$orgId/account'
-    | '/$orgId/announcements'
-    | '/$orgId/categories'
-    | '/$orgId/settings'
-    | '/$orgId/settings/invitations'
+    | "/"
+    | "/onboarding"
+    | "/login"
+    | "/$orgId"
+    | "/$orgId/announcements/new"
+    | "/$orgId/account"
+    | "/$orgId/announcements"
+    | "/$orgId/categories"
+    | "/$orgId/settings"
+    | "/$orgId/settings/invitations";
   id:
-    | '__root__'
-    | '/'
-    | '/$orgId'
-    | '/_auth'
-    | '/onboarding'
-    | '/_auth/login'
-    | '/$orgId/'
-    | '/$orgId/announcements/new'
-    | '/$orgId/account/'
-    | '/$orgId/announcements/'
-    | '/$orgId/categories/'
-    | '/$orgId/settings/'
-    | '/$orgId/settings/invitations/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/$orgId"
+    | "/_auth"
+    | "/onboarding"
+    | "/_auth/login"
+    | "/$orgId/"
+    | "/$orgId/announcements/new"
+    | "/$orgId/account/"
+    | "/$orgId/announcements/"
+    | "/$orgId/categories/"
+    | "/$orgId/settings/"
+    | "/$orgId/settings/invitations/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  OrgIdRouteRoute: typeof OrgIdRouteRouteWithChildren
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  OnboardingRoute: typeof OnboardingRoute
+  IndexRoute: typeof IndexRoute;
+  OrgIdRouteRoute: typeof OrgIdRouteRouteWithChildren;
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren;
+  OnboardingRoute: typeof OnboardingRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$orgId': {
-      id: '/$orgId'
-      path: '/$orgId'
-      fullPath: '/$orgId'
-      preLoaderRoute: typeof OrgIdRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$orgId/': {
-      id: '/$orgId/'
-      path: '/'
-      fullPath: '/$orgId/'
-      preLoaderRoute: typeof OrgIdIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
-    '/$orgId/settings/': {
-      id: '/$orgId/settings/'
-      path: '/settings'
-      fullPath: '/$orgId/settings'
-      preLoaderRoute: typeof OrgIdSettingsIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/$orgId/categories/': {
-      id: '/$orgId/categories/'
-      path: '/categories'
-      fullPath: '/$orgId/categories'
-      preLoaderRoute: typeof OrgIdCategoriesIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/$orgId/announcements/': {
-      id: '/$orgId/announcements/'
-      path: '/announcements'
-      fullPath: '/$orgId/announcements'
-      preLoaderRoute: typeof OrgIdAnnouncementsIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/$orgId/account/': {
-      id: '/$orgId/account/'
-      path: '/account'
-      fullPath: '/$orgId/account'
-      preLoaderRoute: typeof OrgIdAccountIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/$orgId/announcements/new': {
-      id: '/$orgId/announcements/new'
-      path: '/announcements/new'
-      fullPath: '/$orgId/announcements/new'
-      preLoaderRoute: typeof OrgIdAnnouncementsNewRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
-    '/$orgId/settings/invitations/': {
-      id: '/$orgId/settings/invitations/'
-      path: '/settings/invitations'
-      fullPath: '/$orgId/settings/invitations'
-      preLoaderRoute: typeof OrgIdSettingsInvitationsIndexRouteImport
-      parentRoute: typeof OrgIdRouteRoute
-    }
+    "/onboarding": {
+      id: "/onboarding";
+      path: "/onboarding";
+      fullPath: "/onboarding";
+      preLoaderRoute: typeof OnboardingRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_auth": {
+      id: "/_auth";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AuthRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/$orgId": {
+      id: "/$orgId";
+      path: "/$orgId";
+      fullPath: "/$orgId";
+      preLoaderRoute: typeof OrgIdRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/$orgId/": {
+      id: "/$orgId/";
+      path: "/";
+      fullPath: "/$orgId/";
+      preLoaderRoute: typeof OrgIdIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/_auth/login": {
+      id: "/_auth/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof AuthLoginRouteImport;
+      parentRoute: typeof AuthRouteRoute;
+    };
+    "/$orgId/settings/": {
+      id: "/$orgId/settings/";
+      path: "/settings";
+      fullPath: "/$orgId/settings";
+      preLoaderRoute: typeof OrgIdSettingsIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/$orgId/categories/": {
+      id: "/$orgId/categories/";
+      path: "/categories";
+      fullPath: "/$orgId/categories";
+      preLoaderRoute: typeof OrgIdCategoriesIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/$orgId/announcements/": {
+      id: "/$orgId/announcements/";
+      path: "/announcements";
+      fullPath: "/$orgId/announcements";
+      preLoaderRoute: typeof OrgIdAnnouncementsIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/$orgId/account/": {
+      id: "/$orgId/account/";
+      path: "/account";
+      fullPath: "/$orgId/account";
+      preLoaderRoute: typeof OrgIdAccountIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/$orgId/announcements/new": {
+      id: "/$orgId/announcements/new";
+      path: "/announcements/new";
+      fullPath: "/$orgId/announcements/new";
+      preLoaderRoute: typeof OrgIdAnnouncementsNewRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
+    "/$orgId/settings/invitations/": {
+      id: "/$orgId/settings/invitations/";
+      path: "/settings/invitations";
+      fullPath: "/$orgId/settings/invitations";
+      preLoaderRoute: typeof OrgIdSettingsInvitationsIndexRouteImport;
+      parentRoute: typeof OrgIdRouteRoute;
+    };
   }
 }
 
 interface OrgIdRouteRouteChildren {
-  OrgIdIndexRoute: typeof OrgIdIndexRoute
-  OrgIdAnnouncementsNewRoute: typeof OrgIdAnnouncementsNewRoute
-  OrgIdAccountIndexRoute: typeof OrgIdAccountIndexRoute
-  OrgIdAnnouncementsIndexRoute: typeof OrgIdAnnouncementsIndexRoute
-  OrgIdCategoriesIndexRoute: typeof OrgIdCategoriesIndexRoute
-  OrgIdSettingsIndexRoute: typeof OrgIdSettingsIndexRoute
-  OrgIdSettingsInvitationsIndexRoute: typeof OrgIdSettingsInvitationsIndexRoute
+  OrgIdIndexRoute: typeof OrgIdIndexRoute;
+  OrgIdAnnouncementsNewRoute: typeof OrgIdAnnouncementsNewRoute;
+  OrgIdAccountIndexRoute: typeof OrgIdAccountIndexRoute;
+  OrgIdAnnouncementsIndexRoute: typeof OrgIdAnnouncementsIndexRoute;
+  OrgIdCategoriesIndexRoute: typeof OrgIdCategoriesIndexRoute;
+  OrgIdSettingsIndexRoute: typeof OrgIdSettingsIndexRoute;
+  OrgIdSettingsInvitationsIndexRoute: typeof OrgIdSettingsInvitationsIndexRoute;
 }
 
 const OrgIdRouteRouteChildren: OrgIdRouteRouteChildren = {
@@ -279,30 +279,30 @@ const OrgIdRouteRouteChildren: OrgIdRouteRouteChildren = {
   OrgIdCategoriesIndexRoute: OrgIdCategoriesIndexRoute,
   OrgIdSettingsIndexRoute: OrgIdSettingsIndexRoute,
   OrgIdSettingsInvitationsIndexRoute: OrgIdSettingsInvitationsIndexRoute,
-}
+};
 
 const OrgIdRouteRouteWithChildren = OrgIdRouteRoute._addFileChildren(
   OrgIdRouteRouteChildren,
-)
+);
 
 interface AuthRouteRouteChildren {
-  AuthLoginRoute: typeof AuthLoginRoute
+  AuthLoginRoute: typeof AuthLoginRoute;
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
-}
+};
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
-)
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OrgIdRouteRoute: OrgIdRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
