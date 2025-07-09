@@ -1,10 +1,10 @@
-name: API Tests
+name: Test
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
-    types: [opened, reopened, synchronize]
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -22,7 +22,8 @@ jobs:
     - name: Install dependencies
       run: bun install --frozen-lockfile
 
-    - name: Run tests
-      run: bun run test
+    - name: Run API tests
+      run: cd apps/api && bun test
       env:
         BUN_ENVIRONMENT: test
+        NODE_ENV: test
