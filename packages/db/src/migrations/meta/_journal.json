@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1750942489526,
-      "tag": "0000_chief_justice",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1750947265039,
-      "tag": "0001_yummy_sasquatch",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1751055937979,
-      "tag": "0002_amazing_mephisto",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1751057275626,
-      "tag": "0003_oval_spiral",
+      "when": 1752217504255,
+      "tag": "0000_smiling_killmonger",
       "breakpoints": true
     }
   ]

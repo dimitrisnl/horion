@@ -1,5 +1,5 @@
 {
-  "id": "6fba0a46-d993-4691-8702-20b47a252aed",
+  "id": "f64bd355-a89e-4299-a57f-f496d07a078f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -78,13 +78,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -120,7 +122,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "accounts_account_provider_unique": {
+          "name": "accounts_account_provider_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "account_id",
+            "provider_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -133,6 +144,12 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "organization_id": {
@@ -149,13 +166,16 @@
         },
         "role": {
           "name": "role",
-          "type": "text",
+          "type": "invitation_role",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'member'"
         },
         "status": {
           "name": "status",
-          "type": "text",
+          "type": "invitations_status",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'pending'"
@@ -170,7 +190,21 @@
           "name": "inviter_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -204,17 +238,11 @@
           "method": "btree",
           "with": {}
         },
-        "invitations_email_org_idx": {
-          "name": "invitations_email_org_idx",
+        "invitations_token_idx": {
+          "name": "invitations_token_idx",
           "columns": [
             {
-              "expression": "email",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "organization_id",
+              "expression": "token",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -250,12 +278,28 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "invitations_token_unique": {
+          "name": "invitations_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        },
+        "invitations_email_org_unique": {
+          "name": "invitations_email_org_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email",
+            "organization_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -284,7 +328,8 @@
         },
         "role": {
           "name": "role",
-          "type": "text",
+          "type": "membership_role",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'member'"
@@ -293,7 +338,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -317,27 +370,6 @@
           "columns": [
             {
               "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "memberships_user_org_idx": {
-          "name": "memberships_user_org_idx",
-          "columns": [
-            {
-              "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "organization_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -378,7 +410,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "memberships_user_org_idx_unique": {
+          "name": "memberships_user_org_idx_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "organization_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -409,7 +450,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -430,6 +479,117 @@
         }
       },
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.session_metadata": {
+      "name": "session_metadata",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "session_id": {
+          "name": "session_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "browser": {
+          "name": "browser",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "os": {
+          "name": "os",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "device": {
+          "name": "device",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "engine": {
+          "name": "engine",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "session_metadata_session_id_idx": {
+          "name": "session_metadata_session_id_idx",
+          "columns": [
+            {
+              "expression": "session_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "session_metadata_session_id_sessions_id_fk": {
+          "name": "session_metadata_session_id_sessions_id_fk",
+          "tableFrom": "session_metadata",
+          "tableTo": "sessions",
+          "columnsFrom": [
+            "session_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -458,35 +618,25 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "ip_address": {
-          "name": "ip_address",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "user_agent": {
-          "name": "user_agent",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "user_id": {
           "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -588,13 +738,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -661,13 +813,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -695,7 +849,34 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.invitation_role": {
+      "name": "invitation_role",
+      "schema": "public",
+      "values": [
+        "admin",
+        "member"
+      ]
+    },
+    "public.invitations_status": {
+      "name": "invitations_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "accepted",
+        "declined"
+      ]
+    },
+    "public.membership_role": {
+      "name": "membership_role",
+      "schema": "public",
+      "values": [
+        "admin",
+        "member",
+        "owner"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

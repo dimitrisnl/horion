@@ -18,7 +18,7 @@ import {createFileRoute, useNavigate} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
 
-import {FocusedLayout} from "~/components/app-skeleton/focused-layout";
+import {MutedFocusedLayout} from "~/components/focused-layout";
 import {useLogout} from "~/hooks/use-log-out";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
@@ -31,7 +31,7 @@ function RouteComponent() {
   const {logOut} = useLogout();
 
   return (
-    <FocusedLayout>
+    <MutedFocusedLayout>
       <div className="absolute top-4 right-4 flex items-center justify-center">
         <Button variant="link" onClick={logOut}>
           Log out
@@ -51,7 +51,7 @@ function RouteComponent() {
           </CardContent>
         </Card>
       </div>
-    </FocusedLayout>
+    </MutedFocusedLayout>
   );
 }
 

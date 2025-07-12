@@ -14,7 +14,6 @@ import {NotFound} from "~/components/not-found";
 import appCss from "~/styles/app.css?url";
 import interCss from "~/styles/inter.css?url";
 import type {orpc} from "~/utils/orpc";
-// import {ThemeProvider} from "~/components/theme/theme-provider";
 import {basicMeta, favicons, seo} from "~/utils/seo";
 
 export interface RouterAppContext {
@@ -27,7 +26,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context}) => {
     const {session} = await context.queryClient.fetchQuery(
-      context.orpc.auth.getActiveSession.queryOptions(),
+      context.orpc.account.getSession.queryOptions(),
     );
     const userId = session?.userId || null;
 

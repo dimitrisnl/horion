@@ -8,7 +8,7 @@ export const useLogout = () => {
   const navigate = useNavigate();
 
   const logOut = () => {
-    orpc.auth.signOut
+    orpc.account.deleteSession
       .call()
       .then(() => {
         queryClient.clear();
