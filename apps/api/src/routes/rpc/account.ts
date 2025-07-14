@@ -1,3 +1,5 @@
+import {z} from "zod/v4";
+
 import {protectedProcedure, publicProcedure} from "~/app/orpc-procedures";
 import {AccountContext} from "~/core/contexts/account";
 import {updateUserNameInputSchema} from "~/core/models/user";
@@ -90,4 +92,42 @@ export const accountRouter = {
 
     return {invitations};
   }),
+
+  acceptInvitationAsGuest: publicProcedure
+    .input(
+      z.object({
+        invitationToken: z.string(),
+      }),
+    )
+    .handler(async ({context, input}) => {
+      const {db} = context;
+      const {invitationToken} = input;
+
+      const {user, membership} = await AccountContext.acceptInvitationAsGuest({
+        db,
+        invitationToken,
+      });
+
+      return {user, membership};
+    }),
+
+  acceptInvitationAsUser: protectedProcedure
+    .input(
+      z.object({
+        invitationId: z.string(),
+      }),
+    )
+    .handler(async ({context, input}) => {
+      const {db, session} = context;
+      const actorId = session.userId;
+      const {invitationId} = input;
+
+      const {membership} = await AccountContext.acceptInvitationAsUser({
+        db,
+        actorId,
+        invitationId,
+      });
+
+      return {membership};
+    }),
 };
