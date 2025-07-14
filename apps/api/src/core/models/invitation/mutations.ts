@@ -31,6 +31,7 @@ export const createInvitation = async ({
     inviterId,
     id: generateId(),
     token: generateToken(),
+    status: "pending",
     expiresAt: addDays(now, INVITATION_EXPIRATION_IN_DAYS),
     createdAt: now,
     updatedAt: now,

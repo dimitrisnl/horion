@@ -192,6 +192,7 @@ export const createTestInvitation = async ({
     id: identifier,
     token: generateToken(),
     email: `email_${identifier}@example.com`.toLowerCase(),
+    status: "pending",
     organizationId: generateId(),
     inviterId: generateId(),
     role: "member",
