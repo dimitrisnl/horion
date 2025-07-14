@@ -3,12 +3,17 @@ import type {getSessionFingerprint} from "~/utils/fingerprint";
 
 import {
   InvalidVerificationTokenError,
+  InvitationExpiredError,
+  InvitationNotFoundError,
+  OrganizationNotFoundError,
   SessionNotFoundError,
+  UserAlreadyExistsError,
   UserNotFoundError,
   VerificationExpiredError,
 } from "../errors/error-types";
 import {Invitation} from "../models/invitation";
 import {Membership} from "../models/membership";
+import {Organization} from "../models/organization";
 import {Session} from "../models/session";
 import {SessionMetadata} from "../models/session-metadata";
 import {User} from "../models/user";
@@ -174,5 +179,140 @@ export const AccountContext = {
     }
 
     return {session, isRegistration, user};
+  },
+
+  acceptInvitationAsGuest: async ({
+    db,
+    invitationToken,
+  }: {
+    db: DatabaseConnection;
+    invitationToken: string;
+  }) => {
+    const invitation = await Invitation.findByToken({
+      db,
+      token: invitationToken,
+    });
+
+    if (!invitation) {
+      throw new InvitationNotFoundError();
+    }
+
+    if (invitation.status !== "pending") {
+      throw new InvitationNotFoundError();
+    }
+
+    if (invitation.expiresAt < new Date()) {
+      throw new InvitationExpiredError();
+    }
+
+    const email = invitation.email;
+
+    const userExists = await User.findByEmail({db, email});
+
+    if (userExists) {
+      throw new UserAlreadyExistsError();
+    }
+
+    const organization = await Organization.findById({
+      db,
+      organizationId: invitation.organizationId,
+    });
+
+    if (!organization) {
+      throw new OrganizationNotFoundError();
+    }
+
+    const {user, session, membership} = await db.transaction(async (tx) => {
+      const user = await User.create({
+        db: tx,
+        email,
+        name: "",
+        emailVerified: true,
+      });
+
+      const session = await Session.create({
+        db: tx,
+        userId: user.id,
+      });
+
+      const membership = await Membership.create({
+        db: tx,
+        userId: user.id,
+        organizationId: organization.id,
+        role: invitation.role,
+      });
+
+      await Invitation.delete({
+        db: tx,
+        id: invitation.id,
+        organizationId: organization.id,
+      });
+
+      return {user, session, membership};
+    });
+
+    return {user, session, membership};
+  },
+
+  acceptInvitationAsUser: async ({
+    db,
+    actorId,
+    invitationId,
+  }: {
+    db: DatabaseConnection;
+    actorId: string;
+    invitationId: string;
+  }) => {
+    const invitation = await Invitation.findById({db, invitationId});
+
+    if (!invitation) {
+      throw new InvitationNotFoundError();
+    }
+
+    if (invitation.status !== "pending") {
+      throw new InvitationNotFoundError();
+    }
+
+    if (invitation.expiresAt < new Date()) {
+      throw new InvitationExpiredError();
+    }
+
+    const user = await User.findById({db, userId: actorId});
+
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+
+    if (user.email !== invitation.email) {
+      throw new InvitationNotFoundError();
+    }
+
+    const organization = await Organization.findById({
+      db,
+      organizationId: invitation.organizationId,
+    });
+
+    if (!organization) {
+      throw new OrganizationNotFoundError();
+    }
+
+    const {membership} = await db.transaction(async (tx) => {
+      const membership = await Membership.create({
+        db: tx,
+        userId: user.id,
+        organizationId: organization.id,
+        role: invitation.role,
+      });
+
+      await Invitation.delete({
+        db: tx,
+        id: invitation.id,
+        organizationId: organization.id,
+      });
+
+      return {membership};
+    });
+
+    return {membership};
   },
 };

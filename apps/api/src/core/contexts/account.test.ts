@@ -1,6 +1,7 @@
 import {afterEach, describe, expect, it} from "bun:test";
 
 import {
+  createTestInvitation,
   createTestSession,
   createTestUser,
   createTestVerificationToken,
@@ -10,7 +11,9 @@ import {cleanupTestDatabase, createTestDatabase} from "~/test/setup";
 
 import {
   InvalidVerificationTokenError,
+  InvitationNotFoundError,
   SessionNotFoundError,
+  UserAlreadyExistsError,
   UserNotFoundError,
   VerificationExpiredError,
 } from "../errors/error-types";
@@ -248,6 +251,121 @@ describe("Account Context", async () => {
       expect(result.user).toBeDefined();
       expect(result.user!.email).toBe(user.email);
       expect(result.user?.id).toBe(user.id);
+    });
+  });
+
+  describe("acceptInvitationAsGuest", async () => {
+    it("should accept invitation as guest", async () => {
+      const {org, user: inviter} = await setupTestMembership({db});
+
+      const invitation = await createTestInvitation({
+        db,
+        overrides: {
+          organizationId: org.id,
+          inviterId: inviter.id,
+          role: "admin",
+        },
+      });
+
+      const {user, membership} = await AccountContext.acceptInvitationAsGuest({
+        db,
+        invitationToken: invitation.token,
+      });
+
+      expect(user).toBeDefined();
+      expect(membership).toBeDefined();
+      expect(membership.userId).toBe(user.id);
+      expect(membership.organizationId).toBe(org.id);
+      expect(membership.role).toBe("admin");
+    });
+    it("should throw error if invitation not found", async () => {
+      expect(
+        AccountContext.acceptInvitationAsGuest({
+          db,
+          invitationToken: generateId(),
+        }),
+      ).rejects.toThrow(InvitationNotFoundError);
+    });
+
+    it("should throw if invitee already exists", async () => {
+      const {org, user: inviter} = await setupTestMembership({db});
+      const user = await createTestUser({db});
+
+      const invitation = await createTestInvitation({
+        db,
+        overrides: {
+          organizationId: org.id,
+          inviterId: inviter.id,
+          email: user.email,
+        },
+      });
+
+      expect(
+        AccountContext.acceptInvitationAsGuest({
+          db,
+          invitationToken: invitation.token,
+        }),
+      ).rejects.toThrow(UserAlreadyExistsError);
+    });
+  });
+
+  describe("acceptInvitationAsUser", async () => {
+    it("should accept invitation as user", async () => {
+      const {org, user: inviter} = await setupTestMembership({db});
+      const user = await createTestUser({db});
+
+      const invitation = await createTestInvitation({
+        db,
+        overrides: {
+          organizationId: org.id,
+          inviterId: inviter.id,
+          email: user.email,
+        },
+      });
+
+      const {membership} = await AccountContext.acceptInvitationAsUser({
+        db,
+        actorId: user.id,
+        invitationId: invitation.id,
+      });
+
+      expect(membership).toBeDefined();
+      expect(membership.userId).toBe(user.id);
+      expect(membership.organizationId).toBe(org.id);
+      expect(membership.role).toBe("member");
+    });
+
+    it("should throw error if invitation not found", async () => {
+      expect(
+        AccountContext.acceptInvitationAsUser({
+          db,
+          actorId: generateId(),
+          invitationId: generateId(),
+        }),
+      ).rejects.toThrow(InvitationNotFoundError);
+    });
+
+    it("should throw if the user email does not match the invitation email", async () => {
+      const {org, user: inviter} = await setupTestMembership({db});
+      const user = await createTestUser({db});
+      const otherUser = await createTestUser({db});
+
+      const invitation = await createTestInvitation({
+        db,
+        overrides: {
+          organizationId: org.id,
+          inviterId: inviter.id,
+          email: user.email,
+        },
+      });
+
+      expect(
+        AccountContext.acceptInvitationAsUser({
+          db,
+          actorId: otherUser.id,
+          invitationId: invitation.id,
+        }),
+      ).rejects.toThrow(InvitationNotFoundError);
     });
   });
 });
