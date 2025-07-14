@@ -17,6 +17,7 @@ export const invitationSchema = z.object({
   id: invitationIdSchema,
   token: invitationTokenSchema,
   organizationId: organizationIdSchema,
+  status: z.enum(["pending", "accepted", "declined"]),
   email: emailSchema,
   role: invitationRoleSchema,
   expiresAt: z
@@ -41,3 +42,9 @@ export const deleteInvitationInputSchema = invitationSchema.pick({
   id: true,
   organizationId: true,
 });
+
+export const invitationCanBeAccepted = (
+  invitation: z.infer<typeof invitationSchema>,
+) => {
+  return invitation.status === "pending" && invitation.expiresAt >= new Date();
+};
