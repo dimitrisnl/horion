@@ -1,3 +1,5 @@
+import {z} from "zod/v4";
+
 import {protectedProcedure} from "~/app/orpc-procedures";
 import {OrganizationContext} from "~/core/contexts/organization";
 import {
@@ -58,5 +60,21 @@ export const organizationRouter = {
       return {
         organization,
       };
+    }),
+
+  getMemberships: protectedProcedure
+    .input(z.object({organizationId: z.string()}))
+    .handler(async ({context, input}) => {
+      const {db, session} = context;
+      const userId = session.userId;
+      const {organizationId} = input;
+
+      const memberships = await OrganizationContext.getMemberships({
+        db,
+        organizationId,
+        actorId: userId,
+      });
+
+      return {memberships};
     }),
 };

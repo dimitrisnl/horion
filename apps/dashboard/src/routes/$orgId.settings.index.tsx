@@ -20,6 +20,7 @@ import {createFileRoute} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {ContentLayout} from "~/components/content-layout";
+import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
@@ -36,6 +37,7 @@ function RouteComponent() {
     >
       <OrganizationNameSection />
       <Separator className="my-12" />
+      <OrganizationMembersSection />
     </ContentLayout>
   );
 }
@@ -185,4 +187,58 @@ const useOrganizationNameForm = ({
   return {
     form,
   };
+};
+
+const OrganizationMembersSection = () => {
+  return (
+    <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+      <div className="space-y-2">
+        <Strong>Manage your organization members</Strong>
+        <Text className="max-w-sm">
+          Here&apos;s all the members of your organization.
+        </Text>
+      </div>
+      <div className="space-y-4">
+        <Suspense
+          fallback={
+            <div className="grid gap-4">
+              <Skeleton className="h-3.5 w-12" />
+              <Skeleton className="h-9 w-full" />
+            </div>
+          }
+        >
+          <OrganizationMembersList />
+        </Suspense>
+      </div>
+    </section>
+  );
+};
+
+const OrganizationMembersList = () => {
+  const organizationId = useOrgId();
+  const {
+    data: {memberships},
+  } = useSuspenseQuery(
+    orpc.organization.getMemberships.queryOptions({
+      input: {organizationId},
+    }),
+  );
+
+  if (memberships.length === 0) {
+    return <Text>No members found.</Text>;
+  }
+
+  return (
+    <div className="space-y-4">
+      {memberships.map((member) => (
+        <div
+          key={member.memberId}
+          className="flex items-center justify-between"
+        >
+          <Text>{member.memberEmail}</Text>
+          <MembershipRoleBadge role={member.role} />
+        </div>
+      ))}
+    </div>
+  );
 };

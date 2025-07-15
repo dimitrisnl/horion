@@ -51,3 +51,27 @@ export const findMembershipsByUserId = async ({
 
   return memberships;
 };
+
+export const findMembershipsByOrganizationId = async ({
+  db,
+  organizationId,
+}: {
+  db: DatabaseConnection;
+  organizationId: string;
+}) => {
+  const memberships = await db
+    .select({
+      memberName: schema.users.name,
+      memberEmail: schema.users.email,
+      memberId: schema.memberships.id,
+      userId: schema.memberships.userId,
+      role: schema.memberships.role,
+      createdAt: schema.memberships.createdAt,
+    })
+    .from(schema.memberships)
+    .where(eq(schema.memberships.organizationId, organizationId))
+    .innerJoin(schema.users, eq(schema.memberships.userId, schema.users.id))
+    .orderBy(schema.memberships.createdAt);
+
+  return memberships;
+};

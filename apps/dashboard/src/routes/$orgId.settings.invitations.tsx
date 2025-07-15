@@ -1,7 +1,6 @@
 import {Suspense} from "react";
 
 import {LoaderCircleIcon} from "@horionos/icons";
-import {Badge} from "@horionos/ui/badge";
 import {Button} from "@horionos/ui/button";
 import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
@@ -38,6 +37,8 @@ import {createFileRoute} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {ContentLayout} from "~/components/content-layout";
+import {InvitationRoleBadge} from "~/components/invitation-role-badge";
+import {InvitationStatusBadge} from "~/components/invitation-status-badge";
 import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
@@ -63,7 +64,7 @@ function RouteComponent() {
       subtitle="Manage your organization invitations"
     >
       <InviteTeammateSection />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <InvitationsListSection />
     </ContentLayout>
   );
@@ -276,27 +277,6 @@ const InvitationsListSection = () => {
       </div>
     </section>
   );
-};
-
-const InvitationRoleBadge = ({role}: {role: InvitationRole}) => {
-  if (role === "admin") {
-    return <Badge variant="tertiary">Admin</Badge>;
-  }
-  if (role === "member") {
-    return <Badge variant="outline">Member</Badge>;
-  }
-  return null;
-};
-
-const InvitationStatusBadge = ({status}: {status: string}) => {
-  if (status === "pending") {
-    return <Badge variant="outline">Pending</Badge>;
-  }
-  if (status === "expired") {
-    return <Badge variant="outline">Expired</Badge>;
-  }
-
-  return null;
 };
 
 const InvitationsTableRows = () => {

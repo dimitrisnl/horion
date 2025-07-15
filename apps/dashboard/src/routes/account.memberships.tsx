@@ -1,5 +1,4 @@
 import {ArrowRightIcon} from "@horionos/icons";
-import {Badge} from "@horionos/ui/badge";
 import {Button, buttonVariants} from "@horionos/ui/button";
 import {Separator} from "@horionos/ui/separator";
 import {
@@ -16,6 +15,8 @@ import {useSuspenseQuery} from "@tanstack/react-query";
 import {createFileRoute, Link} from "@tanstack/react-router";
 
 import {ContentLayout} from "~/components/content-layout";
+import {InvitationStatusBadge} from "~/components/invitation-status-badge";
+import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {orpc} from "~/utils/orpc";
 
 export const Route = createFileRoute("/account/memberships")({
@@ -41,32 +42,6 @@ function RouteComponent() {
     </ContentLayout>
   );
 }
-
-type MembershipRole = "owner" | "admin" | "member";
-
-const MembershipRoleBadge = ({role}: {role: MembershipRole}) => {
-  if (role === "owner") {
-    return <Badge variant="tertiary">Owner</Badge>;
-  }
-  if (role === "admin") {
-    return <Badge variant="secondary">Admin</Badge>;
-  }
-  if (role === "member") {
-    return <Badge variant="outline">Member</Badge>;
-  }
-  return null;
-};
-
-const InvitationStatusBadge = ({status}: {status: string}) => {
-  if (status === "pending") {
-    return <Badge variant="outline">Pending</Badge>;
-  }
-  if (status === "expired") {
-    return <Badge variant="outline">Expired</Badge>;
-  }
-
-  return null;
-};
 
 const InvitationsSection = () => {
   const {
