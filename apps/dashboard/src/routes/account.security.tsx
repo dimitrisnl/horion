@@ -88,7 +88,7 @@ const SessionTableRows = () => {
       <TableCell className="space-y-0.5">
         <div className="font-medium">
           {session.browser || "Unknown browser"}
-          {session.os ? `on ${session.os}` : ""}
+          {session.os ? ` on ${session.os}` : ""}
         </div>
         <Text>
           {new Intl.DateTimeFormat("en-US", {

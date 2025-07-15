@@ -45,7 +45,7 @@ const ErrorAlert = ({error}: {error: string}) => {
           {message.description}
         </AlertDescription>
       </Alert>
-      <Separator className="my-8" />
+      <Separator className="my-12" />
     </div>
   );
 };

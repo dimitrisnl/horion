@@ -63,7 +63,7 @@ function RouteComponent() {
       subtitle="Manage your organization invitations"
     >
       <InviteTeammateSection />
-      <Separator className="my-8" />
+      <Separator className="my-12" />
       <InvitationsListSection />
     </ContentLayout>
   );
