@@ -18,7 +18,7 @@ import {createFileRoute, Link} from "@tanstack/react-router";
 import {ContentLayout} from "~/components/content-layout";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/account/organizations")({
+export const Route = createFileRoute("/account/memberships")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/account/organizations")({
 function RouteComponent() {
   return (
     <ContentLayout
-      title="Organizations"
+      title="Memberships"
       subtitle="All your memberships and pending invitations"
     >
       <InvitationsSection />
@@ -83,8 +83,8 @@ const InvitationsSection = () => {
         <div className="space-y-2">
           <Strong>Organizations</Strong>
           <Text className="max-w-sm">
-            Here&apos;s all the invitations you&apos;ve received to join
-            organizations
+            Here&apos;s all the organizations you&apos;re a member of, along
+            with your role in each organization.
           </Text>
         </div>
         <div className="space-y-4">
@@ -141,39 +141,43 @@ const InvitationsSection = () => {
           </Text>
         </div>
         <div className="space-y-4">
-          <Table>
-            <TableHeader>
-              <TableRow disableHover>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invitations.map((invitation) => (
-                <TableRow key={invitation.id} disableHover>
-                  <TableCell>{invitation.email}</TableCell>
-                  <TableCell>
-                    <MembershipRoleBadge role={invitation.role} />
-                  </TableCell>
-                  <TableCell>
-                    <InvitationStatusBadge status={invitation.status} />
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-x-2">
-                      <Button variant="outline" size="sm">
-                        Accept
-                      </Button>
-                      <Button variant="destructive" size="sm">
-                        Decline
-                      </Button>
-                    </div>
-                  </TableCell>
+          {invitations.length === 0 ? (
+            <Text className="text-center">No invitations found.</Text>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow disableHover>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {invitations.map((invitation) => (
+                  <TableRow key={invitation.id} disableHover>
+                    <TableCell>{invitation.email}</TableCell>
+                    <TableCell>
+                      <MembershipRoleBadge role={invitation.role} />
+                    </TableCell>
+                    <TableCell>
+                      <InvitationStatusBadge status={invitation.status} />
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-x-2">
+                        <Button variant="outline" size="sm">
+                          Accept
+                        </Button>
+                        <Button variant="destructive" size="sm">
+                          Decline
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
       </section>
     </div>

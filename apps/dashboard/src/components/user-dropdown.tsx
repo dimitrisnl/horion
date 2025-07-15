@@ -48,9 +48,9 @@ export function UserDropdown() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link to="/account/organizations" preload="intent">
+            <Link to="/account/memberships" preload="intent">
               <BuildingIcon className="size-4" />
-              Organizations
+              Memberships
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

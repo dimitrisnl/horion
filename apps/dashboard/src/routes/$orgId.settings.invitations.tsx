@@ -242,7 +242,7 @@ const InvitationsListSection = () => {
   return (
     <section className="grid gap-x-8 gap-y-6">
       <div className="space-y-2">
-        <Strong>Your sessions</Strong>
+        <Strong>Invitations</Strong>
         <Text className="max-w-sm">
           View and manage your organization invitations
         </Text>
