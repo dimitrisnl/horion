@@ -19,7 +19,7 @@ import {InvitationStatusBadge} from "~/components/invitation-status-badge";
 import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/account/memberships")({
+export const Route = createFileRoute("/_authed/account/memberships")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(

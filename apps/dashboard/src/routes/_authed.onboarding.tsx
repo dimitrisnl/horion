@@ -22,7 +22,7 @@ import {MutedFocusedLayout} from "~/components/focused-layout";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
-export const Route = createFileRoute("/onboarding")({
+export const Route = createFileRoute("/_authed/onboarding")({
   component: RouteComponent,
 });
 

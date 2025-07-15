@@ -7,6 +7,14 @@ import {Label} from "@horionos/ui/label";
 import {Separator} from "@horionos/ui/separator";
 import {Skeleton} from "@horionos/ui/skeleton";
 import {toast} from "@horionos/ui/sonner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@horionos/ui/table";
 import {Strong, Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
@@ -25,7 +33,7 @@ import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
-export const Route = createFileRoute("/$orgId/settings/")({
+export const Route = createFileRoute("/_authed/$orgId/settings/")({
   component: RouteComponent,
 });
 
@@ -189,6 +197,15 @@ const useOrganizationNameForm = ({
   };
 };
 
+const LoadingRow = () => (
+  <TableRow>
+    <TableCell className="space-y-1 font-medium">
+      <Skeleton className="h-[20px] w-[200px]" />
+      <Skeleton className="h-[20px] w-[170px]" />
+    </TableCell>
+  </TableRow>
+);
+
 const OrganizationMembersSection = () => {
   return (
     <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -199,16 +216,27 @@ const OrganizationMembersSection = () => {
         </Text>
       </div>
       <div className="space-y-4">
-        <Suspense
-          fallback={
-            <div className="grid gap-4">
-              <Skeleton className="h-3.5 w-12" />
-              <Skeleton className="h-9 w-full" />
-            </div>
-          }
-        >
-          <OrganizationMembersList />
-        </Suspense>
+        <Table>
+          <TableHeader>
+            <TableRow disableHover>
+              <TableHead>Member</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <Suspense
+              fallback={
+                <>
+                  <LoadingRow />
+                  <LoadingRow />
+                </>
+              }
+            >
+              <OrganizationMembersList />
+            </Suspense>
+          </TableBody>
+        </Table>
       </div>
     </section>
   );
@@ -224,21 +252,19 @@ const OrganizationMembersList = () => {
     }),
   );
 
-  if (memberships.length === 0) {
-    return <Text>No members found.</Text>;
-  }
-
-  return (
-    <div className="space-y-4">
-      {memberships.map((member) => (
-        <div
-          key={member.memberId}
-          className="flex items-center justify-between"
-        >
-          <Text>{member.memberEmail}</Text>
-          <MembershipRoleBadge role={member.role} />
-        </div>
-      ))}
-    </div>
-  );
+  return memberships.map((membership) => (
+    <TableRow key={membership.memberId}>
+      <TableCell>
+        <Strong>{membership.memberEmail}</Strong>
+        {membership.memberName ? (
+          <Text className="text-muted-foreground">
+            ({membership.memberName})
+          </Text>
+        ) : null}
+      </TableCell>
+      <TableCell>
+        <MembershipRoleBadge role={membership.role} />
+      </TableCell>
+    </TableRow>
+  ));
 };

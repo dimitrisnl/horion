@@ -13,7 +13,7 @@ import {NotFound} from "~/components/not-found";
 import {TeamDropdownWithoutSelection} from "~/components/team-dropdown";
 import {UserDropdown} from "~/components/user-dropdown";
 
-export const Route = createFileRoute("/account")({
+export const Route = createFileRoute("/_authed/account")({
   component: RouteComponent,
   notFoundComponent: () => <NotFound />,
 });

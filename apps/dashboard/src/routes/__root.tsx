@@ -35,7 +35,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       ...basicMeta,
-      ...seo({title: "Horionos", description: "The best app ever!"}),
+      ...seo({title: "Horionos", description: "The dashboard for Horionos"}),
     ],
     links: [
       {rel: "stylesheet", href: interCss},
