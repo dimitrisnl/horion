@@ -19,15 +19,20 @@ export const Route = createFileRoute("/$orgId")({
   beforeLoad: async ({context, params}) => {
     const {orgId} = params;
 
-    return context.queryClient
-      .ensureQueryData(
+    return Promise.all([
+      context.queryClient.ensureQueryData(
+        context.orpc.account.getMembership.queryOptions({
+          input: {organizationId: orgId},
+        }),
+      ),
+      context.queryClient.ensureQueryData(
         context.orpc.organization.get.queryOptions({
           input: {id: orgId},
         }),
-      )
-      .catch(() => {
-        throw redirect({to: "/"});
-      });
+      ),
+    ]).catch(() => {
+      throw redirect({to: "/"});
+    });
   },
 });
 
