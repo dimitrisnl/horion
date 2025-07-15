@@ -17,7 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
 import { Route as OrgIdIndexRouteImport } from './routes/$orgId.index'
 import { Route as AccountSecurityRouteImport } from './routes/account.security'
-import { Route as AccountOrganizationsRouteImport } from './routes/account.organizations'
+import { Route as AccountMembershipsRouteImport } from './routes/account.memberships'
 import { Route as GuestLoginRouteImport } from './routes/_guest.login'
 import { Route as GuestAcceptInvitationRouteImport } from './routes/_guest.accept-invitation'
 import { Route as OrgIdSettingsIndexRouteImport } from './routes/$orgId.settings.index'
@@ -62,9 +62,9 @@ const AccountSecurityRoute = AccountSecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => AccountRoute,
 } as any)
-const AccountOrganizationsRoute = AccountOrganizationsRouteImport.update({
-  id: '/organizations',
-  path: '/organizations',
+const AccountMembershipsRoute = AccountMembershipsRouteImport.update({
+  id: '/memberships',
+  path: '/memberships',
   getParentRoute: () => AccountRoute,
 } as any)
 const GuestLoginRoute = GuestLoginRouteImport.update({
@@ -96,7 +96,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/accept-invitation': typeof GuestAcceptInvitationRoute
   '/login': typeof GuestLoginRoute
-  '/account/organizations': typeof AccountOrganizationsRoute
+  '/account/memberships': typeof AccountMembershipsRoute
   '/account/security': typeof AccountSecurityRoute
   '/$orgId/': typeof OrgIdIndexRoute
   '/account/': typeof AccountIndexRoute
@@ -108,7 +108,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/accept-invitation': typeof GuestAcceptInvitationRoute
   '/login': typeof GuestLoginRoute
-  '/account/organizations': typeof AccountOrganizationsRoute
+  '/account/memberships': typeof AccountMembershipsRoute
   '/account/security': typeof AccountSecurityRoute
   '/$orgId': typeof OrgIdIndexRoute
   '/account': typeof AccountIndexRoute
@@ -124,7 +124,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/_guest/accept-invitation': typeof GuestAcceptInvitationRoute
   '/_guest/login': typeof GuestLoginRoute
-  '/account/organizations': typeof AccountOrganizationsRoute
+  '/account/memberships': typeof AccountMembershipsRoute
   '/account/security': typeof AccountSecurityRoute
   '/$orgId/': typeof OrgIdIndexRoute
   '/account/': typeof AccountIndexRoute
@@ -140,7 +140,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/accept-invitation'
     | '/login'
-    | '/account/organizations'
+    | '/account/memberships'
     | '/account/security'
     | '/$orgId/'
     | '/account/'
@@ -152,7 +152,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/accept-invitation'
     | '/login'
-    | '/account/organizations'
+    | '/account/memberships'
     | '/account/security'
     | '/$orgId'
     | '/account'
@@ -167,7 +167,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/_guest/accept-invitation'
     | '/_guest/login'
-    | '/account/organizations'
+    | '/account/memberships'
     | '/account/security'
     | '/$orgId/'
     | '/account/'
@@ -241,11 +241,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountSecurityRouteImport
       parentRoute: typeof AccountRoute
     }
-    '/account/organizations': {
-      id: '/account/organizations'
-      path: '/organizations'
-      fullPath: '/account/organizations'
-      preLoaderRoute: typeof AccountOrganizationsRouteImport
+    '/account/memberships': {
+      id: '/account/memberships'
+      path: '/memberships'
+      fullPath: '/account/memberships'
+      preLoaderRoute: typeof AccountMembershipsRouteImport
       parentRoute: typeof AccountRoute
     }
     '/_guest/login': {
@@ -306,13 +306,13 @@ const GuestRouteChildren: GuestRouteChildren = {
 const GuestRouteWithChildren = GuestRoute._addFileChildren(GuestRouteChildren)
 
 interface AccountRouteChildren {
-  AccountOrganizationsRoute: typeof AccountOrganizationsRoute
+  AccountMembershipsRoute: typeof AccountMembershipsRoute
   AccountSecurityRoute: typeof AccountSecurityRoute
   AccountIndexRoute: typeof AccountIndexRoute
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
-  AccountOrganizationsRoute: AccountOrganizationsRoute,
+  AccountMembershipsRoute: AccountMembershipsRoute,
   AccountSecurityRoute: AccountSecurityRoute,
   AccountIndexRoute: AccountIndexRoute,
 }

@@ -30,8 +30,8 @@ const nav = [
     activeOptions: {exact: false},
   },
   {
-    title: "Organizations",
-    url: "/account/organizations",
+    title: "Memberships",
+    url: "/account/memberships",
     activeOptions: {exact: false},
   },
 ];

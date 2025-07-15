@@ -79,14 +79,16 @@ const SessionTableRows = () => {
     data: {session},
   } = useSuspenseQuery(orpc.account.getSession.queryOptions());
 
+  console.log("sessions", sessions);
+
   const activeSessionId = session?.id || "";
 
   return sessions.map((session) => (
     <TableRow key={session.id}>
       <TableCell className="space-y-0.5">
         <div className="font-medium">
-          {session.browser} {" on "}
-          {session.os}
+          {session.browser || "Unknown browser"}
+          {session.os ? `on ${session.os}` : ""}
         </div>
         <Text>
           {new Intl.DateTimeFormat("en-US", {
