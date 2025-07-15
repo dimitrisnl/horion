@@ -4,6 +4,7 @@ import {LoaderCircleIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
 import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
+import {Separator} from "@horionos/ui/separator";
 import {Skeleton} from "@horionos/ui/skeleton";
 import {toast} from "@horionos/ui/sonner";
 import {Strong, Text} from "@horionos/ui/text";
@@ -33,32 +34,39 @@ function RouteComponent() {
       title="Organization Settings"
       subtitle="Manage your organization settings"
     >
-      <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Strong>Update your organization&apos;s name</Strong>
-          <Text className="max-w-sm">
-            This name will be displayed to all members of your organization.
-          </Text>
-        </div>
-        <div className="space-y-4">
-          <Suspense
-            fallback={
-              <div className="grid gap-4">
-                <div className="grid gap-3">
-                  <Skeleton className="h-3.5 w-12" />
-                  <Skeleton className="h-9 w-full" />
-                </div>
-                <Skeleton className="ml-auto h-9 w-32" />
-              </div>
-            }
-          >
-            <OrganizationNameForm />
-          </Suspense>
-        </div>
-      </section>
+      <OrganizationNameSection />
+      <Separator className="my-12" />
     </ContentLayout>
   );
 }
+
+const OrganizationNameSection = () => {
+  return (
+    <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+      <div className="space-y-2">
+        <Strong>Update your organization&apos;s name</Strong>
+        <Text className="max-w-sm">
+          This name will be displayed to all members of your organization.
+        </Text>
+      </div>
+      <div className="space-y-4">
+        <Suspense
+          fallback={
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Skeleton className="h-3.5 w-12" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+              <Skeleton className="ml-auto h-9 w-32" />
+            </div>
+          }
+        >
+          <OrganizationNameForm />
+        </Suspense>
+      </div>
+    </section>
+  );
+};
 
 export const OrganizationNameForm = () => {
   const organizationId = useOrgId();
