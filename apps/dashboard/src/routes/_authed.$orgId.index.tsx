@@ -4,7 +4,7 @@ import {createFileRoute} from "@tanstack/react-router";
 
 import {ContentLayout} from "~/components/content-layout";
 
-export const Route = createFileRoute("/$orgId/")({
+export const Route = createFileRoute("/_authed/$orgId/")({
   component: RouteComponent,
 });
 

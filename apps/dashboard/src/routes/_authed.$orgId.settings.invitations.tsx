@@ -45,7 +45,7 @@ import {withValidationErrors} from "~/utils/with-validation-errors";
 
 type InvitationRole = "member" | "admin";
 
-export const Route = createFileRoute("/$orgId/settings/invitations")({
+export const Route = createFileRoute("/_authed/$orgId/settings/invitations")({
   component: RouteComponent,
   loader({context, params}) {
     context.queryClient.prefetchQuery(
@@ -236,7 +236,6 @@ const InvitationsListSection = () => {
         <Skeleton className="h-[20px] w-[200px]" />
         <Skeleton className="h-[20px] w-[170px]" />
       </TableCell>
-      <TableCell></TableCell>
     </TableRow>
   );
 

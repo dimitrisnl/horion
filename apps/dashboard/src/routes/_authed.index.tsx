@@ -1,5 +1,4 @@
 import {ArrowRightIcon} from "@horionos/icons";
-import {Badge} from "@horionos/ui/badge";
 import {buttonVariants} from "@horionos/ui/button";
 import {Separator} from "@horionos/ui/separator";
 import {Strong} from "@horionos/ui/text";
@@ -8,15 +7,12 @@ import {useSuspenseQuery} from "@tanstack/react-query";
 import {createFileRoute, Link, redirect} from "@tanstack/react-router";
 
 import {MutedFocusedLayout} from "~/components/focused-layout";
+import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {minutesToMs} from "~/utils/minutes-to-ms";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authed/")({
   beforeLoad: async ({context}) => {
-    if (!context.userId) {
-      throw redirect({to: "/login"});
-    }
-
     const {memberships} = await context.queryClient.fetchQuery(
       context.orpc.account.getMemberships.queryOptions({
         staleTime: minutesToMs(5), // Cache memberships for 5 minutes
@@ -29,21 +25,6 @@ export const Route = createFileRoute("/")({
   },
   component: RouteComponent,
 });
-
-type MembershipRole = "owner" | "admin" | "member";
-
-const MembershipRoleBadge = ({role}: {role: MembershipRole}) => {
-  if (role === "owner") {
-    return <Badge variant="tertiary">Owner</Badge>;
-  }
-  if (role === "admin") {
-    return <Badge variant="secondary">Admin</Badge>;
-  }
-  if (role === "member") {
-    return <Badge variant="outline">Member</Badge>;
-  }
-  return null;
-};
 
 function RouteComponent() {
   const {

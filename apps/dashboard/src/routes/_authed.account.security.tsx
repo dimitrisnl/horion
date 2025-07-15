@@ -11,7 +11,7 @@ import {createFileRoute} from "@tanstack/react-router";
 import {ContentLayout} from "~/components/content-layout";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/account/security")({
+export const Route = createFileRoute("/_authed/account/security")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(
@@ -39,7 +39,6 @@ const SessionsSection = () => {
         <Skeleton className="h-[20px] w-[200px]" />
         <Skeleton className="h-[20px] w-[170px]" />
       </TableCell>
-      <TableCell></TableCell>
     </TableRow>
   );
 
@@ -78,8 +77,6 @@ const SessionTableRows = () => {
   const {
     data: {session},
   } = useSuspenseQuery(orpc.account.getSession.queryOptions());
-
-  console.log("sessions", sessions);
 
   const activeSessionId = session?.id || "";
 

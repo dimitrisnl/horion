@@ -13,13 +13,13 @@ import {NotFound} from "~/components/not-found";
 import {TeamDropdown} from "~/components/team-dropdown";
 import {UserDropdown} from "~/components/user-dropdown";
 
-export const Route = createFileRoute("/$orgId")({
+export const Route = createFileRoute("/_authed/$orgId")({
   component: RouteComponent,
   notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context, params}) => {
     const {orgId} = params;
 
-    return Promise.all([
+    const [membership, organization] = await Promise.all([
       context.queryClient.ensureQueryData(
         context.orpc.account.getMembership.queryOptions({
           input: {organizationId: orgId},
@@ -33,6 +33,11 @@ export const Route = createFileRoute("/$orgId")({
     ]).catch(() => {
       throw redirect({to: "/"});
     });
+
+    return {
+      membership,
+      organization,
+    };
   },
 });
 
