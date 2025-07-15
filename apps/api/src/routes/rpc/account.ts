@@ -100,13 +100,16 @@ export const accountRouter = {
       }),
     )
     .handler(async ({context, input}) => {
-      const {db} = context;
+      const {db, cookieService} = context;
       const {invitationToken} = input;
 
-      const {user, membership} = await AccountContext.acceptInvitationAsGuest({
-        db,
-        invitationToken,
-      });
+      const {user, membership, session} =
+        await AccountContext.acceptInvitationAsGuest({
+          db,
+          invitationToken,
+        });
+
+      await cookieService.createSessionCookie(session.token);
 
       return {user, membership};
     }),
