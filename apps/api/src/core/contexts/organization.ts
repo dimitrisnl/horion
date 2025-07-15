@@ -308,4 +308,31 @@ export const OrganizationContext = {
 
     return {organization, invitation};
   },
+
+  getMemberships: async ({
+    db,
+    organizationId,
+    actorId,
+  }: {
+    db: DatabaseConnection;
+    organizationId: string;
+    actorId: string;
+  }) => {
+    const membership = await Membership.find({
+      db,
+      organizationId,
+      userId: actorId,
+    });
+
+    if (!membership) {
+      throw new OrganizationNotFoundError();
+    }
+
+    const memberships = await Membership.findManyByOrganizationId({
+      db,
+      organizationId,
+    });
+
+    return memberships;
+  },
 };
