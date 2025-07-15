@@ -19,7 +19,6 @@ import {createFileRoute, useNavigate} from "@tanstack/react-router";
 import {z} from "zod/v4";
 
 import {MutedFocusedLayout} from "~/components/focused-layout";
-import {useLogout} from "~/hooks/use-log-out";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
@@ -28,15 +27,8 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 function RouteComponent() {
-  const {logOut} = useLogout();
-
   return (
     <MutedFocusedLayout>
-      <div className="absolute top-4 right-4 flex items-center justify-center">
-        <Button variant="link" onClick={logOut}>
-          Log out
-        </Button>
-      </div>
       <div className="flex w-full max-w-lg flex-col gap-6 p-8">
         <Card>
           <CardHeader>
