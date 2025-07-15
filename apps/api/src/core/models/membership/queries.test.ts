@@ -9,7 +9,11 @@ import {
 import {cleanupTestDatabase, createTestDatabase} from "~/test/setup";
 
 import {generateId} from "../id";
-import {findMembership, findMembershipsByUserId} from "./queries";
+import {
+  findMembership,
+  findMembershipsByOrganizationId,
+  findMembershipsByUserId,
+} from "./queries";
 
 describe("Membership Queries", async () => {
   const {client, db} = await createTestDatabase();
@@ -132,6 +136,33 @@ describe("Membership Queries", async () => {
         expect(membership.organizationId).toBeDefined();
         expect(membership.organizationName).toBeDefined();
       });
+    });
+  });
+
+  describe("findMembershipsByOrganizationId", async () => {
+    it("should return memberships for organization", async () => {
+      const {org} = await setupTestMembership({db});
+
+      const memberships = await findMembershipsByOrganizationId({
+        db,
+        organizationId: org.id,
+      });
+
+      expect(memberships).toBeDefined();
+      expect(memberships!.length).toBe(1);
+      expect(memberships![0].role).toBe("owner");
+    });
+
+    it("should return empty array when organization has no memberships", async () => {
+      const createdOrganization = await createTestOrganization({db});
+
+      const memberships = await findMembershipsByOrganizationId({
+        db,
+        organizationId: createdOrganization.id,
+      });
+
+      expect(memberships).toBeDefined();
+      expect(memberships!.length).toBe(0);
     });
   });
 });

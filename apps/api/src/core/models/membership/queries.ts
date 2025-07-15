@@ -63,8 +63,7 @@ export const findMembershipsByOrganizationId = async ({
     .select({
       memberName: schema.users.name,
       memberEmail: schema.users.email,
-      memberId: schema.memberships.id,
-      userId: schema.memberships.userId,
+      memberId: schema.memberships.userId,
       role: schema.memberships.role,
       createdAt: schema.memberships.createdAt,
     })
