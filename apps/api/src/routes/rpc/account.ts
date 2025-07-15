@@ -2,6 +2,7 @@ import {z} from "zod/v4";
 
 import {protectedProcedure, publicProcedure} from "~/app/orpc-procedures";
 import {AccountContext} from "~/core/contexts/account";
+import {OrganizationNotFoundError} from "~/core/errors/error-types";
 import {updateUserNameInputSchema} from "~/core/models/user";
 
 export const accountRouter = {
@@ -29,6 +30,27 @@ export const accountRouter = {
 
     return {user};
   }),
+
+  getMembership: protectedProcedure
+    .input(z.object({organizationId: z.string()}))
+    .handler(async ({context, input}) => {
+      const {db, session} = context;
+      const actorId = session.userId;
+
+      const {organizationId} = input;
+
+      const membership = await AccountContext.getUserMembership({
+        db,
+        actorId,
+        organizationId,
+      });
+
+      if (!membership) {
+        throw new OrganizationNotFoundError();
+      }
+
+      return {membership};
+    }),
 
   deleteSession: protectedProcedure.handler(async ({context}) => {
     const {session, cookieService, db} = context;
@@ -93,6 +115,7 @@ export const accountRouter = {
     return {invitations};
   }),
 
+  // Todo: Add session metadata fingerprinting
   acceptInvitationAsGuest: publicProcedure
     .input(
       z.object({

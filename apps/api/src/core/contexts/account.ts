@@ -101,6 +101,24 @@ export const AccountContext = {
     return memberships;
   },
 
+  getUserMembership: async ({
+    db,
+    actorId,
+    organizationId,
+  }: {
+    db: DatabaseConnection;
+    actorId: string;
+    organizationId: string;
+  }) => {
+    const membership = await Membership.find({
+      db,
+      userId: actorId,
+      organizationId,
+    });
+
+    return membership;
+  },
+
   getUserInvitations: async ({
     db,
     actorId,
