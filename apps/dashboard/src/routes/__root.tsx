@@ -11,6 +11,8 @@ import {
 import {TanStackRouterDevtools} from "@tanstack/react-router-devtools";
 
 import {NotFound} from "~/components/not-found";
+import {ThemeProvider} from "~/components/theme/theme-provider";
+import {getThemeServerFn} from "~/lib/theme";
 import appCss from "~/styles/app.css?url";
 import interCss from "~/styles/inter.css?url";
 import type {orpc} from "~/utils/orpc";
@@ -32,6 +34,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 
     return {userId};
   },
+  loader: () => getThemeServerFn(),
   head: () => ({
     meta: [
       ...basicMeta,
@@ -46,22 +49,28 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootComponent() {
+  const data = Route.useLoaderData();
+
   return (
-    <RootDocument>
-      <div className="grid h-svh grid-rows-[auto_1fr]">
-        <Outlet />
-      </div>
-    </RootDocument>
+    <ThemeProvider theme={data}>
+      <RootDocument>
+        <div className="grid h-svh grid-rows-[auto_1fr]">
+          <Outlet />
+        </div>
+      </RootDocument>
+    </ThemeProvider>
   );
 }
 
 function RootDocument({children}: Readonly<{children: React.ReactNode}>) {
+  const theme = Route.useLoaderData();
+
   return (
-    <html lang="en" className="antialiased">
+    <html lang="en" className={theme} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground antialiased">
         {children}
         <Toaster richColors position="top-right" closeButton />
         <TanStackRouterDevtools position="bottom-right" />

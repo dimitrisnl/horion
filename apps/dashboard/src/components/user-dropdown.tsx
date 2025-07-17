@@ -30,8 +30,8 @@ export function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-(--radix-dropdown-menu-trigger-width) min-w-44 rounded-lg"
-        align="end"
+        className="min-w-44 rounded-lg"
+        align="start"
         sideOffset={4}
       >
         <DropdownMenuGroup>

@@ -5,12 +5,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@horionos/ui/navigation-menu";
+import {Separator} from "@horionos/ui/separator";
 
 import {createFileRoute, Outlet} from "@tanstack/react-router";
 import {Link} from "@tanstack/react-router";
 
 import {NotFound} from "~/components/not-found";
 import {TeamDropdownWithoutSelection} from "~/components/team-dropdown";
+import {ThemeSwitcher} from "~/components/theme/theme-switcher";
 import {UserDropdown} from "~/components/user-dropdown";
 
 export const Route = createFileRoute("/_authed/account")({
@@ -76,6 +78,8 @@ function RouteComponent() {
                 </div>
               </div>
               <Navigation />
+              <Separator className="mx-2" orientation="vertical" />
+              <ThemeSwitcher />
               <UserDropdown />
             </div>
           </div>
