@@ -1,5 +1,7 @@
 import {AudioWaveformIcon} from "@horionos/icons";
+import {Separator} from "@horionos/ui/separator";
 
+import {ThemeSwitcher} from "./theme/theme-switcher";
 import {UserDropdown} from "./user-dropdown";
 
 export function Header() {
@@ -15,6 +17,8 @@ export function Header() {
                 </div>
               </div>
             </div>
+            <Separator className="lg:mx-2" orientation="vertical" />
+            <ThemeSwitcher />
             <UserDropdown />
           </div>
         </div>

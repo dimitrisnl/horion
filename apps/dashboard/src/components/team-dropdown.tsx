@@ -3,6 +3,7 @@ import {Suspense} from "react";
 import {
   ChevronDownIcon,
   CircleSmallIcon,
+  LoaderCircleIcon,
   MailIcon,
   PlusCircleIcon,
   SettingsIcon,
@@ -139,13 +140,21 @@ export const TeamDropdownWithoutSelection = () => {
         align="start"
         sideOffset={4}
       >
-        <MembershipsDropdownList activeOrganizationId={""} />
-        <DropdownMenuItem asChild>
-          <Link to="/onboarding">
-            <PlusCircleIcon className="size-4" />
-            <div>Create new organization</div>
-          </Link>
-        </DropdownMenuItem>
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center p-4">
+              <LoaderCircleIcon className="animate-spin" />
+            </div>
+          }
+        >
+          <MembershipsDropdownList activeOrganizationId={""} />
+          <DropdownMenuItem asChild>
+            <Link to="/onboarding">
+              <PlusCircleIcon className="size-4" />
+              <div>Create new organization</div>
+            </Link>
+          </DropdownMenuItem>
+        </Suspense>
       </DropdownMenuContent>
     </DropdownMenu>
   );
