@@ -1,16 +1,23 @@
-import {AudioWaveformIcon, SquareChartGanttIcon} from "@horionos/icons";
+import {
+  AudioWaveformIcon,
+  MailIcon,
+  SettingsIcon,
+  SquareChartGanttIcon,
+} from "@horionos/icons";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "@horionos/ui/navigation-menu";
+import {Separator} from "@horionos/ui/separator";
 
 import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 import {Link} from "@tanstack/react-router";
 
 import {NotFound} from "~/components/not-found";
 import {TeamDropdown} from "~/components/team-dropdown";
+import {ThemeSwitcher} from "~/components/theme/theme-switcher";
 import {UserDropdown} from "~/components/user-dropdown";
 
 export const Route = createFileRoute("/_authed/$orgId")({
@@ -46,6 +53,18 @@ const nav = [
     title: "Dashboard",
     url: "/$orgId",
     icon: SquareChartGanttIcon,
+    activeOptions: {exact: true},
+  },
+  {
+    title: "Settings",
+    url: "/$orgId/settings",
+    icon: SettingsIcon,
+    activeOptions: {exact: true},
+  },
+  {
+    title: "Invitations",
+    url: "/$orgId/invitations",
+    icon: MailIcon,
     activeOptions: {exact: true},
   },
 ];
@@ -90,6 +109,8 @@ export function OrgPagesHeader() {
               </div>
             </div>
             <Navigation />
+            <Separator className="lg:mx-2" orientation="vertical" />
+            <ThemeSwitcher />
             <UserDropdown />
           </div>
         </div>

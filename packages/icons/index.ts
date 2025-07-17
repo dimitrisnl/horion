@@ -66,4 +66,6 @@ export {
   UserIcon,
   UsersRoundIcon,
   XIcon,
+  LockIcon,
+  ListIcon,
 } from "lucide-react";

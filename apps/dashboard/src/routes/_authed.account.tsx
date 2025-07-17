@@ -1,4 +1,9 @@
-import {AudioWaveformIcon} from "@horionos/icons";
+import {
+  AudioWaveformIcon,
+  BuildingIcon,
+  KeyRoundIcon,
+  SettingsIcon,
+} from "@horionos/icons";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,16 +29,19 @@ const nav = [
   {
     title: "Profile",
     url: "/account",
+    icon: SettingsIcon,
     activeOptions: {exact: true},
   },
   {
     title: "Security",
     url: "/account/security",
+    icon: KeyRoundIcon,
     activeOptions: {exact: false},
   },
   {
     title: "Memberships",
     url: "/account/memberships",
+    icon: BuildingIcon,
     activeOptions: {exact: false},
   },
 ];
@@ -51,7 +59,8 @@ const Navigation = () => {
                   to={item.url}
                   className="flex"
                 >
-                  <span>{item.title}</span>
+                  <item.icon className="stroke-1.5 size-4.5 md:hidden" />
+                  <span className="hidden md:inline">{item.title}</span>
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -78,7 +87,7 @@ function RouteComponent() {
                 </div>
               </div>
               <Navigation />
-              <Separator className="mx-2" orientation="vertical" />
+              <Separator className="lg:mx-2" orientation="vertical" />
               <ThemeSwitcher />
               <UserDropdown />
             </div>
