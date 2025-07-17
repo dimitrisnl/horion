@@ -1,5 +1,5 @@
-import {ArrowRightIcon, EllipsisIcon} from "@horionos/icons";
-import {Button, buttonVariants} from "@horionos/ui/button";
+import {EllipsisIcon} from "@horionos/icons";
+import {Button} from "@horionos/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -92,8 +92,8 @@ const InvitationsSection = () => {
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger>
-                          <Button variant="ghost">
-                            <EllipsisIcon className="size-4" />
+                          <Button variant="ghost" size="sm">
+                            <EllipsisIcon />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
@@ -167,7 +167,7 @@ const InvitationsSection = () => {
                           sideOffset={4}
                         >
                           <DropdownMenuItem>Accept Invitation</DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem variant="destructive">
                             Decline Invitation
                           </DropdownMenuItem>
                         </DropdownMenuContent>

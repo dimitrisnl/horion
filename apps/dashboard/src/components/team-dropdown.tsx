@@ -5,7 +5,7 @@ import {
   CircleSmallIcon,
   LoaderCircleIcon,
   MailIcon,
-  PlusCircleIcon,
+  PlusIcon,
   SettingsIcon,
 } from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
@@ -114,7 +114,7 @@ const MembershipsDropdown = () => {
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
         <Link to="/onboarding">
-          <PlusCircleIcon className="size-4" />
+          <PlusIcon className="size-4" />
           <div>Create new organization</div>
         </Link>
       </DropdownMenuItem>
@@ -142,7 +142,7 @@ export const TeamDropdownWithoutSelection = () => {
           <MembershipsDropdownList activeOrganizationId={""} />
           <DropdownMenuItem asChild>
             <Link to="/onboarding">
-              <PlusCircleIcon className="size-4" />
+              <PlusIcon className="size-4" />
               <div>Create new organization</div>
             </Link>
           </DropdownMenuItem>

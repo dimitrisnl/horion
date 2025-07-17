@@ -1,7 +1,13 @@
 import {Suspense} from "react";
 
-import {LoaderCircleIcon} from "@horionos/icons";
+import {EllipsisIcon, LoaderCircleIcon, XIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@horionos/ui/dropdown-menu";
 import {Input} from "@horionos/ui/input";
 import {Label} from "@horionos/ui/label";
 import {
@@ -317,12 +323,23 @@ const InvitationsTableRows = () => {
         </TableCell>
 
         <TableCell>
-          <div className="flex items-center gap-2">
-            <DeleteInvitationButton
-              invitationId={invitation.id}
-              organizationId={organizationId}
-            />
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="ghost" size="sm">
+                <EllipsisIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="min-w-44"
+              align="start"
+              sideOffset={4}
+            >
+              <DeleteInvitationButton
+                invitationId={invitation.id}
+                organizationId={organizationId}
+              />
+            </DropdownMenuContent>
+          </DropdownMenu>
         </TableCell>
       </TableRow>
     ))
@@ -363,10 +380,8 @@ const DeleteInvitationButton = ({
   );
 
   return (
-    <Button
-      disabled={deleteInvitationMutation.isPending}
+    <DropdownMenuItem
       variant="destructive"
-      size="sm"
       onClick={() => {
         const confirmed = window.confirm(
           "Are you sure you want to revoke this invitation? This action cannot be undone.",
@@ -381,9 +396,16 @@ const DeleteInvitationButton = ({
       }}
     >
       {deleteInvitationMutation.isPending ? (
-        <LoaderCircleIcon className="animate-spin" />
-      ) : null}
-      {deleteInvitationMutation.isPending ? "Revoking..." : "Revoke"}
-    </Button>
+        <>
+          <LoaderCircleIcon className="animate-spin" />
+          Revoking...
+        </>
+      ) : (
+        <>
+          <XIcon />
+          Revoke Invitation
+        </>
+      )}
+    </DropdownMenuItem>
   );
 };
