@@ -63,7 +63,7 @@ const nav = [
   },
   {
     title: "Invitations",
-    url: "/$orgId/invitations",
+    url: "/$orgId/settings/invitations",
     icon: MailIcon,
     activeOptions: {exact: true},
   },

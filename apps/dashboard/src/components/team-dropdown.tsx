@@ -76,7 +76,7 @@ const MembershipsDropdownList = ({
             }
           >
             {activeOrganizationId === membership.organizationId ? (
-              <CircleSmallIcon className="size-4 fill-blue-500 stroke-blue-500" />
+              <CircleSmallIcon className="stroke-primary fill-primary size-4" />
             ) : (
               <CircleSmallIcon className="size-4" />
             )}

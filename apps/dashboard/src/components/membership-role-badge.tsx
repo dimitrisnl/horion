@@ -4,10 +4,10 @@ type MembershipRole = "owner" | "admin" | "member";
 
 export const MembershipRoleBadge = ({role}: {role: MembershipRole}) => {
   if (role === "owner") {
-    return <Badge variant="tertiary">Owner</Badge>;
+    return <Badge variant="outline">Owner</Badge>;
   }
   if (role === "admin") {
-    return <Badge variant="secondary">Admin</Badge>;
+    return <Badge variant="outline">Admin</Badge>;
   }
   if (role === "member") {
     return <Badge variant="outline">Member</Badge>;
