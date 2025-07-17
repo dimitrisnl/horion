@@ -1,7 +1,7 @@
 import {ArrowRightIcon} from "@horionos/icons";
 import {buttonVariants} from "@horionos/ui/button";
+import {Card, CardFooter, CardHeader, CardTitle} from "@horionos/ui/card";
 import {Separator} from "@horionos/ui/separator";
-import {Strong} from "@horionos/ui/text";
 
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {createFileRoute, Link, redirect} from "@tanstack/react-router";
@@ -11,7 +11,7 @@ import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {minutesToMs} from "~/utils/minutes-to-ms";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/_authed/")({
+export const Route = createFileRoute("/_protected/")({
   beforeLoad: async ({context}) => {
     const {memberships} = await context.queryClient.fetchQuery(
       context.orpc.account.getMemberships.queryOptions({
@@ -33,25 +33,30 @@ function RouteComponent() {
 
   return (
     <MutedFocusedLayout>
-      <div className="mt-12 grid grid-cols-2 gap-4">
+      <div className="mx-auto mt-12 grid w-full max-w-3xl grid-cols-2 gap-4">
         {memberships.map((membership) => {
           return (
-            <div
-              key={membership.organizationId}
-              className="bg-card flex min-w-xs items-center justify-between rounded-lg px-4 py-3"
-            >
-              <div className="flex flex-col gap-0.5">
-                <Strong>{membership.organizationName}</Strong>
-                <MembershipRoleBadge role={membership.role} />
-              </div>
-              <Link
-                to="/$orgId"
-                params={{orgId: membership.organizationId}}
-                className={buttonVariants({variant: "outline", size: "icon"})}
-              >
-                <ArrowRightIcon />
-              </Link>
-            </div>
+            <Card key={membership.organizationId} className="w-full gap-0 pb-0">
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between space-x-1">
+                  {membership.organizationName}
+                  <MembershipRoleBadge role={membership.role} />
+                </CardTitle>
+              </CardHeader>
+              <CardFooter className="mt-3 border-t py-3!">
+                <Link
+                  to="/$orgId"
+                  params={{orgId: membership.organizationId}}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "sm",
+                  })}
+                >
+                  Go to Organization
+                  <ArrowRightIcon />
+                </Link>
+              </CardFooter>
+            </Card>
           );
         })}
       </div>

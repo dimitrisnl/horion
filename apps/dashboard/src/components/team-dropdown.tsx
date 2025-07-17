@@ -94,11 +94,7 @@ const MembershipsDropdown = () => {
   const organizationId = useOrgId();
 
   return (
-    <DropdownMenuContent
-      className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-      align="start"
-      sideOffset={4}
-    >
+    <DropdownMenuContent className="min-w-56" align="start" sideOffset={4}>
       <MembershipsDropdownList activeOrganizationId={organizationId} />
       <DropdownMenuItem asChild>
         <Link to="/$orgId/settings" params={{orgId: organizationId}}>
@@ -135,11 +131,7 @@ export const TeamDropdownWithoutSelection = () => {
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-        align="start"
-        sideOffset={4}
-      >
+      <DropdownMenuContent className="min-w-56" align="start" sideOffset={4}>
         <Suspense
           fallback={
             <div className="flex items-center justify-center p-4">

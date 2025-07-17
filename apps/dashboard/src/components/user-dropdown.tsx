@@ -1,10 +1,4 @@
-import {
-  BuildingIcon,
-  CircleQuestionMarkIcon,
-  KeyRoundIcon,
-  LogOutIcon,
-  UserIcon,
-} from "@horionos/icons";
+import {CircleQuestionMarkIcon, LogOutIcon, UserIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
 import {
   DropdownMenu,
@@ -29,27 +23,20 @@ export function UserDropdown() {
           <UserIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="min-w-44 rounded-lg"
-        align="start"
-        sideOffset={4}
-      >
+      <DropdownMenuContent className="min-w-44" align="start" sideOffset={4}>
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to="/account" preload="intent">
-              <UserIcon className="size-4" />
               Profile
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link to="/account/security" preload="intent">
-              <KeyRoundIcon className="size-4" />
               Security
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link to="/account/memberships" preload="intent">
-              <BuildingIcon className="size-4" />
               Memberships
             </Link>
           </DropdownMenuItem>

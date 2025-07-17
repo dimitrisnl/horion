@@ -20,7 +20,7 @@ import {TeamDropdownWithoutSelection} from "~/components/team-dropdown";
 import {ThemeSwitcher} from "~/components/theme/theme-switcher";
 import {UserDropdown} from "~/components/user-dropdown";
 
-export const Route = createFileRoute("/_authed/account")({
+export const Route = createFileRoute("/_protected/account")({
   component: RouteComponent,
   notFoundComponent: () => <NotFound />,
 });

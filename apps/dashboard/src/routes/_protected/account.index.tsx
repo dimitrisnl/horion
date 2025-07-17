@@ -22,7 +22,7 @@ import {ContentLayout} from "~/components/content-layout";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
-export const Route = createFileRoute("/_authed/account/")({
+export const Route = createFileRoute("/_protected/account/")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(orpc.account.getSessions.queryOptions());

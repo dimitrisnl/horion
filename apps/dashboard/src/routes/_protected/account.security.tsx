@@ -11,7 +11,7 @@ import {createFileRoute} from "@tanstack/react-router";
 import {ContentLayout} from "~/components/content-layout";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/_authed/account/security")({
+export const Route = createFileRoute("/_protected/account/security")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(

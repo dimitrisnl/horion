@@ -1,5 +1,11 @@
-import {ArrowRightIcon} from "@horionos/icons";
+import {ArrowRightIcon, EllipsisIcon} from "@horionos/icons";
 import {Button, buttonVariants} from "@horionos/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@horionos/ui/dropdown-menu";
 import {Separator} from "@horionos/ui/separator";
 import {
   Table,
@@ -19,7 +25,7 @@ import {InvitationStatusBadge} from "~/components/invitation-status-badge";
 import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {orpc} from "~/utils/orpc";
 
-export const Route = createFileRoute("/_authed/account/memberships")({
+export const Route = createFileRoute("/_protected/account/memberships")({
   component: RouteComponent,
   loader({context}) {
     context.queryClient.prefetchQuery(
@@ -84,17 +90,27 @@ const InvitationsSection = () => {
                       <MembershipRoleBadge role={membership.role} />
                     </TableCell>
                     <TableCell>
-                      <Link
-                        to="/$orgId"
-                        params={{orgId: membership.organizationId}}
-                        className={buttonVariants({
-                          variant: "outline",
-                          size: "sm",
-                        })}
-                      >
-                        Go to organization
-                        <ArrowRightIcon />
-                      </Link>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Button variant="ghost">
+                            <EllipsisIcon className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          className="min-w-44"
+                          align="start"
+                          sideOffset={4}
+                        >
+                          <DropdownMenuItem>
+                            <Link
+                              to="/$orgId"
+                              params={{orgId: membership.organizationId}}
+                            >
+                              Go to organization
+                            </Link>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))
@@ -139,14 +155,23 @@ const InvitationsSection = () => {
                       <InvitationStatusBadge status={invitation.status} />
                     </TableCell>
                     <TableCell>
-                      <div className="space-x-2">
-                        <Button variant="outline" size="sm">
-                          Accept
-                        </Button>
-                        <Button variant="destructive" size="sm">
-                          Decline
-                        </Button>
-                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Button variant="ghost">
+                            <EllipsisIcon className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          className="min-w-44"
+                          align="start"
+                          sideOffset={4}
+                        >
+                          <DropdownMenuItem>Accept Invitation</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            Decline Invitation
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}

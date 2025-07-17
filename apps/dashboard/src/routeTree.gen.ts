@@ -9,144 +9,145 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as GuestRouteImport } from './routes/_guest'
-import { Route as AuthedRouteImport } from './routes/_authed'
-import { Route as AuthedIndexRouteImport } from './routes/_authed.index'
-import { Route as GuestLoginRouteImport } from './routes/_guest.login'
-import { Route as GuestAcceptInvitationRouteImport } from './routes/_guest.accept-invitation'
-import { Route as AuthedOnboardingRouteImport } from './routes/_authed.onboarding'
-import { Route as AuthedAccountRouteImport } from './routes/_authed.account'
-import { Route as AuthedOrgIdRouteImport } from './routes/_authed.$orgId'
-import { Route as AuthedAccountIndexRouteImport } from './routes/_authed.account.index'
-import { Route as AuthedOrgIdIndexRouteImport } from './routes/_authed.$orgId.index'
-import { Route as AuthedAccountSecurityRouteImport } from './routes/_authed.account.security'
-import { Route as AuthedAccountMembershipsRouteImport } from './routes/_authed.account.memberships'
-import { Route as AuthedOrgIdSettingsIndexRouteImport } from './routes/_authed.$orgId.settings.index'
-import { Route as AuthedOrgIdSettingsInvitationsRouteImport } from './routes/_authed.$orgId.settings.invitations'
+import { Route as ProtectedRouteRouteImport } from './routes/_protected/route'
+import { Route as GuestRouteRouteImport } from './routes/_guest/route'
+import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
+import { Route as ProtectedOnboardingRouteImport } from './routes/_protected/onboarding'
+import { Route as ProtectedAccountRouteImport } from './routes/_protected/account'
+import { Route as ProtectedOrgIdRouteImport } from './routes/_protected/$orgId'
+import { Route as GuestLoginRouteImport } from './routes/_guest/login'
+import { Route as GuestAcceptInvitationRouteImport } from './routes/_guest/accept-invitation'
+import { Route as ProtectedAccountIndexRouteImport } from './routes/_protected/account.index'
+import { Route as ProtectedOrgIdIndexRouteImport } from './routes/_protected/$orgId.index'
+import { Route as ProtectedAccountSecurityRouteImport } from './routes/_protected/account.security'
+import { Route as ProtectedAccountMembershipsRouteImport } from './routes/_protected/account.memberships'
+import { Route as ProtectedOrgIdSettingsIndexRouteImport } from './routes/_protected/$orgId.settings.index'
+import { Route as ProtectedOrgIdSettingsInvitationsRouteImport } from './routes/_protected/$orgId.settings.invitations'
 
-const GuestRoute = GuestRouteImport.update({
+const ProtectedRouteRoute = ProtectedRouteRouteImport.update({
+  id: '/_protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuestRouteRoute = GuestRouteRouteImport.update({
   id: '/_guest',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthedRoute = AuthedRouteImport.update({
-  id: '/_authed',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthedIndexRoute = AuthedIndexRouteImport.update({
+const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthedRoute,
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+const ProtectedOnboardingRoute = ProtectedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+const ProtectedAccountRoute = ProtectedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+const ProtectedOrgIdRoute = ProtectedOrgIdRouteImport.update({
+  id: '/$orgId',
+  path: '/$orgId',
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
 const GuestLoginRoute = GuestLoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => GuestRoute,
+  getParentRoute: () => GuestRouteRoute,
 } as any)
 const GuestAcceptInvitationRoute = GuestAcceptInvitationRouteImport.update({
   id: '/accept-invitation',
   path: '/accept-invitation',
-  getParentRoute: () => GuestRoute,
+  getParentRoute: () => GuestRouteRoute,
 } as any)
-const AuthedOnboardingRoute = AuthedOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => AuthedRoute,
-} as any)
-const AuthedAccountRoute = AuthedAccountRouteImport.update({
-  id: '/account',
-  path: '/account',
-  getParentRoute: () => AuthedRoute,
-} as any)
-const AuthedOrgIdRoute = AuthedOrgIdRouteImport.update({
-  id: '/$orgId',
-  path: '/$orgId',
-  getParentRoute: () => AuthedRoute,
-} as any)
-const AuthedAccountIndexRoute = AuthedAccountIndexRouteImport.update({
+const ProtectedAccountIndexRoute = ProtectedAccountIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthedAccountRoute,
+  getParentRoute: () => ProtectedAccountRoute,
 } as any)
-const AuthedOrgIdIndexRoute = AuthedOrgIdIndexRouteImport.update({
+const ProtectedOrgIdIndexRoute = ProtectedOrgIdIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthedOrgIdRoute,
+  getParentRoute: () => ProtectedOrgIdRoute,
 } as any)
-const AuthedAccountSecurityRoute = AuthedAccountSecurityRouteImport.update({
-  id: '/security',
-  path: '/security',
-  getParentRoute: () => AuthedAccountRoute,
-} as any)
-const AuthedAccountMembershipsRoute =
-  AuthedAccountMembershipsRouteImport.update({
+const ProtectedAccountSecurityRoute =
+  ProtectedAccountSecurityRouteImport.update({
+    id: '/security',
+    path: '/security',
+    getParentRoute: () => ProtectedAccountRoute,
+  } as any)
+const ProtectedAccountMembershipsRoute =
+  ProtectedAccountMembershipsRouteImport.update({
     id: '/memberships',
     path: '/memberships',
-    getParentRoute: () => AuthedAccountRoute,
+    getParentRoute: () => ProtectedAccountRoute,
   } as any)
-const AuthedOrgIdSettingsIndexRoute =
-  AuthedOrgIdSettingsIndexRouteImport.update({
+const ProtectedOrgIdSettingsIndexRoute =
+  ProtectedOrgIdSettingsIndexRouteImport.update({
     id: '/settings/',
     path: '/settings/',
-    getParentRoute: () => AuthedOrgIdRoute,
+    getParentRoute: () => ProtectedOrgIdRoute,
   } as any)
-const AuthedOrgIdSettingsInvitationsRoute =
-  AuthedOrgIdSettingsInvitationsRouteImport.update({
+const ProtectedOrgIdSettingsInvitationsRoute =
+  ProtectedOrgIdSettingsInvitationsRouteImport.update({
     id: '/settings/invitations',
     path: '/settings/invitations',
-    getParentRoute: () => AuthedOrgIdRoute,
+    getParentRoute: () => ProtectedOrgIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/$orgId': typeof AuthedOrgIdRouteWithChildren
-  '/account': typeof AuthedAccountRouteWithChildren
-  '/onboarding': typeof AuthedOnboardingRoute
   '/accept-invitation': typeof GuestAcceptInvitationRoute
   '/login': typeof GuestLoginRoute
-  '/': typeof AuthedIndexRoute
-  '/account/memberships': typeof AuthedAccountMembershipsRoute
-  '/account/security': typeof AuthedAccountSecurityRoute
-  '/$orgId/': typeof AuthedOrgIdIndexRoute
-  '/account/': typeof AuthedAccountIndexRoute
-  '/$orgId/settings/invitations': typeof AuthedOrgIdSettingsInvitationsRoute
-  '/$orgId/settings': typeof AuthedOrgIdSettingsIndexRoute
+  '/$orgId': typeof ProtectedOrgIdRouteWithChildren
+  '/account': typeof ProtectedAccountRouteWithChildren
+  '/onboarding': typeof ProtectedOnboardingRoute
+  '/': typeof ProtectedIndexRoute
+  '/account/memberships': typeof ProtectedAccountMembershipsRoute
+  '/account/security': typeof ProtectedAccountSecurityRoute
+  '/$orgId/': typeof ProtectedOrgIdIndexRoute
+  '/account/': typeof ProtectedAccountIndexRoute
+  '/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
+  '/$orgId/settings': typeof ProtectedOrgIdSettingsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/onboarding': typeof AuthedOnboardingRoute
   '/accept-invitation': typeof GuestAcceptInvitationRoute
   '/login': typeof GuestLoginRoute
-  '/': typeof AuthedIndexRoute
-  '/account/memberships': typeof AuthedAccountMembershipsRoute
-  '/account/security': typeof AuthedAccountSecurityRoute
-  '/$orgId': typeof AuthedOrgIdIndexRoute
-  '/account': typeof AuthedAccountIndexRoute
-  '/$orgId/settings/invitations': typeof AuthedOrgIdSettingsInvitationsRoute
-  '/$orgId/settings': typeof AuthedOrgIdSettingsIndexRoute
+  '/onboarding': typeof ProtectedOnboardingRoute
+  '/': typeof ProtectedIndexRoute
+  '/account/memberships': typeof ProtectedAccountMembershipsRoute
+  '/account/security': typeof ProtectedAccountSecurityRoute
+  '/$orgId': typeof ProtectedOrgIdIndexRoute
+  '/account': typeof ProtectedAccountIndexRoute
+  '/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
+  '/$orgId/settings': typeof ProtectedOrgIdSettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authed': typeof AuthedRouteWithChildren
-  '/_guest': typeof GuestRouteWithChildren
-  '/_authed/$orgId': typeof AuthedOrgIdRouteWithChildren
-  '/_authed/account': typeof AuthedAccountRouteWithChildren
-  '/_authed/onboarding': typeof AuthedOnboardingRoute
+  '/_guest': typeof GuestRouteRouteWithChildren
+  '/_protected': typeof ProtectedRouteRouteWithChildren
   '/_guest/accept-invitation': typeof GuestAcceptInvitationRoute
   '/_guest/login': typeof GuestLoginRoute
-  '/_authed/': typeof AuthedIndexRoute
-  '/_authed/account/memberships': typeof AuthedAccountMembershipsRoute
-  '/_authed/account/security': typeof AuthedAccountSecurityRoute
-  '/_authed/$orgId/': typeof AuthedOrgIdIndexRoute
-  '/_authed/account/': typeof AuthedAccountIndexRoute
-  '/_authed/$orgId/settings/invitations': typeof AuthedOrgIdSettingsInvitationsRoute
-  '/_authed/$orgId/settings/': typeof AuthedOrgIdSettingsIndexRoute
+  '/_protected/$orgId': typeof ProtectedOrgIdRouteWithChildren
+  '/_protected/account': typeof ProtectedAccountRouteWithChildren
+  '/_protected/onboarding': typeof ProtectedOnboardingRoute
+  '/_protected/': typeof ProtectedIndexRoute
+  '/_protected/account/memberships': typeof ProtectedAccountMembershipsRoute
+  '/_protected/account/security': typeof ProtectedAccountSecurityRoute
+  '/_protected/$orgId/': typeof ProtectedOrgIdIndexRoute
+  '/_protected/account/': typeof ProtectedAccountIndexRoute
+  '/_protected/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
+  '/_protected/$orgId/settings/': typeof ProtectedOrgIdSettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/accept-invitation'
+    | '/login'
     | '/$orgId'
     | '/account'
     | '/onboarding'
-    | '/accept-invitation'
-    | '/login'
     | '/'
     | '/account/memberships'
     | '/account/security'
@@ -156,9 +157,9 @@ export interface FileRouteTypes {
     | '/$orgId/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/onboarding'
     | '/accept-invitation'
     | '/login'
+    | '/onboarding'
     | '/'
     | '/account/memberships'
     | '/account/security'
@@ -168,194 +169,197 @@ export interface FileRouteTypes {
     | '/$orgId/settings'
   id:
     | '__root__'
-    | '/_authed'
     | '/_guest'
-    | '/_authed/$orgId'
-    | '/_authed/account'
-    | '/_authed/onboarding'
+    | '/_protected'
     | '/_guest/accept-invitation'
     | '/_guest/login'
-    | '/_authed/'
-    | '/_authed/account/memberships'
-    | '/_authed/account/security'
-    | '/_authed/$orgId/'
-    | '/_authed/account/'
-    | '/_authed/$orgId/settings/invitations'
-    | '/_authed/$orgId/settings/'
+    | '/_protected/$orgId'
+    | '/_protected/account'
+    | '/_protected/onboarding'
+    | '/_protected/'
+    | '/_protected/account/memberships'
+    | '/_protected/account/security'
+    | '/_protected/$orgId/'
+    | '/_protected/account/'
+    | '/_protected/$orgId/settings/invitations'
+    | '/_protected/$orgId/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthedRoute: typeof AuthedRouteWithChildren
-  GuestRoute: typeof GuestRouteWithChildren
+  GuestRouteRoute: typeof GuestRouteRouteWithChildren
+  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_guest': {
       id: '/_guest'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof GuestRouteImport
+      preLoaderRoute: typeof GuestRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authed': {
-      id: '/_authed'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authed/': {
-      id: '/_authed/'
+    '/_protected/': {
+      id: '/_protected/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthedIndexRouteImport
-      parentRoute: typeof AuthedRoute
+      preLoaderRoute: typeof ProtectedIndexRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/onboarding': {
+      id: '/_protected/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof ProtectedOnboardingRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/account': {
+      id: '/_protected/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof ProtectedAccountRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/$orgId': {
+      id: '/_protected/$orgId'
+      path: '/$orgId'
+      fullPath: '/$orgId'
+      preLoaderRoute: typeof ProtectedOrgIdRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
     '/_guest/login': {
       id: '/_guest/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof GuestLoginRouteImport
-      parentRoute: typeof GuestRoute
+      parentRoute: typeof GuestRouteRoute
     }
     '/_guest/accept-invitation': {
       id: '/_guest/accept-invitation'
       path: '/accept-invitation'
       fullPath: '/accept-invitation'
       preLoaderRoute: typeof GuestAcceptInvitationRouteImport
-      parentRoute: typeof GuestRoute
+      parentRoute: typeof GuestRouteRoute
     }
-    '/_authed/onboarding': {
-      id: '/_authed/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof AuthedOnboardingRouteImport
-      parentRoute: typeof AuthedRoute
-    }
-    '/_authed/account': {
-      id: '/_authed/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AuthedAccountRouteImport
-      parentRoute: typeof AuthedRoute
-    }
-    '/_authed/$orgId': {
-      id: '/_authed/$orgId'
-      path: '/$orgId'
-      fullPath: '/$orgId'
-      preLoaderRoute: typeof AuthedOrgIdRouteImport
-      parentRoute: typeof AuthedRoute
-    }
-    '/_authed/account/': {
-      id: '/_authed/account/'
+    '/_protected/account/': {
+      id: '/_protected/account/'
       path: '/'
       fullPath: '/account/'
-      preLoaderRoute: typeof AuthedAccountIndexRouteImport
-      parentRoute: typeof AuthedAccountRoute
+      preLoaderRoute: typeof ProtectedAccountIndexRouteImport
+      parentRoute: typeof ProtectedAccountRoute
     }
-    '/_authed/$orgId/': {
-      id: '/_authed/$orgId/'
+    '/_protected/$orgId/': {
+      id: '/_protected/$orgId/'
       path: '/'
       fullPath: '/$orgId/'
-      preLoaderRoute: typeof AuthedOrgIdIndexRouteImport
-      parentRoute: typeof AuthedOrgIdRoute
+      preLoaderRoute: typeof ProtectedOrgIdIndexRouteImport
+      parentRoute: typeof ProtectedOrgIdRoute
     }
-    '/_authed/account/security': {
-      id: '/_authed/account/security'
+    '/_protected/account/security': {
+      id: '/_protected/account/security'
       path: '/security'
       fullPath: '/account/security'
-      preLoaderRoute: typeof AuthedAccountSecurityRouteImport
-      parentRoute: typeof AuthedAccountRoute
+      preLoaderRoute: typeof ProtectedAccountSecurityRouteImport
+      parentRoute: typeof ProtectedAccountRoute
     }
-    '/_authed/account/memberships': {
-      id: '/_authed/account/memberships'
+    '/_protected/account/memberships': {
+      id: '/_protected/account/memberships'
       path: '/memberships'
       fullPath: '/account/memberships'
-      preLoaderRoute: typeof AuthedAccountMembershipsRouteImport
-      parentRoute: typeof AuthedAccountRoute
+      preLoaderRoute: typeof ProtectedAccountMembershipsRouteImport
+      parentRoute: typeof ProtectedAccountRoute
     }
-    '/_authed/$orgId/settings/': {
-      id: '/_authed/$orgId/settings/'
+    '/_protected/$orgId/settings/': {
+      id: '/_protected/$orgId/settings/'
       path: '/settings'
       fullPath: '/$orgId/settings'
-      preLoaderRoute: typeof AuthedOrgIdSettingsIndexRouteImport
-      parentRoute: typeof AuthedOrgIdRoute
+      preLoaderRoute: typeof ProtectedOrgIdSettingsIndexRouteImport
+      parentRoute: typeof ProtectedOrgIdRoute
     }
-    '/_authed/$orgId/settings/invitations': {
-      id: '/_authed/$orgId/settings/invitations'
+    '/_protected/$orgId/settings/invitations': {
+      id: '/_protected/$orgId/settings/invitations'
       path: '/settings/invitations'
       fullPath: '/$orgId/settings/invitations'
-      preLoaderRoute: typeof AuthedOrgIdSettingsInvitationsRouteImport
-      parentRoute: typeof AuthedOrgIdRoute
+      preLoaderRoute: typeof ProtectedOrgIdSettingsInvitationsRouteImport
+      parentRoute: typeof ProtectedOrgIdRoute
     }
   }
 }
 
-interface AuthedOrgIdRouteChildren {
-  AuthedOrgIdIndexRoute: typeof AuthedOrgIdIndexRoute
-  AuthedOrgIdSettingsInvitationsRoute: typeof AuthedOrgIdSettingsInvitationsRoute
-  AuthedOrgIdSettingsIndexRoute: typeof AuthedOrgIdSettingsIndexRoute
-}
-
-const AuthedOrgIdRouteChildren: AuthedOrgIdRouteChildren = {
-  AuthedOrgIdIndexRoute: AuthedOrgIdIndexRoute,
-  AuthedOrgIdSettingsInvitationsRoute: AuthedOrgIdSettingsInvitationsRoute,
-  AuthedOrgIdSettingsIndexRoute: AuthedOrgIdSettingsIndexRoute,
-}
-
-const AuthedOrgIdRouteWithChildren = AuthedOrgIdRoute._addFileChildren(
-  AuthedOrgIdRouteChildren,
-)
-
-interface AuthedAccountRouteChildren {
-  AuthedAccountMembershipsRoute: typeof AuthedAccountMembershipsRoute
-  AuthedAccountSecurityRoute: typeof AuthedAccountSecurityRoute
-  AuthedAccountIndexRoute: typeof AuthedAccountIndexRoute
-}
-
-const AuthedAccountRouteChildren: AuthedAccountRouteChildren = {
-  AuthedAccountMembershipsRoute: AuthedAccountMembershipsRoute,
-  AuthedAccountSecurityRoute: AuthedAccountSecurityRoute,
-  AuthedAccountIndexRoute: AuthedAccountIndexRoute,
-}
-
-const AuthedAccountRouteWithChildren = AuthedAccountRoute._addFileChildren(
-  AuthedAccountRouteChildren,
-)
-
-interface AuthedRouteChildren {
-  AuthedOrgIdRoute: typeof AuthedOrgIdRouteWithChildren
-  AuthedAccountRoute: typeof AuthedAccountRouteWithChildren
-  AuthedOnboardingRoute: typeof AuthedOnboardingRoute
-  AuthedIndexRoute: typeof AuthedIndexRoute
-}
-
-const AuthedRouteChildren: AuthedRouteChildren = {
-  AuthedOrgIdRoute: AuthedOrgIdRouteWithChildren,
-  AuthedAccountRoute: AuthedAccountRouteWithChildren,
-  AuthedOnboardingRoute: AuthedOnboardingRoute,
-  AuthedIndexRoute: AuthedIndexRoute,
-}
-
-const AuthedRouteWithChildren =
-  AuthedRoute._addFileChildren(AuthedRouteChildren)
-
-interface GuestRouteChildren {
+interface GuestRouteRouteChildren {
   GuestAcceptInvitationRoute: typeof GuestAcceptInvitationRoute
   GuestLoginRoute: typeof GuestLoginRoute
 }
 
-const GuestRouteChildren: GuestRouteChildren = {
+const GuestRouteRouteChildren: GuestRouteRouteChildren = {
   GuestAcceptInvitationRoute: GuestAcceptInvitationRoute,
   GuestLoginRoute: GuestLoginRoute,
 }
 
-const GuestRouteWithChildren = GuestRoute._addFileChildren(GuestRouteChildren)
+const GuestRouteRouteWithChildren = GuestRouteRoute._addFileChildren(
+  GuestRouteRouteChildren,
+)
+
+interface ProtectedOrgIdRouteChildren {
+  ProtectedOrgIdIndexRoute: typeof ProtectedOrgIdIndexRoute
+  ProtectedOrgIdSettingsInvitationsRoute: typeof ProtectedOrgIdSettingsInvitationsRoute
+  ProtectedOrgIdSettingsIndexRoute: typeof ProtectedOrgIdSettingsIndexRoute
+}
+
+const ProtectedOrgIdRouteChildren: ProtectedOrgIdRouteChildren = {
+  ProtectedOrgIdIndexRoute: ProtectedOrgIdIndexRoute,
+  ProtectedOrgIdSettingsInvitationsRoute:
+    ProtectedOrgIdSettingsInvitationsRoute,
+  ProtectedOrgIdSettingsIndexRoute: ProtectedOrgIdSettingsIndexRoute,
+}
+
+const ProtectedOrgIdRouteWithChildren = ProtectedOrgIdRoute._addFileChildren(
+  ProtectedOrgIdRouteChildren,
+)
+
+interface ProtectedAccountRouteChildren {
+  ProtectedAccountMembershipsRoute: typeof ProtectedAccountMembershipsRoute
+  ProtectedAccountSecurityRoute: typeof ProtectedAccountSecurityRoute
+  ProtectedAccountIndexRoute: typeof ProtectedAccountIndexRoute
+}
+
+const ProtectedAccountRouteChildren: ProtectedAccountRouteChildren = {
+  ProtectedAccountMembershipsRoute: ProtectedAccountMembershipsRoute,
+  ProtectedAccountSecurityRoute: ProtectedAccountSecurityRoute,
+  ProtectedAccountIndexRoute: ProtectedAccountIndexRoute,
+}
+
+const ProtectedAccountRouteWithChildren =
+  ProtectedAccountRoute._addFileChildren(ProtectedAccountRouteChildren)
+
+interface ProtectedRouteRouteChildren {
+  ProtectedOrgIdRoute: typeof ProtectedOrgIdRouteWithChildren
+  ProtectedAccountRoute: typeof ProtectedAccountRouteWithChildren
+  ProtectedOnboardingRoute: typeof ProtectedOnboardingRoute
+  ProtectedIndexRoute: typeof ProtectedIndexRoute
+}
+
+const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
+  ProtectedOrgIdRoute: ProtectedOrgIdRouteWithChildren,
+  ProtectedAccountRoute: ProtectedAccountRouteWithChildren,
+  ProtectedOnboardingRoute: ProtectedOnboardingRoute,
+  ProtectedIndexRoute: ProtectedIndexRoute,
+}
+
+const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
+  ProtectedRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthedRoute: AuthedRouteWithChildren,
-  GuestRoute: GuestRouteWithChildren,
+  GuestRouteRoute: GuestRouteRouteWithChildren,
+  ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

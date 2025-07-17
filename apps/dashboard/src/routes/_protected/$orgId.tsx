@@ -20,7 +20,7 @@ import {TeamDropdown} from "~/components/team-dropdown";
 import {ThemeSwitcher} from "~/components/theme/theme-switcher";
 import {UserDropdown} from "~/components/user-dropdown";
 
-export const Route = createFileRoute("/_authed/$orgId")({
+export const Route = createFileRoute("/_protected/$orgId")({
   component: RouteComponent,
   notFoundComponent: () => <NotFound />,
   beforeLoad: async ({context, params}) => {

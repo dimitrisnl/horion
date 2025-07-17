@@ -68,4 +68,5 @@ export {
   XIcon,
   LockIcon,
   ListIcon,
+  EllipsisIcon,
 } from "lucide-react";

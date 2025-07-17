@@ -33,7 +33,7 @@ import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
-export const Route = createFileRoute("/_authed/$orgId/settings/")({
+export const Route = createFileRoute("/_protected/$orgId/settings/")({
   component: RouteComponent,
 });
 

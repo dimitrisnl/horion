@@ -45,17 +45,19 @@ import {withValidationErrors} from "~/utils/with-validation-errors";
 
 type InvitationRole = "member" | "admin";
 
-export const Route = createFileRoute("/_authed/$orgId/settings/invitations")({
-  component: RouteComponent,
-  loader({context, params}) {
-    context.queryClient.prefetchQuery(
-      orpc.invitation.getAll.queryOptions({
-        input: {organizationId: params.orgId},
-      }),
-    );
-    return {};
+export const Route = createFileRoute("/_protected/$orgId/settings/invitations")(
+  {
+    component: RouteComponent,
+    loader({context, params}) {
+      context.queryClient.prefetchQuery(
+        orpc.invitation.getAll.queryOptions({
+          input: {organizationId: params.orgId},
+        }),
+      );
+      return {};
+    },
   },
-});
+);
 
 function RouteComponent() {
   return (
@@ -320,10 +322,6 @@ const InvitationsTableRows = () => {
               invitationId={invitation.id}
               organizationId={organizationId}
             />
-            {/* <Button variant="outline" size="sm" className="text-tertiary">
-              <Repeat2Icon className="stroke-tertiary" />
-              Resend
-            </Button> */}
           </div>
         </TableCell>
       </TableRow>
