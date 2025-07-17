@@ -1,11 +1,11 @@
 import {ORPCError, os, ValidationError} from "@orpc/server";
 import {z, ZodError} from "zod/v4";
 
-import {BaseError, orpcErrors} from "~/core/errors/error-types";
+import {AuthenticationError, BaseError} from "~/core/errors/error-types";
 
 import type {Context} from "./context";
 
-export const op = os.$context<Context>().errors(orpcErrors);
+export const op = os.$context<Context>();
 
 const errorHandlingMiddleware = op.middleware(async ({next}) => {
   try {
@@ -13,6 +13,7 @@ const errorHandlingMiddleware = op.middleware(async ({next}) => {
   } catch (error) {
     if (error instanceof BaseError) {
       throw new ORPCError(error.code, {
+        status: error.status,
         message: error.message,
         data: {
           details: error.details,
@@ -44,9 +45,11 @@ const errorHandlingMiddleware = op.middleware(async ({next}) => {
   }
 });
 
-const requireAuthMiddleware = op.middleware(async ({context, next, errors}) => {
+const requireAuthMiddleware = op.middleware(async ({context, next}) => {
   if (!context.session?.userId) {
-    throw errors.UNAUTHORIZED();
+    throw new AuthenticationError(
+      "You must be authenticated to perform this action.",
+    );
   }
   return next({
     context: {

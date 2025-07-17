@@ -1,6 +1,6 @@
 import {z} from "zod/v4";
 
-import {protectedProcedure} from "~/app/orpc-procedures";
+import {protectedProcedure} from "~/app/orpc";
 import {OrganizationContext} from "~/core/contexts/organization";
 import {
   createOrganizationInputSchema,

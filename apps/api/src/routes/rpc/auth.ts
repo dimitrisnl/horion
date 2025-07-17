@@ -1,7 +1,8 @@
 import {z} from "zod/v4";
 
-import {publicProcedure} from "~/app/orpc-procedures";
+import {publicProcedure} from "~/app/orpc";
 import {envVars} from "~/config";
+import {MagicLinkSentFailError} from "~/core/errors/error-types";
 import {emailSchema} from "~/core/models/email";
 import {Verification} from "~/core/models/verification";
 import {sendMagicLinkEmail} from "~/services/email";
@@ -13,7 +14,7 @@ const getMagicLinkUrl = (token: string) => {
 export const authRouter = {
   sendMagicLink: publicProcedure
     .input(z.object({email: emailSchema}))
-    .handler(async ({input, context, errors}) => {
+    .handler(async ({input, context}) => {
       const {email} = input;
       const {db} = context;
 
@@ -23,9 +24,7 @@ export const authRouter = {
       return sendMagicLinkEmail({to: email, url})
         .then(() => ({message: "Magic link sent successfully"}))
         .catch(() => {
-          throw errors.FAILED_TO_SEND_MAGIC_LINK_EMAIL({
-            message: "Failed to send magic link email",
-          });
+          throw new MagicLinkSentFailError();
         });
     }),
 };

@@ -1,8 +1,9 @@
 import {z} from "zod/v4";
 
-import {protectedProcedure, publicProcedure} from "~/app/orpc-procedures";
+import {protectedProcedure, publicProcedure} from "~/app/orpc";
 import {envVars} from "~/config";
 import {OrganizationContext} from "~/core/contexts/organization";
+import {InvitationSendFailError} from "~/core/errors/error-types";
 import {
   createInvitationInputSchema,
   deleteInvitationInputSchema,
@@ -35,7 +36,7 @@ export const invitationRouter = {
 
   create: protectedProcedure
     .input(createInvitationInputSchema)
-    .handler(async ({context, input, errors}) => {
+    .handler(async ({context, input}) => {
       const {db, session} = context;
       const {email, role, organizationId} = input;
       const userId = session.userId;
@@ -57,7 +58,7 @@ export const invitationRouter = {
         })
           .then(() => ({invitation}))
           .catch(() => {
-            throw errors.FAILED_TO_SEND_INVITATION_EMAIL();
+            throw new InvitationSendFailError();
           });
       } else {
         sendInvitationWithoutAccountEmail({
@@ -67,7 +68,7 @@ export const invitationRouter = {
         })
           .then(() => ({invitation}))
           .catch(() => {
-            throw errors.FAILED_TO_SEND_INVITATION_EMAIL();
+            throw new InvitationSendFailError();
           });
       }
 
