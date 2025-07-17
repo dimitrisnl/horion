@@ -161,8 +161,8 @@ function RouteComponent() {
 const MagicLinkSentMessage = () => (
   <div>
     <div className="space-y-4">
-      <div className="inline-flex items-center rounded-md bg-blue-100/50 p-2">
-        <MailCheckIcon className="size-6 text-blue-600" />
+      <div className="bg-primary/50 inline-flex items-center rounded-md p-2">
+        <MailCheckIcon className="text-primary-foreground size-6" />
       </div>
       <div className="flex items-center gap-2">
         <Heading1>Email Sent</Heading1>

@@ -35,8 +35,8 @@
   --card-foreground: var(--color-neutral-50);
   --popover: var(--color-neutral-900);
   --popover-foreground: var(--color-neutral-50);
-  --primary: var(--color-neutral-50);
-  --primary-foreground: var(--color-neutral-900);
+  --primary: var(--color-blue-500);
+  --primary-foreground: var(--color-neutral-100);
   --secondary: var(--color-neutral-700);
   --secondary-foreground: var(--color-neutral-50);
   --tertiary: var(--color-neutral-500);
