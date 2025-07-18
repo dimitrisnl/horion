@@ -9,6 +9,7 @@ const invalidOrganizationNames = [
   "true",
   "admin",
   "support",
+  "new",
 ];
 
 export const organizationIdSchema = idSchema;

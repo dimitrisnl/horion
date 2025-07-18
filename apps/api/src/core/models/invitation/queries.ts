@@ -91,9 +91,26 @@ export const findInvitationsByEmail = async ({
   email: string;
 }) => {
   const invitations = await db
-    .select()
+    .select({
+      id: schema.invitations.id,
+      email: schema.invitations.email,
+      role: schema.invitations.role,
+      status: schema.invitations.status,
+      createdAt: schema.invitations.createdAt,
+      updatedAt: schema.invitations.updatedAt,
+      expiresAt: schema.invitations.expiresAt,
+      inviterId: schema.invitations.inviterId,
+      inviterName: schema.users.name,
+      inviterEmail: schema.users.email,
+      organizationName: schema.organizations.name,
+    })
     .from(schema.invitations)
-    .where(eq(schema.invitations.email, email));
+    .where(eq(schema.invitations.email, email))
+    .leftJoin(schema.users, eq(schema.invitations.inviterId, schema.users.id))
+    .leftJoin(
+      schema.organizations,
+      eq(schema.invitations.organizationId, schema.organizations.id),
+    );
 
   return invitations;
 };
