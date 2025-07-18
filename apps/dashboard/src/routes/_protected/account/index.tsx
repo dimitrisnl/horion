@@ -35,10 +35,7 @@ export const Route = createFileRoute("/_protected/account/")({
 
 function RouteComponent() {
   return (
-    <ContentLayout
-      title="Account Settings"
-      subtitle="Manage your account settings"
-    >
+    <ContentLayout title="Account Settings">
       <UpdateNameSection />
     </ContentLayout>
   );

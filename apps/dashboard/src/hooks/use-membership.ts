@@ -1,7 +1,7 @@
 import {useRouteContext} from "@tanstack/react-router";
 
 export const useCurrentMembership = () => {
-  const {membership} = useRouteContext({from: "/_authed/$orgId"});
+  const {membership} = useRouteContext({from: "/_protected/$orgId"});
 
   return membership;
 };

@@ -20,7 +20,14 @@ export const Route = createFileRoute("/_protected/")({
     );
 
     if (memberships.length === 0) {
-      throw redirect({to: "/onboarding"});
+      throw redirect({to: "/create-organization"});
+    }
+
+    if (memberships.length === 1) {
+      throw redirect({
+        to: "/$orgId",
+        params: {orgId: memberships[0].organizationId},
+      });
     }
   },
   component: RouteComponent,
@@ -61,7 +68,10 @@ function RouteComponent() {
         })}
       </div>
       <Separator className="mx-auto my-4 max-w-sm" />
-      <Link to="/onboarding" className={buttonVariants({variant: "outline"})}>
+      <Link
+        to="/create-organization"
+        className={buttonVariants({variant: "outline"})}
+      >
         Create Organization
       </Link>
     </MutedFocusedLayout>

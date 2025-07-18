@@ -63,8 +63,8 @@ function RouteComponent() {
   return (
     <div>
       <div className="space-y-4">
-        <div className="bg-primary-100/50 inline-flex items-center rounded-md p-2">
-          <UsersRoundIcon className="text-primary-foreground size-6" />
+        <div className="bg-primary inline-flex items-center rounded-md p-1.5">
+          <UsersRoundIcon className="text-primary-foreground size-5" />
         </div>
         <div className="flex items-center gap-2">
           <Heading1>

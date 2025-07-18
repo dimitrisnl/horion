@@ -19,6 +19,7 @@ import {NotFound} from "~/components/not-found";
 import {TeamDropdown} from "~/components/team-dropdown";
 import {ThemeSwitcher} from "~/components/theme/theme-switcher";
 import {UserDropdown} from "~/components/user-dropdown";
+import {useCurrentMembership} from "~/hooks/use-membership";
 
 export const Route = createFileRoute("/_protected/$orgId")({
   component: RouteComponent,
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/_protected/$orgId")({
   beforeLoad: async ({context, params}) => {
     const {orgId} = params;
 
-    const [membership, organization] = await Promise.all([
+    const [{membership}, {organization}] = await Promise.all([
       context.queryClient.ensureQueryData(
         context.orpc.account.getMembership.queryOptions({
           input: {organizationId: orgId},
@@ -54,41 +55,48 @@ const nav = [
     url: "/$orgId",
     icon: SquareChartGanttIcon,
     activeOptions: {exact: true},
+    roles: ["owner", "admin", "member"],
   },
   {
     title: "Settings",
     url: "/$orgId/settings",
     icon: SettingsIcon,
     activeOptions: {exact: true},
+    roles: ["owner", "admin"],
   },
   {
     title: "Invitations",
     url: "/$orgId/settings/invitations",
     icon: MailIcon,
     activeOptions: {exact: true},
+    roles: ["owner", "admin"],
   },
 ];
 
 const Navigation = () => {
+  const membership = useCurrentMembership();
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {nav.map((item) => {
-          return (
-            <NavigationMenuItem key={item.title + item.url}>
-              <NavigationMenuLink asChild>
-                <Link
-                  activeOptions={item.activeOptions}
-                  to={item.url}
-                  className="flex"
-                >
-                  <item.icon className="stroke-1.5 size-4.5 md:hidden" />
-                  <span className="hidden md:inline">{item.title}</span>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          );
-        })}
+        {nav
+          .filter((item) => item.roles.includes(membership.role))
+          .map((item) => {
+            return (
+              <NavigationMenuItem key={item.title + item.url}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    activeOptions={item.activeOptions}
+                    to={item.url}
+                    className="flex"
+                  >
+                    <item.icon className="stroke-1.5 size-4.5 md:hidden" />
+                    <span className="hidden md:inline">{item.title}</span>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            );
+          })}
       </NavigationMenuList>
     </NavigationMenu>
   );

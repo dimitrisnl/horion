@@ -46,6 +46,7 @@ import {ContentLayout} from "~/components/content-layout";
 import {InvitationRoleBadge} from "~/components/invitation-role-badge";
 import {InvitationStatusBadge} from "~/components/invitation-status-badge";
 import {useOrgId} from "~/hooks/use-org-id";
+import {formatDateTime} from "~/utils/date-helpers";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
@@ -67,10 +68,7 @@ export const Route = createFileRoute("/_protected/$orgId/settings/invitations")(
 
 function RouteComponent() {
   return (
-    <ContentLayout
-      title="Invitations"
-      subtitle="Manage your organization invitations"
-    >
+    <ContentLayout title="Invitations">
       <InviteTeammateSection />
       <Separator className="my-8" />
       <InvitationsListSection />
@@ -297,52 +295,63 @@ const InvitationsTableRows = () => {
     }),
   );
   return invitations.length > 0 ? (
-    invitations.map((invitation) => (
-      <TableRow key={invitation.id} disableHover>
-        <TableCell className="font-medium">{invitation.email}</TableCell>
-        <TableCell>
-          <InvitationRoleBadge role={invitation.role} />
-        </TableCell>
-        <TableCell>
-          <InvitationStatusBadge status={invitation.status} />
-        </TableCell>
-        <TableCell>
-          {invitation.inviterName ?? invitation.inviterEmail ?? "Deleted User"}
-        </TableCell>
-        <TableCell>
-          {new Intl.DateTimeFormat("en-US", {
-            dateStyle: "medium",
-            timeStyle: "short",
-          }).format(invitation.createdAt)}
-        </TableCell>
-        <TableCell>
-          {new Intl.DateTimeFormat("en-US", {
-            dateStyle: "medium",
-            timeStyle: "short",
-          }).format(invitation.expiresAt)}
-        </TableCell>
+    invitations.map((invitation) => {
+      const isExpired = new Date(invitation.expiresAt) < new Date();
+      return (
+        <TableRow
+          key={invitation.id}
+          disableHover
+          className={isExpired ? "h-14 opacity-30" : "h-14"}
+        >
+          <TableCell className="font-medium">{invitation.email}</TableCell>
+          <TableCell>
+            <InvitationRoleBadge role={invitation.role} />
+          </TableCell>
+          <TableCell>
+            <InvitationStatusBadge status={invitation.status} />
+          </TableCell>
+          <TableCell>
+            {invitation.inviterName ||
+              invitation.inviterEmail ||
+              "Deleted User"}
+          </TableCell>
+          <TableCell>
+            {formatDateTime(invitation.createdAt, {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+          </TableCell>
+          <TableCell>
+            {isExpired ? (
+              <span>Expired</span>
+            ) : (
+              formatDateTime(invitation.expiresAt, {
+                dateStyle: "medium",
+                timeStyle: "short",
+              })
+            )}
+          </TableCell>
 
-        <TableCell>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost" size="sm">
-                <EllipsisIcon />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="min-w-44"
-              align="start"
-              sideOffset={4}
-            >
-              <DeleteInvitationButton
-                invitationId={invitation.id}
-                organizationId={organizationId}
-              />
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </TableCell>
-      </TableRow>
-    ))
+          <TableCell>
+            {isExpired ? null : (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="ghost" size="sm">
+                    <EllipsisIcon />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="min-w-44" align="center">
+                  <DeleteInvitationButton
+                    invitationId={invitation.id}
+                    organizationId={organizationId}
+                  />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </TableCell>
+        </TableRow>
+      );
+    })
   ) : (
     <TableRow>
       <TableCell colSpan={7} className="text-center">

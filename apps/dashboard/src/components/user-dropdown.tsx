@@ -23,7 +23,7 @@ export function UserDropdown() {
           <UserIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-44" align="start" sideOffset={4}>
+      <DropdownMenuContent className="min-w-40" align="center">
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to="/account" preload="intent">

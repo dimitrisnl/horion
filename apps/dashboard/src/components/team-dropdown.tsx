@@ -21,6 +21,7 @@ import {
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {Link, useNavigate} from "@tanstack/react-router";
 
+import {useCurrentMembership} from "~/hooks/use-membership";
 import {useOrgId} from "~/hooks/use-org-id";
 import {orpc} from "~/utils/orpc";
 
@@ -92,28 +93,37 @@ const MembershipsDropdownList = ({
 
 const MembershipsDropdown = () => {
   const organizationId = useOrgId();
+  const membership = useCurrentMembership();
+
+  const shouldShowOrgActions =
+    membership.role === "owner" || membership.role === "admin";
 
   return (
     <DropdownMenuContent className="min-w-56" align="start" sideOffset={4}>
       <MembershipsDropdownList activeOrganizationId={organizationId} />
+      {shouldShowOrgActions ? (
+        <>
+          <DropdownMenuItem asChild>
+            <Link to="/$orgId/settings" params={{orgId: organizationId}}>
+              <SettingsIcon className="size-4" />
+              <div>Settings</div>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link
+              to="/$orgId/settings/invitations"
+              params={{orgId: organizationId}}
+            >
+              <MailIcon className="size-4" />
+              <div>Invite teammates</div>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+        </>
+      ) : null}
+
       <DropdownMenuItem asChild>
-        <Link to="/$orgId/settings" params={{orgId: organizationId}}>
-          <SettingsIcon className="size-4" />
-          <div>Settings</div>
-        </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link
-          to="/$orgId/settings/invitations"
-          params={{orgId: organizationId}}
-        >
-          <MailIcon className="size-4" />
-          <div>Invite teammates</div>
-        </Link>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem asChild>
-        <Link to="/onboarding">
+        <Link to="/create-organization">
           <PlusIcon className="size-4" />
           <div>Create new organization</div>
         </Link>
@@ -141,7 +151,7 @@ export const TeamDropdownWithoutSelection = () => {
         >
           <MembershipsDropdownList activeOrganizationId={""} />
           <DropdownMenuItem asChild>
-            <Link to="/onboarding">
+            <Link to="/create-organization">
               <PlusIcon className="size-4" />
               <div>Create new organization</div>
             </Link>

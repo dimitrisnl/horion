@@ -13,7 +13,7 @@ import {toast} from "@horionos/ui/sonner";
 import {Text} from "@horionos/ui/text";
 
 import {useForm} from "@tanstack/react-form";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {createFileRoute, useNavigate} from "@tanstack/react-router";
 
 import {z} from "zod/v4";
@@ -22,7 +22,7 @@ import {MutedFocusedLayout} from "~/components/focused-layout";
 import {orpc} from "~/utils/orpc";
 import {withValidationErrors} from "~/utils/with-validation-errors";
 
-export const Route = createFileRoute("/_protected/onboarding")({
+export const Route = createFileRoute("/_protected/create-organization")({
   component: RouteComponent,
 });
 
@@ -101,11 +101,16 @@ const CreateOrganizationForm = () => {
 
 const useOrganizationCreateForm = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const createOrganizationMutation = useMutation(
     orpc.organization.create.mutationOptions({
       onSuccess: ({organization}) => {
         toast.success("Your organization has been created");
+        queryClient.invalidateQueries(
+          orpc.account.getMemberships.queryOptions(),
+        );
+
         navigate({to: "/$orgId", params: {orgId: organization.id}});
       },
       onError: (error) => {

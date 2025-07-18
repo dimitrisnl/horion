@@ -21,7 +21,7 @@ export function ThemeSwitcher() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" side="top" className="min-w-32">
+      <DropdownMenuContent align="center" className="min-w-32">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <SunIcon />
           Light

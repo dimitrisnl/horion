@@ -2,7 +2,7 @@ import {createContext, type PropsWithChildren, use} from "react";
 
 import {useRouter} from "@tanstack/react-router";
 
-import {setThemeServerFn} from "~/lib/theme";
+import {setThemeServerFn} from "~/utils/theme";
 
 export type Theme = "light" | "dark";
 

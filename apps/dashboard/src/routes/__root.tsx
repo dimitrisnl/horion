@@ -12,7 +12,7 @@ import {TanStackRouterDevtools} from "@tanstack/react-router-devtools";
 
 import {NotFound} from "~/components/not-found";
 import {ThemeProvider} from "~/components/theme/theme-provider";
-import {getThemeServerFn} from "~/lib/theme";
+import {getThemeServerFn} from "~/utils/theme";
 import appCss from "~/styles/app.css?url";
 import interCss from "~/styles/inter.css?url";
 import type {orpc} from "~/utils/orpc";

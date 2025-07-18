@@ -39,10 +39,7 @@ export const Route = createFileRoute("/_protected/$orgId/settings/")({
 
 function RouteComponent() {
   return (
-    <ContentLayout
-      title="Organization Settings"
-      subtitle="Manage your organization settings"
-    >
+    <ContentLayout title="Organization Settings">
       <OrganizationNameSection />
       <Separator className="my-12" />
       <OrganizationMembersSection />
@@ -54,7 +51,7 @@ const OrganizationNameSection = () => {
   return (
     <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
       <div className="space-y-2">
-        <Strong>Update your organization&apos;s name</Strong>
+        <Strong>Update your organization name</Strong>
         <Text className="max-w-sm">
           This name will be displayed to all members of your organization.
         </Text>

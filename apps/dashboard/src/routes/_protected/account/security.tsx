@@ -23,10 +23,7 @@ export const Route = createFileRoute("/_protected/account/security")({
 
 function RouteComponent() {
   return (
-    <ContentLayout
-      title="Security Settings"
-      subtitle="Manage your security settings"
-    >
+    <ContentLayout title="Security Settings">
       <SessionsSection />
     </ContentLayout>
   );
