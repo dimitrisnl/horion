@@ -101,6 +101,10 @@ describe("Invitation Queries", async () => {
       expect(invitations[1].id).toBe(invitation2.id);
       expect(invitations[0].email).toBe(invitation1.email);
       expect(invitations[1].email).toBe(invitation2.email);
+      expect(invitations[0].inviterId).toBe(user.id);
+      expect(invitations[1].inviterId).toBe(user.id);
+      expect(invitations[0].inviterEmail).toBe(user.email);
+      expect(invitations[1].inviterEmail).toBe(user.email);
     });
 
     it("should return an empty array if no invitations exist for the org", async () => {
