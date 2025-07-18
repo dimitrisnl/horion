@@ -18,6 +18,7 @@
     "@horionos/emails": "workspace:*",
     "@orpc/client": "^1.7.3",
     "@orpc/server": "^1.7.3",
+    "croner": "^9.1.0",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.0",
     "drizzle-orm": "^0.44.3",

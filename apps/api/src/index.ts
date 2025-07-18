@@ -6,6 +6,7 @@ import {timeout} from "hono/timeout";
 import {setupClientHints, setupCors, setupRPC} from "~/app/setup";
 import {envVars} from "~/config";
 
+import {setupCrons} from "./crons";
 import {restRouter} from "./routes/rest";
 
 const app = new Hono();
@@ -22,6 +23,9 @@ app.use("/rpc/*", setupRPC());
 
 // Configure REST routes
 app.get("/", restRouter["/"].GET);
+
+// Start cron jobs
+setupCrons();
 
 export default {
   hostname: "0.0.0.0",
