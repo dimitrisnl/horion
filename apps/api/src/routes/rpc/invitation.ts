@@ -1,6 +1,5 @@
 import {z} from "zod/v4";
 
-import {protectedProcedure, publicProcedure} from "~/app/orpc";
 import {envVars} from "~/config";
 import {OrganizationContext} from "~/core/contexts/organization";
 import {InvitationSendFailError} from "~/core/errors/error-types";
@@ -9,6 +8,7 @@ import {
   deleteInvitationInputSchema,
   getInvitationsInputSchema,
 } from "~/core/models/invitation";
+import {protectedProcedure, publicProcedure} from "~/orpc";
 import {
   sendInvitationWithAccountEmail,
   sendInvitationWithoutAccountEmail,

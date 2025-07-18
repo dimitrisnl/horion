@@ -3,8 +3,8 @@ import {logger} from "hono/logger";
 import {secureHeaders} from "hono/secure-headers";
 import {timeout} from "hono/timeout";
 
-import {setupClientHints, setupCors, setupRPC} from "~/app/setup";
 import {envVars} from "~/config";
+import {setupClientHints, setupCors, setupRPC} from "~/setup";
 
 import {setupCrons} from "./crons";
 import {restRouter} from "./routes/rest";

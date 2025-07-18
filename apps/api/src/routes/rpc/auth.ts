@@ -1,11 +1,11 @@
 import {z} from "zod/v4";
 
-import {publicProcedure} from "~/app/orpc";
 import {envVars} from "~/config";
 import {AccountContext} from "~/core/contexts/account";
 import {MagicLinkSentFailError} from "~/core/errors/error-types";
 import {emailSchema} from "~/core/models/email";
 import {Verification} from "~/core/models/verification";
+import {publicProcedure} from "~/orpc";
 import {sendMagicLinkEmail} from "~/services/email";
 import {getSessionFingerprint} from "~/utils/fingerprint";
 

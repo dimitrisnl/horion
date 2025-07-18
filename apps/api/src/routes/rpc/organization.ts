@@ -1,12 +1,12 @@
 import {z} from "zod/v4";
 
-import {protectedProcedure} from "~/app/orpc";
 import {OrganizationContext} from "~/core/contexts/organization";
 import {
   createOrganizationInputSchema,
   getOrganizationInputSchema,
   updateOrganizationInputSchema,
 } from "~/core/models/organization";
+import {protectedProcedure} from "~/orpc";
 
 export const organizationRouter = {
   get: protectedProcedure

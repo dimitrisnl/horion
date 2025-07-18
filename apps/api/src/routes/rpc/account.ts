@@ -1,9 +1,9 @@
 import {z} from "zod/v4";
 
-import {protectedProcedure, publicProcedure} from "~/app/orpc";
 import {AccountContext} from "~/core/contexts/account";
 import {OrganizationNotFoundError} from "~/core/errors/error-types";
 import {updateUserNameInputSchema} from "~/core/models/user";
+import {protectedProcedure, publicProcedure} from "~/orpc";
 
 export const accountRouter = {
   getSession: publicProcedure.handler(({context}) => {

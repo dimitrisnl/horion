@@ -6,8 +6,8 @@ import {cors} from "hono/cors";
 import {RPCHandler} from "@orpc/server/fetch";
 import {ResponseHeadersPlugin} from "@orpc/server/plugins";
 
-import {createContext} from "~/app/context";
 import {envVars} from "~/config";
+import {createContext} from "~/context";
 import {rpcRouter} from "~/routes/rpc";
 import {clientHints, criticalHints} from "~/utils/fingerprint";
 
