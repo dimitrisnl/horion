@@ -6,7 +6,7 @@ import {timeout} from "hono/timeout";
 import {setupClientHints, setupCors, setupRPC} from "~/app/setup";
 import {envVars} from "~/config";
 
-import {httpRouter} from "./routes/http";
+import {restRouter} from "./routes/rest";
 
 const app = new Hono();
 
@@ -20,9 +20,8 @@ app.use("/*", timeout(5000));
 // Configure RPC
 app.use("/rpc/*", setupRPC());
 
-// Configure HTTP routes
-app.get("/auth/verify", httpRouter["/auth/verify"].GET);
-app.get("/", httpRouter["/"].GET);
+// Configure REST routes
+app.get("/", restRouter["/"].GET);
 
 export default {
   hostname: "0.0.0.0",

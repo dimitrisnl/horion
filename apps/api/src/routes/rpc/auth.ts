@@ -2,13 +2,15 @@ import {z} from "zod/v4";
 
 import {publicProcedure} from "~/app/orpc";
 import {envVars} from "~/config";
+import {AccountContext} from "~/core/contexts/account";
 import {MagicLinkSentFailError} from "~/core/errors/error-types";
 import {emailSchema} from "~/core/models/email";
 import {Verification} from "~/core/models/verification";
 import {sendMagicLinkEmail} from "~/services/email";
+import {getSessionFingerprint} from "~/utils/fingerprint";
 
 const getMagicLinkUrl = (token: string) => {
-  return `${envVars.BASE_URL}/auth/verify?token=${token}`;
+  return `${envVars.DASHBOARD_URL}/verify-token/?token=${token}`;
 };
 
 export const authRouter = {
@@ -26,5 +28,25 @@ export const authRouter = {
         .catch(() => {
           throw new MagicLinkSentFailError();
         });
+    }),
+  verifyMagicLink: publicProcedure
+    .input(z.object({token: z.string()}))
+    .handler(async ({input, context}) => {
+      const {token} = input;
+      const {db, cookieService, headers} = context;
+
+      const incomingHeaders = Object.fromEntries(headers.entries());
+      const fingerprintMetadata = await getSessionFingerprint(incomingHeaders);
+
+      const verification = await AccountContext.validateTokenAndCreateUser({
+        db,
+        token,
+        fingerprintMetadata,
+      });
+
+      const sessionToken = verification.session.token;
+      await cookieService.createSessionCookie(sessionToken);
+
+      return {success: true};
     }),
 };

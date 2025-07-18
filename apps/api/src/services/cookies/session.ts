@@ -27,6 +27,7 @@ export function createCookieService(context: HonoContext) {
           sameSite: "lax",
           path: "/",
           maxAge: SESSION_DURATION_IN_SECONDS, // 30 days
+          domain: isProduction() ? undefined : "localhost",
         },
       );
     },
