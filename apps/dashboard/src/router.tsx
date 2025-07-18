@@ -16,6 +16,7 @@ export function createRouter() {
         refetchOnMount: true,
         refetchOnReconnect: true,
         staleTime: minutesToMs(2),
+        retry: false,
       },
     },
   });

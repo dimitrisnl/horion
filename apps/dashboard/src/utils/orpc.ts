@@ -32,6 +32,7 @@ const getClientLink = createIsomorphicFn()
 
         return fetch(url, {
           ...options,
+          credentials: "include",
           headers: {
             cookie: cookie || "",
           },

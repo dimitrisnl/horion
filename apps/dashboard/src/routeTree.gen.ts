@@ -8,327 +8,348 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProtectedRouteRouteImport } from './routes/_protected/route'
-import { Route as GuestRouteRouteImport } from './routes/_guest/route'
-import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
-import { Route as ProtectedCreateOrganizationRouteImport } from './routes/_protected/create-organization'
-import { Route as GuestLoginRouteImport } from './routes/_guest/login'
-import { Route as GuestAcceptInvitationRouteImport } from './routes/_guest/accept-invitation'
-import { Route as ProtectedAccountRouteRouteImport } from './routes/_protected/account/route'
-import { Route as ProtectedOrgIdRouteRouteImport } from './routes/_protected/$orgId/route'
-import { Route as ProtectedAccountIndexRouteImport } from './routes/_protected/account/index'
-import { Route as ProtectedOrgIdIndexRouteImport } from './routes/_protected/$orgId/index'
-import { Route as ProtectedAccountSecurityRouteImport } from './routes/_protected/account/security'
-import { Route as ProtectedAccountMembershipsRouteImport } from './routes/_protected/account/memberships'
-import { Route as ProtectedOrgIdSettingsRouteRouteImport } from './routes/_protected/$orgId/settings/route'
-import { Route as ProtectedOrgIdSettingsIndexRouteImport } from './routes/_protected/$orgId/settings/index'
-import { Route as ProtectedOrgIdSettingsInvitationsRouteImport } from './routes/_protected/$orgId/settings/invitations'
+import {Route as rootRouteImport} from "./routes/__root";
+import {Route as ProtectedRouteRouteImport} from "./routes/_protected/route";
+import {Route as GuestRouteRouteImport} from "./routes/_guest/route";
+import {Route as ProtectedIndexRouteImport} from "./routes/_protected/index";
+import {Route as ProtectedCreateOrganizationRouteImport} from "./routes/_protected/create-organization";
+import {Route as GuestVerifyTokenRouteImport} from "./routes/_guest/verify-token";
+import {Route as GuestLoginRouteImport} from "./routes/_guest/login";
+import {Route as GuestAcceptInvitationRouteImport} from "./routes/_guest/accept-invitation";
+import {Route as ProtectedAccountRouteRouteImport} from "./routes/_protected/account/route";
+import {Route as ProtectedOrgIdRouteRouteImport} from "./routes/_protected/$orgId/route";
+import {Route as ProtectedAccountIndexRouteImport} from "./routes/_protected/account/index";
+import {Route as ProtectedOrgIdIndexRouteImport} from "./routes/_protected/$orgId/index";
+import {Route as ProtectedAccountSecurityRouteImport} from "./routes/_protected/account/security";
+import {Route as ProtectedAccountMembershipsRouteImport} from "./routes/_protected/account/memberships";
+import {Route as ProtectedOrgIdSettingsRouteRouteImport} from "./routes/_protected/$orgId/settings/route";
+import {Route as ProtectedOrgIdSettingsIndexRouteImport} from "./routes/_protected/$orgId/settings/index";
+import {Route as ProtectedOrgIdSettingsInvitationsRouteImport} from "./routes/_protected/$orgId/settings/invitations";
 
 const ProtectedRouteRoute = ProtectedRouteRouteImport.update({
-  id: '/_protected',
+  id: "/_protected",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const GuestRouteRoute = GuestRouteRouteImport.update({
-  id: '/_guest',
+  id: "/_guest",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => ProtectedRouteRoute,
-} as any)
+} as any);
 const ProtectedCreateOrganizationRoute =
   ProtectedCreateOrganizationRouteImport.update({
-    id: '/create-organization',
-    path: '/create-organization',
+    id: "/create-organization",
+    path: "/create-organization",
     getParentRoute: () => ProtectedRouteRoute,
-  } as any)
+  } as any);
+const GuestVerifyTokenRoute = GuestVerifyTokenRouteImport.update({
+  id: "/verify-token",
+  path: "/verify-token",
+  getParentRoute: () => GuestRouteRoute,
+} as any);
 const GuestLoginRoute = GuestLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+  id: "/login",
+  path: "/login",
   getParentRoute: () => GuestRouteRoute,
-} as any)
+} as any);
 const GuestAcceptInvitationRoute = GuestAcceptInvitationRouteImport.update({
-  id: '/accept-invitation',
-  path: '/accept-invitation',
+  id: "/accept-invitation",
+  path: "/accept-invitation",
   getParentRoute: () => GuestRouteRoute,
-} as any)
+} as any);
 const ProtectedAccountRouteRoute = ProtectedAccountRouteRouteImport.update({
-  id: '/account',
-  path: '/account',
+  id: "/account",
+  path: "/account",
   getParentRoute: () => ProtectedRouteRoute,
-} as any)
+} as any);
 const ProtectedOrgIdRouteRoute = ProtectedOrgIdRouteRouteImport.update({
-  id: '/$orgId',
-  path: '/$orgId',
+  id: "/$orgId",
+  path: "/$orgId",
   getParentRoute: () => ProtectedRouteRoute,
-} as any)
+} as any);
 const ProtectedAccountIndexRoute = ProtectedAccountIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => ProtectedAccountRouteRoute,
-} as any)
+} as any);
 const ProtectedOrgIdIndexRoute = ProtectedOrgIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => ProtectedOrgIdRouteRoute,
-} as any)
+} as any);
 const ProtectedAccountSecurityRoute =
   ProtectedAccountSecurityRouteImport.update({
-    id: '/security',
-    path: '/security',
+    id: "/security",
+    path: "/security",
     getParentRoute: () => ProtectedAccountRouteRoute,
-  } as any)
+  } as any);
 const ProtectedAccountMembershipsRoute =
   ProtectedAccountMembershipsRouteImport.update({
-    id: '/memberships',
-    path: '/memberships',
+    id: "/memberships",
+    path: "/memberships",
     getParentRoute: () => ProtectedAccountRouteRoute,
-  } as any)
+  } as any);
 const ProtectedOrgIdSettingsRouteRoute =
   ProtectedOrgIdSettingsRouteRouteImport.update({
-    id: '/settings',
-    path: '/settings',
+    id: "/settings",
+    path: "/settings",
     getParentRoute: () => ProtectedOrgIdRouteRoute,
-  } as any)
+  } as any);
 const ProtectedOrgIdSettingsIndexRoute =
   ProtectedOrgIdSettingsIndexRouteImport.update({
-    id: '/',
-    path: '/',
+    id: "/",
+    path: "/",
     getParentRoute: () => ProtectedOrgIdSettingsRouteRoute,
-  } as any)
+  } as any);
 const ProtectedOrgIdSettingsInvitationsRoute =
   ProtectedOrgIdSettingsInvitationsRouteImport.update({
-    id: '/invitations',
-    path: '/invitations',
+    id: "/invitations",
+    path: "/invitations",
     getParentRoute: () => ProtectedOrgIdSettingsRouteRoute,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/$orgId': typeof ProtectedOrgIdRouteRouteWithChildren
-  '/account': typeof ProtectedAccountRouteRouteWithChildren
-  '/accept-invitation': typeof GuestAcceptInvitationRoute
-  '/login': typeof GuestLoginRoute
-  '/create-organization': typeof ProtectedCreateOrganizationRoute
-  '/': typeof ProtectedIndexRoute
-  '/$orgId/settings': typeof ProtectedOrgIdSettingsRouteRouteWithChildren
-  '/account/memberships': typeof ProtectedAccountMembershipsRoute
-  '/account/security': typeof ProtectedAccountSecurityRoute
-  '/$orgId/': typeof ProtectedOrgIdIndexRoute
-  '/account/': typeof ProtectedAccountIndexRoute
-  '/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
-  '/$orgId/settings/': typeof ProtectedOrgIdSettingsIndexRoute
+  "/$orgId": typeof ProtectedOrgIdRouteRouteWithChildren;
+  "/account": typeof ProtectedAccountRouteRouteWithChildren;
+  "/accept-invitation": typeof GuestAcceptInvitationRoute;
+  "/login": typeof GuestLoginRoute;
+  "/verify-token": typeof GuestVerifyTokenRoute;
+  "/create-organization": typeof ProtectedCreateOrganizationRoute;
+  "/": typeof ProtectedIndexRoute;
+  "/$orgId/settings": typeof ProtectedOrgIdSettingsRouteRouteWithChildren;
+  "/account/memberships": typeof ProtectedAccountMembershipsRoute;
+  "/account/security": typeof ProtectedAccountSecurityRoute;
+  "/$orgId/": typeof ProtectedOrgIdIndexRoute;
+  "/account/": typeof ProtectedAccountIndexRoute;
+  "/$orgId/settings/invitations": typeof ProtectedOrgIdSettingsInvitationsRoute;
+  "/$orgId/settings/": typeof ProtectedOrgIdSettingsIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/accept-invitation': typeof GuestAcceptInvitationRoute
-  '/login': typeof GuestLoginRoute
-  '/create-organization': typeof ProtectedCreateOrganizationRoute
-  '/': typeof ProtectedIndexRoute
-  '/account/memberships': typeof ProtectedAccountMembershipsRoute
-  '/account/security': typeof ProtectedAccountSecurityRoute
-  '/$orgId': typeof ProtectedOrgIdIndexRoute
-  '/account': typeof ProtectedAccountIndexRoute
-  '/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
-  '/$orgId/settings': typeof ProtectedOrgIdSettingsIndexRoute
+  "/accept-invitation": typeof GuestAcceptInvitationRoute;
+  "/login": typeof GuestLoginRoute;
+  "/verify-token": typeof GuestVerifyTokenRoute;
+  "/create-organization": typeof ProtectedCreateOrganizationRoute;
+  "/": typeof ProtectedIndexRoute;
+  "/account/memberships": typeof ProtectedAccountMembershipsRoute;
+  "/account/security": typeof ProtectedAccountSecurityRoute;
+  "/$orgId": typeof ProtectedOrgIdIndexRoute;
+  "/account": typeof ProtectedAccountIndexRoute;
+  "/$orgId/settings/invitations": typeof ProtectedOrgIdSettingsInvitationsRoute;
+  "/$orgId/settings": typeof ProtectedOrgIdSettingsIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/_guest': typeof GuestRouteRouteWithChildren
-  '/_protected': typeof ProtectedRouteRouteWithChildren
-  '/_protected/$orgId': typeof ProtectedOrgIdRouteRouteWithChildren
-  '/_protected/account': typeof ProtectedAccountRouteRouteWithChildren
-  '/_guest/accept-invitation': typeof GuestAcceptInvitationRoute
-  '/_guest/login': typeof GuestLoginRoute
-  '/_protected/create-organization': typeof ProtectedCreateOrganizationRoute
-  '/_protected/': typeof ProtectedIndexRoute
-  '/_protected/$orgId/settings': typeof ProtectedOrgIdSettingsRouteRouteWithChildren
-  '/_protected/account/memberships': typeof ProtectedAccountMembershipsRoute
-  '/_protected/account/security': typeof ProtectedAccountSecurityRoute
-  '/_protected/$orgId/': typeof ProtectedOrgIdIndexRoute
-  '/_protected/account/': typeof ProtectedAccountIndexRoute
-  '/_protected/$orgId/settings/invitations': typeof ProtectedOrgIdSettingsInvitationsRoute
-  '/_protected/$orgId/settings/': typeof ProtectedOrgIdSettingsIndexRoute
+  __root__: typeof rootRouteImport;
+  "/_guest": typeof GuestRouteRouteWithChildren;
+  "/_protected": typeof ProtectedRouteRouteWithChildren;
+  "/_protected/$orgId": typeof ProtectedOrgIdRouteRouteWithChildren;
+  "/_protected/account": typeof ProtectedAccountRouteRouteWithChildren;
+  "/_guest/accept-invitation": typeof GuestAcceptInvitationRoute;
+  "/_guest/login": typeof GuestLoginRoute;
+  "/_guest/verify-token": typeof GuestVerifyTokenRoute;
+  "/_protected/create-organization": typeof ProtectedCreateOrganizationRoute;
+  "/_protected/": typeof ProtectedIndexRoute;
+  "/_protected/$orgId/settings": typeof ProtectedOrgIdSettingsRouteRouteWithChildren;
+  "/_protected/account/memberships": typeof ProtectedAccountMembershipsRoute;
+  "/_protected/account/security": typeof ProtectedAccountSecurityRoute;
+  "/_protected/$orgId/": typeof ProtectedOrgIdIndexRoute;
+  "/_protected/account/": typeof ProtectedAccountIndexRoute;
+  "/_protected/$orgId/settings/invitations": typeof ProtectedOrgIdSettingsInvitationsRoute;
+  "/_protected/$orgId/settings/": typeof ProtectedOrgIdSettingsIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/$orgId'
-    | '/account'
-    | '/accept-invitation'
-    | '/login'
-    | '/create-organization'
-    | '/'
-    | '/$orgId/settings'
-    | '/account/memberships'
-    | '/account/security'
-    | '/$orgId/'
-    | '/account/'
-    | '/$orgId/settings/invitations'
-    | '/$orgId/settings/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/$orgId"
+    | "/account"
+    | "/accept-invitation"
+    | "/login"
+    | "/verify-token"
+    | "/create-organization"
+    | "/"
+    | "/$orgId/settings"
+    | "/account/memberships"
+    | "/account/security"
+    | "/$orgId/"
+    | "/account/"
+    | "/$orgId/settings/invitations"
+    | "/$orgId/settings/";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/accept-invitation'
-    | '/login'
-    | '/create-organization'
-    | '/'
-    | '/account/memberships'
-    | '/account/security'
-    | '/$orgId'
-    | '/account'
-    | '/$orgId/settings/invitations'
-    | '/$orgId/settings'
+    | "/accept-invitation"
+    | "/login"
+    | "/verify-token"
+    | "/create-organization"
+    | "/"
+    | "/account/memberships"
+    | "/account/security"
+    | "/$orgId"
+    | "/account"
+    | "/$orgId/settings/invitations"
+    | "/$orgId/settings";
   id:
-    | '__root__'
-    | '/_guest'
-    | '/_protected'
-    | '/_protected/$orgId'
-    | '/_protected/account'
-    | '/_guest/accept-invitation'
-    | '/_guest/login'
-    | '/_protected/create-organization'
-    | '/_protected/'
-    | '/_protected/$orgId/settings'
-    | '/_protected/account/memberships'
-    | '/_protected/account/security'
-    | '/_protected/$orgId/'
-    | '/_protected/account/'
-    | '/_protected/$orgId/settings/invitations'
-    | '/_protected/$orgId/settings/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/_guest"
+    | "/_protected"
+    | "/_protected/$orgId"
+    | "/_protected/account"
+    | "/_guest/accept-invitation"
+    | "/_guest/login"
+    | "/_guest/verify-token"
+    | "/_protected/create-organization"
+    | "/_protected/"
+    | "/_protected/$orgId/settings"
+    | "/_protected/account/memberships"
+    | "/_protected/account/security"
+    | "/_protected/$orgId/"
+    | "/_protected/account/"
+    | "/_protected/$orgId/settings/invitations"
+    | "/_protected/$orgId/settings/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  GuestRouteRoute: typeof GuestRouteRouteWithChildren
-  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
+  GuestRouteRoute: typeof GuestRouteRouteWithChildren;
+  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/_protected': {
-      id: '/_protected'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof ProtectedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_guest': {
-      id: '/_guest'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof GuestRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_protected/': {
-      id: '/_protected/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof ProtectedIndexRouteImport
-      parentRoute: typeof ProtectedRouteRoute
-    }
-    '/_protected/create-organization': {
-      id: '/_protected/create-organization'
-      path: '/create-organization'
-      fullPath: '/create-organization'
-      preLoaderRoute: typeof ProtectedCreateOrganizationRouteImport
-      parentRoute: typeof ProtectedRouteRoute
-    }
-    '/_guest/login': {
-      id: '/_guest/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof GuestLoginRouteImport
-      parentRoute: typeof GuestRouteRoute
-    }
-    '/_guest/accept-invitation': {
-      id: '/_guest/accept-invitation'
-      path: '/accept-invitation'
-      fullPath: '/accept-invitation'
-      preLoaderRoute: typeof GuestAcceptInvitationRouteImport
-      parentRoute: typeof GuestRouteRoute
-    }
-    '/_protected/account': {
-      id: '/_protected/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof ProtectedAccountRouteRouteImport
-      parentRoute: typeof ProtectedRouteRoute
-    }
-    '/_protected/$orgId': {
-      id: '/_protected/$orgId'
-      path: '/$orgId'
-      fullPath: '/$orgId'
-      preLoaderRoute: typeof ProtectedOrgIdRouteRouteImport
-      parentRoute: typeof ProtectedRouteRoute
-    }
-    '/_protected/account/': {
-      id: '/_protected/account/'
-      path: '/'
-      fullPath: '/account/'
-      preLoaderRoute: typeof ProtectedAccountIndexRouteImport
-      parentRoute: typeof ProtectedAccountRouteRoute
-    }
-    '/_protected/$orgId/': {
-      id: '/_protected/$orgId/'
-      path: '/'
-      fullPath: '/$orgId/'
-      preLoaderRoute: typeof ProtectedOrgIdIndexRouteImport
-      parentRoute: typeof ProtectedOrgIdRouteRoute
-    }
-    '/_protected/account/security': {
-      id: '/_protected/account/security'
-      path: '/security'
-      fullPath: '/account/security'
-      preLoaderRoute: typeof ProtectedAccountSecurityRouteImport
-      parentRoute: typeof ProtectedAccountRouteRoute
-    }
-    '/_protected/account/memberships': {
-      id: '/_protected/account/memberships'
-      path: '/memberships'
-      fullPath: '/account/memberships'
-      preLoaderRoute: typeof ProtectedAccountMembershipsRouteImport
-      parentRoute: typeof ProtectedAccountRouteRoute
-    }
-    '/_protected/$orgId/settings': {
-      id: '/_protected/$orgId/settings'
-      path: '/settings'
-      fullPath: '/$orgId/settings'
-      preLoaderRoute: typeof ProtectedOrgIdSettingsRouteRouteImport
-      parentRoute: typeof ProtectedOrgIdRouteRoute
-    }
-    '/_protected/$orgId/settings/': {
-      id: '/_protected/$orgId/settings/'
-      path: '/'
-      fullPath: '/$orgId/settings/'
-      preLoaderRoute: typeof ProtectedOrgIdSettingsIndexRouteImport
-      parentRoute: typeof ProtectedOrgIdSettingsRouteRoute
-    }
-    '/_protected/$orgId/settings/invitations': {
-      id: '/_protected/$orgId/settings/invitations'
-      path: '/invitations'
-      fullPath: '/$orgId/settings/invitations'
-      preLoaderRoute: typeof ProtectedOrgIdSettingsInvitationsRouteImport
-      parentRoute: typeof ProtectedOrgIdSettingsRouteRoute
-    }
+    "/_protected": {
+      id: "/_protected";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof ProtectedRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_guest": {
+      id: "/_guest";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof GuestRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_protected/": {
+      id: "/_protected/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof ProtectedIndexRouteImport;
+      parentRoute: typeof ProtectedRouteRoute;
+    };
+    "/_protected/create-organization": {
+      id: "/_protected/create-organization";
+      path: "/create-organization";
+      fullPath: "/create-organization";
+      preLoaderRoute: typeof ProtectedCreateOrganizationRouteImport;
+      parentRoute: typeof ProtectedRouteRoute;
+    };
+    "/_guest/verify-token": {
+      id: "/_guest/verify-token";
+      path: "/verify-token";
+      fullPath: "/verify-token";
+      preLoaderRoute: typeof GuestVerifyTokenRouteImport;
+      parentRoute: typeof GuestRouteRoute;
+    };
+    "/_guest/login": {
+      id: "/_guest/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof GuestLoginRouteImport;
+      parentRoute: typeof GuestRouteRoute;
+    };
+    "/_guest/accept-invitation": {
+      id: "/_guest/accept-invitation";
+      path: "/accept-invitation";
+      fullPath: "/accept-invitation";
+      preLoaderRoute: typeof GuestAcceptInvitationRouteImport;
+      parentRoute: typeof GuestRouteRoute;
+    };
+    "/_protected/account": {
+      id: "/_protected/account";
+      path: "/account";
+      fullPath: "/account";
+      preLoaderRoute: typeof ProtectedAccountRouteRouteImport;
+      parentRoute: typeof ProtectedRouteRoute;
+    };
+    "/_protected/$orgId": {
+      id: "/_protected/$orgId";
+      path: "/$orgId";
+      fullPath: "/$orgId";
+      preLoaderRoute: typeof ProtectedOrgIdRouteRouteImport;
+      parentRoute: typeof ProtectedRouteRoute;
+    };
+    "/_protected/account/": {
+      id: "/_protected/account/";
+      path: "/";
+      fullPath: "/account/";
+      preLoaderRoute: typeof ProtectedAccountIndexRouteImport;
+      parentRoute: typeof ProtectedAccountRouteRoute;
+    };
+    "/_protected/$orgId/": {
+      id: "/_protected/$orgId/";
+      path: "/";
+      fullPath: "/$orgId/";
+      preLoaderRoute: typeof ProtectedOrgIdIndexRouteImport;
+      parentRoute: typeof ProtectedOrgIdRouteRoute;
+    };
+    "/_protected/account/security": {
+      id: "/_protected/account/security";
+      path: "/security";
+      fullPath: "/account/security";
+      preLoaderRoute: typeof ProtectedAccountSecurityRouteImport;
+      parentRoute: typeof ProtectedAccountRouteRoute;
+    };
+    "/_protected/account/memberships": {
+      id: "/_protected/account/memberships";
+      path: "/memberships";
+      fullPath: "/account/memberships";
+      preLoaderRoute: typeof ProtectedAccountMembershipsRouteImport;
+      parentRoute: typeof ProtectedAccountRouteRoute;
+    };
+    "/_protected/$orgId/settings": {
+      id: "/_protected/$orgId/settings";
+      path: "/settings";
+      fullPath: "/$orgId/settings";
+      preLoaderRoute: typeof ProtectedOrgIdSettingsRouteRouteImport;
+      parentRoute: typeof ProtectedOrgIdRouteRoute;
+    };
+    "/_protected/$orgId/settings/": {
+      id: "/_protected/$orgId/settings/";
+      path: "/";
+      fullPath: "/$orgId/settings/";
+      preLoaderRoute: typeof ProtectedOrgIdSettingsIndexRouteImport;
+      parentRoute: typeof ProtectedOrgIdSettingsRouteRoute;
+    };
+    "/_protected/$orgId/settings/invitations": {
+      id: "/_protected/$orgId/settings/invitations";
+      path: "/invitations";
+      fullPath: "/$orgId/settings/invitations";
+      preLoaderRoute: typeof ProtectedOrgIdSettingsInvitationsRouteImport;
+      parentRoute: typeof ProtectedOrgIdSettingsRouteRoute;
+    };
   }
 }
 
 interface GuestRouteRouteChildren {
-  GuestAcceptInvitationRoute: typeof GuestAcceptInvitationRoute
-  GuestLoginRoute: typeof GuestLoginRoute
+  GuestAcceptInvitationRoute: typeof GuestAcceptInvitationRoute;
+  GuestLoginRoute: typeof GuestLoginRoute;
+  GuestVerifyTokenRoute: typeof GuestVerifyTokenRoute;
 }
 
 const GuestRouteRouteChildren: GuestRouteRouteChildren = {
   GuestAcceptInvitationRoute: GuestAcceptInvitationRoute,
   GuestLoginRoute: GuestLoginRoute,
-}
+  GuestVerifyTokenRoute: GuestVerifyTokenRoute,
+};
 
 const GuestRouteRouteWithChildren = GuestRouteRoute._addFileChildren(
   GuestRouteRouteChildren,
-)
+);
 
 interface ProtectedOrgIdSettingsRouteRouteChildren {
-  ProtectedOrgIdSettingsInvitationsRoute: typeof ProtectedOrgIdSettingsInvitationsRoute
-  ProtectedOrgIdSettingsIndexRoute: typeof ProtectedOrgIdSettingsIndexRoute
+  ProtectedOrgIdSettingsInvitationsRoute: typeof ProtectedOrgIdSettingsInvitationsRoute;
+  ProtectedOrgIdSettingsIndexRoute: typeof ProtectedOrgIdSettingsIndexRoute;
 }
 
 const ProtectedOrgIdSettingsRouteRouteChildren: ProtectedOrgIdSettingsRouteRouteChildren =
@@ -336,49 +357,49 @@ const ProtectedOrgIdSettingsRouteRouteChildren: ProtectedOrgIdSettingsRouteRoute
     ProtectedOrgIdSettingsInvitationsRoute:
       ProtectedOrgIdSettingsInvitationsRoute,
     ProtectedOrgIdSettingsIndexRoute: ProtectedOrgIdSettingsIndexRoute,
-  }
+  };
 
 const ProtectedOrgIdSettingsRouteRouteWithChildren =
   ProtectedOrgIdSettingsRouteRoute._addFileChildren(
     ProtectedOrgIdSettingsRouteRouteChildren,
-  )
+  );
 
 interface ProtectedOrgIdRouteRouteChildren {
-  ProtectedOrgIdSettingsRouteRoute: typeof ProtectedOrgIdSettingsRouteRouteWithChildren
-  ProtectedOrgIdIndexRoute: typeof ProtectedOrgIdIndexRoute
+  ProtectedOrgIdSettingsRouteRoute: typeof ProtectedOrgIdSettingsRouteRouteWithChildren;
+  ProtectedOrgIdIndexRoute: typeof ProtectedOrgIdIndexRoute;
 }
 
 const ProtectedOrgIdRouteRouteChildren: ProtectedOrgIdRouteRouteChildren = {
   ProtectedOrgIdSettingsRouteRoute:
     ProtectedOrgIdSettingsRouteRouteWithChildren,
   ProtectedOrgIdIndexRoute: ProtectedOrgIdIndexRoute,
-}
+};
 
 const ProtectedOrgIdRouteRouteWithChildren =
-  ProtectedOrgIdRouteRoute._addFileChildren(ProtectedOrgIdRouteRouteChildren)
+  ProtectedOrgIdRouteRoute._addFileChildren(ProtectedOrgIdRouteRouteChildren);
 
 interface ProtectedAccountRouteRouteChildren {
-  ProtectedAccountMembershipsRoute: typeof ProtectedAccountMembershipsRoute
-  ProtectedAccountSecurityRoute: typeof ProtectedAccountSecurityRoute
-  ProtectedAccountIndexRoute: typeof ProtectedAccountIndexRoute
+  ProtectedAccountMembershipsRoute: typeof ProtectedAccountMembershipsRoute;
+  ProtectedAccountSecurityRoute: typeof ProtectedAccountSecurityRoute;
+  ProtectedAccountIndexRoute: typeof ProtectedAccountIndexRoute;
 }
 
 const ProtectedAccountRouteRouteChildren: ProtectedAccountRouteRouteChildren = {
   ProtectedAccountMembershipsRoute: ProtectedAccountMembershipsRoute,
   ProtectedAccountSecurityRoute: ProtectedAccountSecurityRoute,
   ProtectedAccountIndexRoute: ProtectedAccountIndexRoute,
-}
+};
 
 const ProtectedAccountRouteRouteWithChildren =
   ProtectedAccountRouteRoute._addFileChildren(
     ProtectedAccountRouteRouteChildren,
-  )
+  );
 
 interface ProtectedRouteRouteChildren {
-  ProtectedOrgIdRouteRoute: typeof ProtectedOrgIdRouteRouteWithChildren
-  ProtectedAccountRouteRoute: typeof ProtectedAccountRouteRouteWithChildren
-  ProtectedCreateOrganizationRoute: typeof ProtectedCreateOrganizationRoute
-  ProtectedIndexRoute: typeof ProtectedIndexRoute
+  ProtectedOrgIdRouteRoute: typeof ProtectedOrgIdRouteRouteWithChildren;
+  ProtectedAccountRouteRoute: typeof ProtectedAccountRouteRouteWithChildren;
+  ProtectedCreateOrganizationRoute: typeof ProtectedCreateOrganizationRoute;
+  ProtectedIndexRoute: typeof ProtectedIndexRoute;
 }
 
 const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
@@ -386,16 +407,16 @@ const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
   ProtectedAccountRouteRoute: ProtectedAccountRouteRouteWithChildren,
   ProtectedCreateOrganizationRoute: ProtectedCreateOrganizationRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
-}
+};
 
 const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
   ProtectedRouteRouteChildren,
-)
+);
 
 const rootRouteChildren: RootRouteChildren = {
   GuestRouteRoute: GuestRouteRouteWithChildren,
   ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

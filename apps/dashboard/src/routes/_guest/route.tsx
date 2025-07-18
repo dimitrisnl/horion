@@ -1,9 +1,14 @@
 import {AudioWaveformIcon} from "@horionos/icons";
 
-import {createFileRoute, Outlet} from "@tanstack/react-router";
+import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_guest")({
   component: RouteComponent,
+  beforeLoad: ({context}) => {
+    if (context.userId) {
+      throw redirect({to: "/"});
+    }
+  },
 });
 
 function RouteComponent() {

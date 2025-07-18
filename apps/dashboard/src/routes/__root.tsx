@@ -12,11 +12,11 @@ import {TanStackRouterDevtools} from "@tanstack/react-router-devtools";
 
 import {NotFound} from "~/components/not-found";
 import {ThemeProvider} from "~/components/theme/theme-provider";
-import {getThemeServerFn} from "~/utils/theme";
 import appCss from "~/styles/app.css?url";
 import interCss from "~/styles/inter.css?url";
 import type {orpc} from "~/utils/orpc";
 import {basicMeta, favicons, seo} from "~/utils/seo";
+import {getThemeServerFn} from "~/utils/theme";
 
 export interface RouterAppContext {
   orpc: typeof orpc;
@@ -26,7 +26,11 @@ export interface RouterAppContext {
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
-  beforeLoad: async ({context}) => {
+  beforeLoad: async ({context, location}) => {
+    console.log("Running __root.beforeLoad", {
+      location: location.href,
+      timestamp: Date.now(),
+    });
     const {session} = await context.queryClient.fetchQuery(
       context.orpc.account.getSession.queryOptions(),
     );
