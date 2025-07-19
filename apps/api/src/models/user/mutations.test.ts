@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, it} from "bun:test";
 
-import {UserAlreadyExistsError} from "~/core/errors/error-types";
+import {UserAlreadyExistsError} from "~/errors";
 import {createTestUser} from "~/test/fixtures";
 import {cleanupTestDatabase, createTestDatabase} from "~/test/setup";
 

@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, it} from "bun:test";
 
-import {InvitationAlreadyExistsError} from "~/core/errors/error-types";
+import {InvitationAlreadyExistsError} from "~/errors";
 import {createTestInvitation, setupTestMembership} from "~/test/fixtures";
 import {cleanupTestDatabase, createTestDatabase} from "~/test/setup";
 

@@ -1,12 +1,12 @@
 import {z} from "zod/v4";
 
-import {OrganizationContext} from "~/core/contexts/organization";
 import {
   createOrganizationInputSchema,
   getOrganizationInputSchema,
   updateOrganizationInputSchema,
-} from "~/core/models/organization";
+} from "~/models/organization";
 import {protectedProcedure} from "~/orpc";
+import {OrganizationService} from "~/services/organization-service";
 
 export const organizationRouter = {
   get: protectedProcedure
@@ -17,7 +17,7 @@ export const organizationRouter = {
 
       const {id: organizationId} = input;
 
-      const organization = await OrganizationContext.getOrganization({
+      const organization = await OrganizationService.getOrganization({
         db,
         organizationId,
         actorId: userId,
@@ -34,7 +34,7 @@ export const organizationRouter = {
       const userId = session.userId;
 
       const {organization, membership} =
-        await OrganizationContext.createOrganization({
+        await OrganizationService.createOrganization({
           db,
           name,
           actorId: userId,
@@ -50,7 +50,7 @@ export const organizationRouter = {
       const {id: organizationId, name} = input;
       const userId = session.userId;
 
-      const organization = await OrganizationContext.updateOrganization({
+      const organization = await OrganizationService.updateOrganization({
         db,
         organizationId,
         name,
@@ -69,7 +69,7 @@ export const organizationRouter = {
       const userId = session.userId;
       const {organizationId} = input;
 
-      const memberships = await OrganizationContext.getMemberships({
+      const memberships = await OrganizationService.getMemberships({
         db,
         organizationId,
         actorId: userId,

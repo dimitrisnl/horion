@@ -1,18 +1,18 @@
 import {z} from "zod/v4";
 
-import {envVars} from "~/config";
-import {OrganizationContext} from "~/core/contexts/organization";
-import {InvitationSendFailError} from "~/core/errors/error-types";
+import {envVars} from "~/config/env";
+import {InvitationSendFailError} from "~/errors";
+import {
+  sendInvitationWithAccountEmail,
+  sendInvitationWithoutAccountEmail,
+} from "~/mailer/send-invitation-link";
 import {
   createInvitationInputSchema,
   deleteInvitationInputSchema,
   getInvitationsInputSchema,
-} from "~/core/models/invitation";
+} from "~/models/invitation";
 import {protectedProcedure, publicProcedure} from "~/orpc";
-import {
-  sendInvitationWithAccountEmail,
-  sendInvitationWithoutAccountEmail,
-} from "~/services/email/send-invitation-link";
+import {OrganizationService} from "~/services/organization-service";
 
 export const invitationRouter = {
   check: publicProcedure
@@ -22,7 +22,7 @@ export const invitationRouter = {
       const {token} = input;
 
       const {invitation, organization} =
-        await OrganizationContext.getInvitationByToken({db, token});
+        await OrganizationService.getInvitationByToken({db, token});
 
       return {
         organization: {
@@ -42,7 +42,7 @@ export const invitationRouter = {
       const userId = session.userId;
 
       const {invitation, organization, invitee} =
-        await OrganizationContext.createInvitation({
+        await OrganizationService.createInvitation({
           db,
           organizationId,
           actorId: userId,
@@ -82,7 +82,7 @@ export const invitationRouter = {
       const {organizationId} = input;
       const userId = session.userId;
 
-      const invitations = await OrganizationContext.getInvitations({
+      const invitations = await OrganizationService.getInvitations({
         db,
         organizationId,
         userId,
@@ -98,7 +98,7 @@ export const invitationRouter = {
       const {id: invitationId, organizationId} = input;
       const userId = session.userId;
 
-      await OrganizationContext.deleteInvitation({
+      await OrganizationService.deleteInvitation({
         db,
         invitationId,
         organizationId,

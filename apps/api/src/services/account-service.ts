@@ -1,5 +1,5 @@
 import type {DatabaseConnection} from "~/types/database";
-import type {getSessionFingerprint} from "~/utils/fingerprint";
+import type {getSessionFingerprint} from "~/utils/session-fingerprint";
 
 import {
   InvalidVerificationTokenError,
@@ -10,7 +10,7 @@ import {
   UserAlreadyExistsError,
   UserNotFoundError,
   VerificationExpiredError,
-} from "../errors/error-types";
+} from "../errors";
 import {Invitation} from "../models/invitation";
 import {Membership} from "../models/membership";
 import {Organization} from "../models/organization";
@@ -19,7 +19,7 @@ import {SessionMetadata} from "../models/session-metadata";
 import {User} from "../models/user";
 import {isVerificationExpired, Verification} from "../models/verification";
 
-export const AccountContext = {
+export const AccountService = {
   getUserById: async ({
     db,
     actorId,

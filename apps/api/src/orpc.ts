@@ -1,7 +1,7 @@
 import {ORPCError, os, ValidationError} from "@orpc/server";
 import {z, ZodError} from "zod/v4";
 
-import {AuthenticationError, BaseError} from "~/core/errors/error-types";
+import {AuthenticationError, BaseError} from "~/errors";
 
 import type {Context} from "./context";
 

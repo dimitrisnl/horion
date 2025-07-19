@@ -1,13 +1,13 @@
 import {z} from "zod/v4";
 
-import {envVars} from "~/config";
-import {AccountContext} from "~/core/contexts/account";
-import {MagicLinkSentFailError} from "~/core/errors/error-types";
-import {emailSchema} from "~/core/models/email";
-import {Verification} from "~/core/models/verification";
+import {envVars} from "~/config/env";
+import {MagicLinkSentFailError} from "~/errors";
+import {sendMagicLinkEmail} from "~/mailer/send-magic-link";
+import {emailSchema} from "~/models/email";
+import {Verification} from "~/models/verification";
 import {publicProcedure} from "~/orpc";
-import {sendMagicLinkEmail} from "~/services/email";
-import {getSessionFingerprint} from "~/utils/fingerprint";
+import {AccountService} from "~/services/account-service";
+import {getSessionFingerprint} from "~/utils/session-fingerprint";
 
 const getMagicLinkUrl = (token: string) => {
   return `${envVars.DASHBOARD_URL}/verify-token/?token=${token}`;
@@ -38,7 +38,7 @@ export const authRouter = {
       const incomingHeaders = Object.fromEntries(headers.entries());
       const fingerprintMetadata = await getSessionFingerprint(incomingHeaders);
 
-      const verification = await AccountContext.validateTokenAndCreateUser({
+      const verification = await AccountService.validateTokenAndCreateUser({
         db,
         token,
         fingerprintMetadata,

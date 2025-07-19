@@ -8,13 +8,13 @@ import {
   MembershipAlreadyExistsError,
   OrganizationNotFoundError,
   UnexpectedError,
-} from "../errors/error-types";
+} from "../errors";
 import {Invitation} from "../models/invitation";
 import {Membership} from "../models/membership";
 import {Organization} from "../models/organization";
 import {User} from "../models/user";
 
-export const OrganizationContext = {
+export const OrganizationService = {
   getOrganization: async ({
     db,
     organizationId,

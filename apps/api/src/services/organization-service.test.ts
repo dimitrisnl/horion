@@ -14,11 +14,11 @@ import {
   InvitationNotFoundError,
   MembershipAlreadyExistsError,
   OrganizationNotFoundError,
-} from "../errors/error-types";
+} from "../errors";
 import {generateId} from "../models/id";
-import {OrganizationContext} from "./organization";
+import {OrganizationService} from "./organization-service";
 
-describe("Organization Context", async () => {
+describe("Organization Service", async () => {
   const {client, db} = await createTestDatabase();
 
   afterEach(async () => {
@@ -29,7 +29,7 @@ describe("Organization Context", async () => {
     it("should return organization for valid membership", async () => {
       const {user, org} = await setupTestMembership({db});
 
-      const foundOrganization = await OrganizationContext.getOrganization({
+      const foundOrganization = await OrganizationService.getOrganization({
         db,
         organizationId: org.id,
         actorId: user.id,
@@ -44,7 +44,7 @@ describe("Organization Context", async () => {
       const org = await createTestOrganization({db});
 
       await expect(
-        OrganizationContext.getOrganization({
+        OrganizationService.getOrganization({
           db,
           organizationId: org.id,
           actorId: user.id,
@@ -56,7 +56,7 @@ describe("Organization Context", async () => {
       const {user} = await setupTestMembership({db});
 
       await expect(
-        OrganizationContext.getOrganization({
+        OrganizationService.getOrganization({
           db,
           organizationId: generateId(),
           actorId: user.id,
@@ -70,7 +70,7 @@ describe("Organization Context", async () => {
       const user = await createTestUser({db});
 
       const {organization, membership} =
-        await OrganizationContext.createOrganization({
+        await OrganizationService.createOrganization({
           db,
           name: "Test Organization",
           actorId: user.id,
@@ -86,7 +86,7 @@ describe("Organization Context", async () => {
 
     it("should throw error if organization creation fails", async () => {
       expect(
-        OrganizationContext.createOrganization({
+        OrganizationService.createOrganization({
           db,
           name: "",
           actorId: generateId(),
@@ -98,7 +98,7 @@ describe("Organization Context", async () => {
     it("should update organization name", async () => {
       const {org, user} = await setupTestMembership({db});
 
-      const updatedOrg = await OrganizationContext.updateOrganization({
+      const updatedOrg = await OrganizationService.updateOrganization({
         db,
         organizationId: org.id,
         name: "Updated Organization",
@@ -113,7 +113,7 @@ describe("Organization Context", async () => {
       const user = await createTestUser({db});
 
       expect(
-        OrganizationContext.updateOrganization({
+        OrganizationService.updateOrganization({
           db,
           organizationId: generateId(),
           name: "Updated Organization",
@@ -129,7 +129,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.updateOrganization({
+        OrganizationService.updateOrganization({
           db,
           organizationId: org.id,
           name: "Updated Organization",
@@ -143,7 +143,7 @@ describe("Organization Context", async () => {
     it("should create an invitation for a user", async () => {
       const {org, user} = await setupTestMembership({db});
 
-      const {invitation, invitee} = await OrganizationContext.createInvitation({
+      const {invitation, invitee} = await OrganizationService.createInvitation({
         db,
         email: "test@example.com",
         role: "member",
@@ -163,7 +163,7 @@ describe("Organization Context", async () => {
       const {org, user} = await setupTestMembership({db});
       const inviteeUser = await createTestUser({db});
 
-      const {invitation, invitee} = await OrganizationContext.createInvitation({
+      const {invitation, invitee} = await OrganizationService.createInvitation({
         db,
         email: inviteeUser.email,
         role: "member",
@@ -184,7 +184,7 @@ describe("Organization Context", async () => {
       const org = await createTestOrganization({db});
 
       expect(
-        OrganizationContext.createInvitation({
+        OrganizationService.createInvitation({
           db,
           email: "test@example.com",
           role: "member",
@@ -201,7 +201,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.createInvitation({
+        OrganizationService.createInvitation({
           db,
           email: "test@example.com",
           role: "member",
@@ -214,7 +214,7 @@ describe("Organization Context", async () => {
     it("should throw error if the invitation already exists", async () => {
       const {org, user} = await setupTestMembership({db});
 
-      await OrganizationContext.createInvitation({
+      await OrganizationService.createInvitation({
         db,
         email: "test@example.com",
         role: "member",
@@ -223,7 +223,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.createInvitation({
+        OrganizationService.createInvitation({
           db,
           email: "test@example.com",
           role: "member",
@@ -242,7 +242,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.createInvitation({
+        OrganizationService.createInvitation({
           db,
           email: invitee.email,
           role: "member",
@@ -256,7 +256,7 @@ describe("Organization Context", async () => {
       const {org, user} = await setupTestMembership({db});
 
       expect(
-        OrganizationContext.createInvitation({
+        OrganizationService.createInvitation({
           db,
           email: user.email,
           role: "member",
@@ -272,7 +272,7 @@ describe("Organization Context", async () => {
       const {org, user} = await setupTestMembership({db});
       const invitee = await createTestUser({db});
 
-      await OrganizationContext.createInvitation({
+      await OrganizationService.createInvitation({
         db,
         email: invitee.email,
         role: "member",
@@ -280,7 +280,7 @@ describe("Organization Context", async () => {
         actorId: user.id,
       });
 
-      const invitations = await OrganizationContext.getInvitations({
+      const invitations = await OrganizationService.getInvitations({
         db,
         organizationId: org.id,
         userId: user.id,
@@ -294,7 +294,7 @@ describe("Organization Context", async () => {
     it("should return empty array if no invitations", async () => {
       const {org, user} = await setupTestMembership({db});
 
-      const invitations = await OrganizationContext.getInvitations({
+      const invitations = await OrganizationService.getInvitations({
         db,
         organizationId: org.id,
         userId: user.id,
@@ -309,7 +309,7 @@ describe("Organization Context", async () => {
       const org = await createTestOrganization({db});
 
       expect(
-        OrganizationContext.getInvitations({
+        OrganizationService.getInvitations({
           db,
           organizationId: org.id,
           userId: user.id,
@@ -324,7 +324,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.getInvitations({
+        OrganizationService.getInvitations({
           db,
           organizationId: org.id,
           userId: user.id,
@@ -337,7 +337,7 @@ describe("Organization Context", async () => {
       const {org, user} = await setupTestMembership({db});
       const invitee = await createTestUser({db});
 
-      const {invitation} = await OrganizationContext.createInvitation({
+      const {invitation} = await OrganizationService.createInvitation({
         db,
         email: invitee.email,
         role: "member",
@@ -345,7 +345,7 @@ describe("Organization Context", async () => {
         actorId: user.id,
       });
 
-      const result = await OrganizationContext.deleteInvitation({
+      const result = await OrganizationService.deleteInvitation({
         db,
         invitationId: invitation.id,
         actorId: user.id,
@@ -359,7 +359,7 @@ describe("Organization Context", async () => {
       const {org, user} = await setupTestMembership({db});
 
       expect(
-        OrganizationContext.deleteInvitation({
+        OrganizationService.deleteInvitation({
           db,
           invitationId: generateId(),
           actorId: user.id,
@@ -373,7 +373,7 @@ describe("Organization Context", async () => {
       const org = await createTestOrganization({db});
 
       expect(
-        OrganizationContext.deleteInvitation({
+        OrganizationService.deleteInvitation({
           db,
           invitationId: generateId(),
           actorId: user.id,
@@ -399,7 +399,7 @@ describe("Organization Context", async () => {
       });
 
       expect(
-        OrganizationContext.deleteInvitation({
+        OrganizationService.deleteInvitation({
           db,
           invitationId: invitation.id,
           actorId: user.id,

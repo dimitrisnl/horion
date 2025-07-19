@@ -16,11 +16,11 @@ import {
   UserAlreadyExistsError,
   UserNotFoundError,
   VerificationExpiredError,
-} from "../errors/error-types";
+} from "../errors";
 import {generateId} from "../models/id";
-import {AccountContext} from "./account";
+import {AccountService} from "./account-service";
 
-describe("Account Context", async () => {
+describe("Account Service", async () => {
   const {client, db} = await createTestDatabase();
 
   afterEach(async () => {
@@ -31,7 +31,7 @@ describe("Account Context", async () => {
     it("should return user by ID", async () => {
       const user = await createTestUser({db});
 
-      const foundUser = await AccountContext.getUserById({
+      const foundUser = await AccountService.getUserById({
         db,
         actorId: user.id,
       });
@@ -42,7 +42,7 @@ describe("Account Context", async () => {
 
     it("should throw error if user not found", async () => {
       expect(
-        AccountContext.getUserById({
+        AccountService.getUserById({
           db,
           actorId: generateId(),
         }),
@@ -54,7 +54,7 @@ describe("Account Context", async () => {
     it("should update user name", async () => {
       const user = await createTestUser({db});
 
-      const updatedUser = await AccountContext.updateUserName({
+      const updatedUser = await AccountService.updateUserName({
         db,
         actorId: user.id,
         name: "New Name",
@@ -67,7 +67,7 @@ describe("Account Context", async () => {
 
     it("should throw error if user not found", async () => {
       expect(
-        AccountContext.updateUserName({
+        AccountService.updateUserName({
           db,
           actorId: generateId(),
           name: "New Name",
@@ -83,7 +83,7 @@ describe("Account Context", async () => {
         db,
         overrides: {userId: user.id},
       });
-      const sessions = await AccountContext.getUserSessions({
+      const sessions = await AccountService.getUserSessions({
         db,
         actorId: user.id,
       });
@@ -94,7 +94,7 @@ describe("Account Context", async () => {
 
     it("should return empty array if no sessions", async () => {
       const user = await createTestUser({db});
-      const sessions = await AccountContext.getUserSessions({
+      const sessions = await AccountService.getUserSessions({
         db,
         actorId: user.id,
       });
@@ -111,7 +111,7 @@ describe("Account Context", async () => {
         overrides: {userId: user.id},
       });
 
-      const result = await AccountContext.deleteUserSession({
+      const result = await AccountService.deleteUserSession({
         db,
         token: session.token,
         actorId: user.id,
@@ -122,7 +122,7 @@ describe("Account Context", async () => {
 
     it("should throw error if session not found", async () => {
       expect(
-        AccountContext.deleteUserSession({
+        AccountService.deleteUserSession({
           db,
           token: generateId(),
           actorId: generateId(),
@@ -134,7 +134,7 @@ describe("Account Context", async () => {
   describe("getUserMemberships", async () => {
     it("should return user memberships", async () => {
       const {user} = await setupTestMembership({db});
-      const memberships = await AccountContext.getUserMemberships({
+      const memberships = await AccountService.getUserMemberships({
         db,
         actorId: user.id,
       });
@@ -144,7 +144,7 @@ describe("Account Context", async () => {
     });
     it("should return empty array if no memberships", async () => {
       const user = await createTestUser({db});
-      const memberships = await AccountContext.getUserMemberships({
+      const memberships = await AccountService.getUserMemberships({
         db,
         actorId: user.id,
       });
@@ -157,7 +157,7 @@ describe("Account Context", async () => {
     it("should validate token and create user", async () => {
       const token = await createTestVerificationToken({db});
 
-      const result = await AccountContext.validateTokenAndCreateUser({
+      const result = await AccountService.validateTokenAndCreateUser({
         db,
         token: token.identifier,
         fingerprintMetadata: {
@@ -178,7 +178,7 @@ describe("Account Context", async () => {
     });
     it("should throw error for invalid token", async () => {
       expect(
-        AccountContext.validateTokenAndCreateUser({
+        AccountService.validateTokenAndCreateUser({
           db,
           token: generateId(),
           fingerprintMetadata: {
@@ -199,7 +199,7 @@ describe("Account Context", async () => {
       });
 
       expect(
-        AccountContext.validateTokenAndCreateUser({
+        AccountService.validateTokenAndCreateUser({
           db,
           token: token.identifier,
           fingerprintMetadata: {
@@ -217,7 +217,7 @@ describe("Account Context", async () => {
     it("should proceed without fingerprint metadata", async () => {
       const token = await createTestVerificationToken({db});
 
-      const result = await AccountContext.validateTokenAndCreateUser({
+      const result = await AccountService.validateTokenAndCreateUser({
         db,
         token: token.identifier,
         fingerprintMetadata: {} as never,
@@ -234,7 +234,7 @@ describe("Account Context", async () => {
         overrides: {value: user.email},
       });
 
-      const result = await AccountContext.validateTokenAndCreateUser({
+      const result = await AccountService.validateTokenAndCreateUser({
         db,
         token: token.identifier,
         fingerprintMetadata: {
@@ -267,7 +267,7 @@ describe("Account Context", async () => {
         },
       });
 
-      const {user, membership} = await AccountContext.acceptInvitationAsGuest({
+      const {user, membership} = await AccountService.acceptInvitationAsGuest({
         db,
         invitationToken: invitation.token,
       });
@@ -280,7 +280,7 @@ describe("Account Context", async () => {
     });
     it("should throw error if invitation not found", async () => {
       expect(
-        AccountContext.acceptInvitationAsGuest({
+        AccountService.acceptInvitationAsGuest({
           db,
           invitationToken: generateId(),
         }),
@@ -301,7 +301,7 @@ describe("Account Context", async () => {
       });
 
       expect(
-        AccountContext.acceptInvitationAsGuest({
+        AccountService.acceptInvitationAsGuest({
           db,
           invitationToken: invitation.token,
         }),
@@ -323,7 +323,7 @@ describe("Account Context", async () => {
         },
       });
 
-      const {membership} = await AccountContext.acceptInvitationAsUser({
+      const {membership} = await AccountService.acceptInvitationAsUser({
         db,
         actorId: user.id,
         invitationId: invitation.id,
@@ -337,7 +337,7 @@ describe("Account Context", async () => {
 
     it("should throw error if invitation not found", async () => {
       expect(
-        AccountContext.acceptInvitationAsUser({
+        AccountService.acceptInvitationAsUser({
           db,
           actorId: generateId(),
           invitationId: generateId(),
@@ -360,7 +360,7 @@ describe("Account Context", async () => {
       });
 
       expect(
-        AccountContext.acceptInvitationAsUser({
+        AccountService.acceptInvitationAsUser({
           db,
           actorId: otherUser.id,
           invitationId: invitation.id,

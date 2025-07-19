@@ -2,8 +2,8 @@ import * as schema from "@horionos/db/schema";
 
 import {nanoid} from "nanoid";
 
-import {generateId} from "~/core/models/id";
-import {generateToken} from "~/core/models/token";
+import {generateId} from "~/models/id";
+import {generateToken} from "~/models/token";
 import type {DatabaseConnection} from "~/types/database";
 
 export const createTestUser = async ({

@@ -3,7 +3,7 @@ import * as schema from "@horionos/db/schema";
 import {eq} from "drizzle-orm";
 import {z} from "zod/v4";
 
-import {UserAlreadyExistsError} from "~/core/errors/error-types";
+import {UserAlreadyExistsError} from "~/errors";
 import type {DatabaseConnection} from "~/types/database";
 
 import {generateId} from "../id";

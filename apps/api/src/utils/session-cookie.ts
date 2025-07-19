@@ -1,11 +1,14 @@
 import type {Context as HonoContext} from "hono";
 import {deleteCookie, getSignedCookie, setSignedCookie} from "hono/cookie";
 
-import {envVars} from "~/config";
-import {SESSION_COOKIE_NAME, SESSION_DURATION_IN_SECONDS} from "~/constants";
-import {isProduction} from "~/utils/environment";
+import {
+  SESSION_COOKIE_NAME,
+  SESSION_DURATION_IN_SECONDS,
+} from "~/config/constants";
+import {envVars} from "~/config/env";
+import {isProduction} from "~/config/runtime";
 
-export function createCookieService(context: HonoContext) {
+export function createSessionCookieHelper(context: HonoContext) {
   return {
     getSessionToken: () =>
       getSignedCookie(

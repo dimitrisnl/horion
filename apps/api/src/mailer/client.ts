@@ -1,8 +1,9 @@
 import {Resend} from "resend";
 
-import {envVars} from "~/config";
-import {FROM_EMAIL} from "~/constants";
-import {isProduction} from "~/utils/environment";
+import {envVars} from "~/config/env";
+import {isProduction} from "~/config/runtime";
+
+export const FROM_EMAIL = "Jim from Horionos <send@horionos.com>";
 
 const resendClient = new Resend(envVars.RESEND_API_KEY);
 

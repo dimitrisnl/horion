@@ -1,8 +1,8 @@
 import type {Context as HonoContext} from "hono";
 
-import {Session} from "~/core/models/session";
-import {createCookieService} from "~/services/cookies";
+import {Session} from "~/models/session";
 import type {DatabaseConnection} from "~/types/database";
+import {createSessionCookieHelper} from "~/utils/session-cookie";
 
 export interface CreateContextOptions {
   context: HonoContext;
@@ -10,7 +10,7 @@ export interface CreateContextOptions {
 }
 
 export async function createContext({context, db}: CreateContextOptions) {
-  const cookieService = createCookieService(context);
+  const cookieService = createSessionCookieHelper(context);
   const headers = context.req.raw.headers;
 
   const sessionToken = await cookieService.getSessionToken();

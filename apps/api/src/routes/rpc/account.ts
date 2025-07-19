@@ -1,9 +1,9 @@
 import {z} from "zod/v4";
 
-import {AccountContext} from "~/core/contexts/account";
-import {OrganizationNotFoundError} from "~/core/errors/error-types";
-import {updateUserNameInputSchema} from "~/core/models/user";
+import {OrganizationNotFoundError} from "~/errors";
+import {updateUserNameInputSchema} from "~/models/user";
 import {protectedProcedure, publicProcedure} from "~/orpc";
+import {AccountService} from "~/services/account-service";
 
 export const accountRouter = {
   getSession: publicProcedure.handler(({context}) => {
@@ -26,7 +26,7 @@ export const accountRouter = {
     const {db, session} = context;
     const actorId = session.userId;
 
-    const user = await AccountContext.getUserById({db, actorId});
+    const user = await AccountService.getUserById({db, actorId});
 
     return {user};
   }),
@@ -39,7 +39,7 @@ export const accountRouter = {
 
       const {organizationId} = input;
 
-      const membership = await AccountContext.getUserMembership({
+      const membership = await AccountService.getUserMembership({
         db,
         actorId,
         organizationId,
@@ -55,7 +55,7 @@ export const accountRouter = {
   deleteSession: protectedProcedure.handler(async ({context}) => {
     const {session, cookieService, db} = context;
 
-    await AccountContext.deleteUserSession({
+    await AccountService.deleteUserSession({
       db,
       actorId: session.userId,
       token: session.token,
@@ -70,7 +70,7 @@ export const accountRouter = {
     const {db, session} = context;
     const actorId = session.userId;
 
-    const sessions = await AccountContext.getUserSessions({
+    const sessions = await AccountService.getUserSessions({
       db,
       actorId,
     });
@@ -86,7 +86,7 @@ export const accountRouter = {
       const name = input.name;
       const actorId = session.userId;
 
-      const user = await AccountContext.updateUserName({db, actorId, name});
+      const user = await AccountService.updateUserName({db, actorId, name});
 
       return {user};
     }),
@@ -95,7 +95,7 @@ export const accountRouter = {
     const {db, session} = context;
     const userId = session.userId;
 
-    const memberships = await AccountContext.getUserMemberships({
+    const memberships = await AccountService.getUserMemberships({
       db,
       actorId: userId,
     });
@@ -107,7 +107,7 @@ export const accountRouter = {
     const {db, session} = context;
     const userId = session.userId;
 
-    const invitations = await AccountContext.getUserInvitations({
+    const invitations = await AccountService.getUserInvitations({
       db,
       actorId: userId,
     });
@@ -127,7 +127,7 @@ export const accountRouter = {
       const {invitationToken} = input;
 
       const {user, membership, session} =
-        await AccountContext.acceptInvitationAsGuest({
+        await AccountService.acceptInvitationAsGuest({
           db,
           invitationToken,
         });
@@ -148,7 +148,7 @@ export const accountRouter = {
       const actorId = session.userId;
       const {invitationId} = input;
 
-      const {membership} = await AccountContext.acceptInvitationAsUser({
+      const {membership} = await AccountService.acceptInvitationAsUser({
         db,
         actorId,
         invitationId,

@@ -1,4 +1,4 @@
-import {envVars} from "~/config";
+import {envVars} from "~/config/env";
 
 export const isProduction = () => {
   return envVars.BUN_ENVIRONMENT === "production";

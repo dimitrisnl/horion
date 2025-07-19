@@ -4,7 +4,7 @@ import {addDays} from "date-fns";
 import {and, eq} from "drizzle-orm";
 import type {z} from "zod/v4";
 
-import {InvitationAlreadyExistsError} from "~/core/errors/error-types";
+import {InvitationAlreadyExistsError} from "~/errors";
 import type {DatabaseConnection} from "~/types/database";
 
 import {generateId} from "../id";
