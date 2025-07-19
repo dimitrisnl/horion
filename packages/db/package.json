@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@horionos/eslint-config": "workspace:*",
-    "@types/bun": "^1.2.18",
+    "@types/bun": "^1.2.19",
     "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.31.4",
     "typescript": "^5.8.3"
