@@ -4,23 +4,27 @@ import {Session} from "~/models/session";
 import type {DatabaseConnection} from "~/types/database";
 import {createSessionCookieHelper} from "~/utils/session-cookie";
 
+import {createContextEventEmitter} from "./events";
+
 export interface CreateContextOptions {
   context: HonoContext;
   db: DatabaseConnection;
 }
 
 export async function createContext({context, db}: CreateContextOptions) {
-  const cookieService = createSessionCookieHelper(context);
+  const cookieHelper = createSessionCookieHelper(context);
+  const eventEmitter = createContextEventEmitter(context);
   const headers = context.req.raw.headers;
 
-  const sessionToken = await cookieService.getSessionToken();
+  const sessionToken = await cookieHelper.getSessionToken();
 
   if (!sessionToken) {
     return {
       session: null,
       headers,
-      cookieService,
+      cookieHelper,
       db,
+      eventEmitter,
     };
   }
 
@@ -30,21 +34,23 @@ export async function createContext({context, db}: CreateContextOptions) {
   });
 
   if (!session) {
-    cookieService.deleteSessionCookie();
+    cookieHelper.deleteSessionCookie();
 
     return {
       session: null,
       headers,
-      cookieService,
+      cookieHelper,
       db,
+      eventEmitter,
     };
   }
 
   return {
     session,
     headers,
-    cookieService,
+    cookieHelper,
     db,
+    eventEmitter,
   };
 }
 

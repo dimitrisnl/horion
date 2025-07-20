@@ -53,7 +53,7 @@ export const accountRouter = {
     }),
 
   deleteSession: protectedProcedure.handler(async ({context}) => {
-    const {session, cookieService, db} = context;
+    const {session, cookieHelper, db} = context;
 
     await AccountService.deleteUserSession({
       db,
@@ -61,7 +61,7 @@ export const accountRouter = {
       token: session.token,
     });
 
-    cookieService.deleteSessionCookie();
+    cookieHelper.deleteSessionCookie();
 
     return;
   }),
@@ -123,7 +123,7 @@ export const accountRouter = {
       }),
     )
     .handler(async ({context, input}) => {
-      const {db, cookieService} = context;
+      const {db, cookieHelper} = context;
       const {invitationToken} = input;
 
       const {user, membership, session} =
@@ -132,7 +132,7 @@ export const accountRouter = {
           invitationToken,
         });
 
-      await cookieService.createSessionCookie(session.token);
+      await cookieHelper.createSessionCookie(session.token);
 
       return {user, membership};
     }),

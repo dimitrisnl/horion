@@ -14,6 +14,7 @@
     "test": "bun test"
   },
   "dependencies": {
+    "@hono/event-emitter": "^2.0.0",
     "@horionos/db": "workspace:*",
     "@horionos/emails": "workspace:*",
     "@orpc/client": "^1.7.4",

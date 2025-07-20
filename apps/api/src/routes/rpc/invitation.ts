@@ -1,11 +1,5 @@
 import {z} from "zod/v4";
 
-import {envVars} from "~/config/env";
-import {InvitationSendFailError} from "~/errors";
-import {
-  sendInvitationWithAccountEmail,
-  sendInvitationWithoutAccountEmail,
-} from "~/mailer/send-invitation-link";
 import {
   createInvitationInputSchema,
   deleteInvitationInputSchema,
@@ -25,19 +19,15 @@ export const invitationRouter = {
         await OrganizationService.getInvitationByToken({db, token});
 
       return {
-        organization: {
-          name: organization.name,
-        },
-        invitation: {
-          role: invitation.role,
-        },
+        organization: {name: organization.name},
+        invitation: {role: invitation.role},
       };
     }),
 
   create: protectedProcedure
     .input(createInvitationInputSchema)
     .handler(async ({context, input}) => {
-      const {db, session} = context;
+      const {db, session, eventEmitter} = context;
       const {email, role, organizationId} = input;
       const userId = session.userId;
 
@@ -50,27 +40,12 @@ export const invitationRouter = {
           email,
         });
 
-      if (invitee) {
-        return sendInvitationWithAccountEmail({
-          to: email,
-          url: `${envVars.DASHBOARD_URL}/account/invitations`,
-          organization: {name: organization.name},
-        })
-          .then(() => ({invitation}))
-          .catch(() => {
-            throw new InvitationSendFailError();
-          });
-      } else {
-        sendInvitationWithoutAccountEmail({
-          to: email,
-          url: `${envVars.DASHBOARD_URL}/accept-invitation?token=${invitation.token}`,
-          organization: {name: organization.name},
-        })
-          .then(() => ({invitation}))
-          .catch(() => {
-            throw new InvitationSendFailError();
-          });
-      }
+      eventEmitter("invitation-created", {
+        inviteeEmail: email,
+        inviteeId: invitee?.id,
+        organizationName: organization.name,
+        invitationToken: invitation.token,
+      });
 
       return {success: true};
     }),

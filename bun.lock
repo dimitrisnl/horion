@@ -15,6 +15,7 @@
     "apps/api": {
       "name": "@horionos/api",
       "dependencies": {
+        "@hono/event-emitter": "^2.0.0",
         "@horionos/db": "workspace:*",
         "@horionos/emails": "workspace:*",
         "@orpc/client": "^1.7.4",
@@ -322,6 +323,8 @@
     "@floating-ui/react-dom": ["@floating-ui/react-dom@2.1.3", "", { "dependencies": { "@floating-ui/dom": "^1.0.0" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-huMBfiU9UnQ2oBwIhgzyIiSpVgvlDstU8CX0AF+wS+KzmYMs0J2a3GwuFHV1Lz+jlrQGeC1fF+Nv0QoumyV0bA=="],
 
     "@floating-ui/utils": ["@floating-ui/utils@0.2.9", "", {}, "sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg=="],
+
+    "@hono/event-emitter": ["@hono/event-emitter@2.0.0", "", { "peerDependencies": { "hono": "*" } }, "sha512-7/zg7hfPh9lncYCxU3avk40vGhiqP4D5NvmaNX+8QxXivIkrLckSia5P4Nz6PH+A1T8Aj3yFlONf4AiX5rqaEA=="],
 
     "@horionos/api": ["@horionos/api@workspace:apps/api"],
 

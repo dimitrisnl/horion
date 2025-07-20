@@ -107,15 +107,6 @@ export class VerificationExpiredError extends BaseError {
 }
 
 // ===== INVITATION ERRORS =====
-export class InvitationSendFailError extends BaseError {
-  constructor(
-    message = "Failed to send invitation email",
-    details?: Record<string, unknown>,
-  ) {
-    super("INVITATION_SEND_FAIL", message, 200, details);
-  }
-}
-
 export class InvitationNotFoundError extends BaseError {
   constructor(
     message = "Invitation not found",
@@ -150,15 +141,6 @@ export class AuthenticationError extends BaseError {
     details?: Record<string, unknown>,
   ) {
     super("AUTHENTICATION_ERROR", message, 401, details);
-  }
-}
-
-export class MagicLinkSentFailError extends BaseError {
-  constructor(
-    message = "Failed to send magic link email",
-    details?: Record<string, unknown>,
-  ) {
-    super("MAGIC_LINK_SENT_FAIL", message, 200, details);
   }
 }
 
