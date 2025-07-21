@@ -38,7 +38,8 @@ const errorHandlingMiddleware = op.middleware(async ({next}) => {
       });
     }
 
-    console.log(error);
+    // Log the error (logger will be available in context if needed)
+    console.error("Unhandled error:", error);
 
     // Report the error to a logging service.
     throw error;

@@ -24,9 +24,11 @@
     "dotenv": "^17.2.0",
     "drizzle-orm": "^0.44.3",
     "hono": "^4.8.5",
+    "hono-pino": "^0.10.1",
     "hono-rate-limiter": "^0.4.2",
     "nanoid": "^5.1.5",
     "pg": "^8.16.3",
+    "pino": "^9.7.0",
     "resend": "^4.7.0",
     "ua-parser-js": "^2.0.4",
     "zod": "^4.0.5"
