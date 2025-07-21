@@ -1,6 +1,6 @@
-import {Suspense} from "react";
+import {Suspense, useState} from "react";
 
-import {EllipsisIcon, LoaderCircleIcon, XIcon} from "@horionos/icons";
+import {EllipsisIcon, XIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
 import {cn} from "@horionos/ui/cn";
 import {
@@ -27,6 +27,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 
+import {ConfirmDialog} from "~/components/confirm-dialog";
 import {InvitationRoleBadge} from "~/components/invitation-role-badge";
 import {InvitationStatusBadge} from "~/components/invitation-status-badge";
 import {useOrgId} from "~/hooks/use-org-id";
@@ -60,36 +61,59 @@ const LoadingRow = () => (
 );
 
 export const OrganizationInvitationsTable = () => {
+  const [deletingInvitationId, setDeletingInvitationId] = useState<
+    string | null
+  >(null);
+
+  const onDeleteInvitation = (invitationId: string) => {
+    setDeletingInvitationId(invitationId);
+  };
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow disableHover>
-          <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Invited by</TableHead>
-          <TableHead>Sent at</TableHead>
-          <TableHead>Expires at</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <Suspense
-          fallback={
-            <>
-              <LoadingRow />
-              <LoadingRow />
-            </>
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow disableHover>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Invited by</TableHead>
+            <TableHead>Sent at</TableHead>
+            <TableHead>Expires at</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <Suspense
+            fallback={
+              <>
+                <LoadingRow />
+                <LoadingRow />
+              </>
+            }
+          >
+            <InvitationsTableRows onDeleteInvitation={onDeleteInvitation} />
+          </Suspense>
+        </TableBody>
+      </Table>
+      <ConfirmDeleteDialog
+        invitationId={deletingInvitationId}
+        isOpen={Boolean(deletingInvitationId)}
+        setIsOpen={(open) => {
+          if (!open) {
+            setDeletingInvitationId(null);
           }
-        >
-          <InvitationsTableRows />
-        </Suspense>
-      </TableBody>
-    </Table>
+        }}
+      />
+    </>
   );
 };
 
-const InvitationsTableRows = () => {
+const InvitationsTableRows = ({
+  onDeleteInvitation,
+}: {
+  onDeleteInvitation: (id: string) => void;
+}) => {
   const organizationId = useOrgId();
 
   const {
@@ -151,13 +175,21 @@ const InvitationsTableRows = () => {
 
         <TableCell>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm">
                 <EllipsisIcon />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="min-w-44" align="center">
-              <DeleteInvitationButton invitationId={invitation.id} />
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => {
+                  onDeleteInvitation(invitation.id);
+                }}
+              >
+                <XIcon />
+                Delete Invitation
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
@@ -166,7 +198,15 @@ const InvitationsTableRows = () => {
   });
 };
 
-const DeleteInvitationButton = ({invitationId}: {invitationId: string}) => {
+const ConfirmDeleteDialog = ({
+  isOpen,
+  setIsOpen,
+  invitationId,
+}: {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  invitationId: string | null;
+}) => {
   const queryClient = useQueryClient();
   const organizationId = useOrgId();
 
@@ -187,32 +227,26 @@ const DeleteInvitationButton = ({invitationId}: {invitationId: string}) => {
   );
 
   return (
-    <DropdownMenuItem
-      variant="destructive"
-      onClick={() => {
-        const confirmed = window.confirm(
-          "Are you sure you want to delete this invitation? This action cannot be undone.",
-        );
-
-        if (confirmed) {
+    <ConfirmDialog
+      isOpen={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setIsOpen(false);
+        }
+      }}
+      trigger={<></>}
+      title="Delete Invitation"
+      description="Are you sure you want to delete this invitation? This action cannot be undone."
+      onClose={() => setIsOpen(false)}
+      onConfirm={() => {
+        if (invitationId) {
           deleteInvitationMutation.mutate({
             id: invitationId,
             organizationId,
           });
         }
       }}
-    >
-      {deleteInvitationMutation.isPending ? (
-        <>
-          <LoaderCircleIcon className="animate-spin" />
-          Deleting...
-        </>
-      ) : (
-        <>
-          <XIcon />
-          Delete Invitation
-        </>
-      )}
-    </DropdownMenuItem>
+      isPending={deleteInvitationMutation.isPending}
+    />
   );
 };

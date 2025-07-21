@@ -26,11 +26,7 @@ export interface RouterAppContext {
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
-  beforeLoad: async ({context, location}) => {
-    console.log("Running __root.beforeLoad", {
-      location: location.href,
-      timestamp: Date.now(),
-    });
+  beforeLoad: async ({context}) => {
     const {session} = await context.queryClient.fetchQuery(
       context.orpc.account.getSession.queryOptions(),
     );

@@ -94,7 +94,7 @@ const MembershipTableRows = () => {
       </TableCell>
       <TableCell>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
               <EllipsisIcon />
             </Button>

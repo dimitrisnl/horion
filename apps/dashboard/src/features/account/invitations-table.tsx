@@ -51,38 +51,6 @@ const LoadingRow = () => (
 );
 
 export const InvitationsTable = () => {
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow disableHover>
-          <TableHead>Organization</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Invited by</TableHead>
-          <TableHead>Expires at</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <Suspense
-          fallback={
-            <>
-              <LoadingRow />
-              <LoadingRow />
-            </>
-          }
-        >
-          <InvitationsTableRows />
-        </Suspense>
-      </TableBody>
-    </Table>
-  );
-};
-
-const InvitationsTableRows = () => {
-  const {
-    data: {invitations},
-  } = useSuspenseQuery(orpc.account.getInvitations.queryOptions());
-
   const [decliningInvitationId, setDecliningInvitationId] = useState<
     string | null
   >(null);
@@ -90,72 +58,42 @@ const InvitationsTableRows = () => {
     string | null
   >(null);
 
-  if (!invitations || invitations.length === 0) {
-    return (
-      <TableRow>
-        <TableCell colSpan={5} className="text-center">
-          <Text className="text-muted-foreground py-12">
-            No invitations found
-          </Text>
-        </TableCell>
-      </TableRow>
-    );
-  }
+  const onAcceptInvitation = (invitationId: string) => {
+    setAcceptingInvitationId(invitationId);
+  };
+
+  const onDeclineInvitation = (invitationId: string) => {
+    setDecliningInvitationId(invitationId);
+  };
 
   return (
     <>
-      {invitations.map((invitation) => {
-        const isExpired = new Date(invitation.expiresAt) < new Date();
-        const isPending = invitation.status === "pending" && !isExpired;
-
-        return (
-          <TableRow
-            key={invitation.id}
-            disableHover
-            className={isExpired ? "h-14 opacity-50" : "h-14"}
-          >
-            <TableCell>{invitation.organizationName}</TableCell>
-            <TableCell>
-              <MembershipRoleBadge role={invitation.role} />
-            </TableCell>
-            <TableCell>{invitation.inviterEmail}</TableCell>
-            <TableCell>
-              {isExpired ? (
-                <span>Expired</span>
-              ) : (
-                formatDateTime(invitation.expiresAt, {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })
-              )}
-            </TableCell>
-            <TableCell>
-              {!isPending ? null : (
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Button variant="ghost">
-                      <EllipsisIcon />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="min-w-44" align="center">
-                    <DropdownMenuItem
-                      onClick={() => setAcceptingInvitationId(invitation.id)}
-                    >
-                      Accept Invitation
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onClick={() => setDecliningInvitationId(invitation.id)}
-                    >
-                      Decline Invitation
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </TableCell>
+      <Table>
+        <TableHeader>
+          <TableRow disableHover>
+            <TableHead>Organization</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Invited by</TableHead>
+            <TableHead>Expires at</TableHead>
+            <TableHead></TableHead>
           </TableRow>
-        );
-      })}
+        </TableHeader>
+        <TableBody>
+          <Suspense
+            fallback={
+              <>
+                <LoadingRow />
+                <LoadingRow />
+              </>
+            }
+          >
+            <InvitationsTableRows
+              onAcceptInvitation={onAcceptInvitation}
+              onDeclineInvitation={onDeclineInvitation}
+            />
+          </Suspense>
+        </TableBody>
+      </Table>
       <ConfirmAcceptDialog
         invitationId={acceptingInvitationId}
         isOpen={Boolean(acceptingInvitationId)}
@@ -176,6 +114,83 @@ const InvitationsTableRows = () => {
       />
     </>
   );
+};
+
+const InvitationsTableRows = ({
+  onAcceptInvitation,
+  onDeclineInvitation,
+}: {
+  onAcceptInvitation: (id: string) => void;
+  onDeclineInvitation: (id: string) => void;
+}) => {
+  const {
+    data: {invitations},
+  } = useSuspenseQuery(orpc.account.getInvitations.queryOptions());
+
+  if (!invitations || invitations.length === 0) {
+    return (
+      <TableRow>
+        <TableCell colSpan={5} className="text-center">
+          <Text className="text-muted-foreground py-12">
+            No invitations found
+          </Text>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return invitations.map((invitation) => {
+    const isExpired = new Date(invitation.expiresAt) < new Date();
+    const isPending = invitation.status === "pending" && !isExpired;
+
+    return (
+      <TableRow
+        key={invitation.id}
+        disableHover
+        className={isExpired ? "h-14 opacity-50" : "h-14"}
+      >
+        <TableCell>{invitation.organizationName}</TableCell>
+        <TableCell>
+          <MembershipRoleBadge role={invitation.role} />
+        </TableCell>
+        <TableCell>{invitation.inviterEmail}</TableCell>
+        <TableCell>
+          {isExpired ? (
+            <span>Expired</span>
+          ) : (
+            formatDateTime(invitation.expiresAt, {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })
+          )}
+        </TableCell>
+        <TableCell>
+          {!isPending ? null : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  <EllipsisIcon />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="min-w-44" align="center">
+                <DropdownMenuItem
+                  onClick={() => onAcceptInvitation(invitation.id)}
+                >
+                  Accept Invitation
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={() => onDeclineInvitation(invitation.id)}
+                >
+                  Decline Invitation
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </TableCell>
+      </TableRow>
+    );
+  });
 };
 
 const ConfirmAcceptDialog = ({
