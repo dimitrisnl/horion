@@ -4,7 +4,7 @@ import {addDays} from "date-fns";
 import {and, eq} from "drizzle-orm";
 import type {z} from "zod/v4";
 
-import {InvitationAlreadyExistsError} from "~/errors";
+import {InvitationAlreadyExistsError, InvitationNotFoundError} from "~/errors";
 import type {DatabaseConnection} from "~/types/database";
 
 import {generateId} from "../id";
@@ -69,6 +69,31 @@ export const deleteInvitation = async ({
     .returning({
       id: schema.invitations.id,
     });
+
+  return deleted;
+};
+
+export const declineInvitation = async ({
+  db,
+  id,
+}: {
+  db: DatabaseConnection;
+  id: string;
+}) => {
+  const [deleted = null] = await db
+    .update(schema.invitations)
+    .set({
+      status: "declined",
+      updatedAt: new Date(),
+    })
+    .where(eq(schema.invitations.id, id))
+    .returning({
+      id: schema.invitations.id,
+    });
+
+  if (!deleted) {
+    throw new InvitationNotFoundError();
+  }
 
   return deleted;
 };

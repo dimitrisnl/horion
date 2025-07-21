@@ -333,4 +333,41 @@ export const AccountService = {
 
     return {membership};
   },
+
+  declineInvitation: async ({
+    db,
+    actorId,
+    invitationId,
+  }: {
+    db: DatabaseConnection;
+    actorId: string;
+    invitationId: string;
+  }) => {
+    const invitation = await Invitation.findById({db, invitationId});
+
+    if (!invitation) {
+      throw new InvitationNotFoundError();
+    }
+
+    if (invitation.status !== "pending") {
+      throw new InvitationNotFoundError();
+    }
+
+    const user = await User.findById({db, userId: actorId});
+
+    if (!user) {
+      throw new UserNotFoundError();
+    }
+
+    if (user.email !== invitation.email) {
+      throw new InvitationNotFoundError();
+    }
+
+    await Invitation.decline({
+      db,
+      id: invitation.id,
+    });
+
+    return {success: true};
+  },
 };

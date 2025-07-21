@@ -1,6 +1,6 @@
 import * as schema from "@horionos/db/schema";
 
-import {and, eq} from "drizzle-orm";
+import {and, eq, gte} from "drizzle-orm";
 
 import type {DatabaseConnection} from "~/types/database";
 
@@ -105,7 +105,13 @@ export const findInvitationsByEmail = async ({
       organizationName: schema.organizations.name,
     })
     .from(schema.invitations)
-    .where(eq(schema.invitations.email, email))
+    .where(
+      and(
+        eq(schema.invitations.email, email),
+        eq(schema.invitations.status, "pending"),
+        gte(schema.invitations.expiresAt, new Date()),
+      ),
+    )
     .leftJoin(schema.users, eq(schema.invitations.inviterId, schema.users.id))
     .leftJoin(
       schema.organizations,

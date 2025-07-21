@@ -1,4 +1,8 @@
-import {createInvitation, deleteInvitation} from "./mutations";
+import {
+  createInvitation,
+  declineInvitation,
+  deleteInvitation,
+} from "./mutations";
 import {
   findInvitationByEmailAndOrganizationId,
   findInvitationById,
@@ -9,12 +13,13 @@ import {
 
 export const Invitation = {
   create: createInvitation,
+  decline: declineInvitation,
+  delete: deleteInvitation,
   findById: findInvitationById,
   findByToken: findInvitationByToken,
   findManyByEmail: findInvitationsByEmail,
   findByEmailAndOrganizationId: findInvitationByEmailAndOrganizationId,
   findManyByOrganizationId: findInvitationsByOrganizationId,
-  delete: deleteInvitation,
 };
 
 export * from "./schema";

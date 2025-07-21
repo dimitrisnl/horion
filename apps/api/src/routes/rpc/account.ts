@@ -156,4 +156,24 @@ export const accountRouter = {
 
       return {membership};
     }),
+
+  declineInvitation: protectedProcedure
+    .input(
+      z.object({
+        invitationId: z.string(),
+      }),
+    )
+    .handler(async ({context, input}) => {
+      const {db, session} = context;
+      const actorId = session.userId;
+      const {invitationId} = input;
+
+      await AccountService.declineInvitation({
+        db,
+        actorId,
+        invitationId,
+      });
+
+      return {success: true};
+    }),
 };
