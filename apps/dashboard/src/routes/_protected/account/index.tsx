@@ -9,7 +9,6 @@ import {orpc} from "~/utils/orpc";
 export const Route = createFileRoute("/_protected/account/")({
   component: RouteComponent,
   loader({context}) {
-    context.queryClient.prefetchQuery(orpc.account.getSessions.queryOptions());
     context.queryClient.prefetchQuery(
       orpc.account.getCurrentUser.queryOptions(),
     );

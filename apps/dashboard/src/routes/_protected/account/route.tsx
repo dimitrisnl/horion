@@ -55,6 +55,7 @@ const Navigation = () => {
             <NavigationMenuItem key={item.title + item.url}>
               <NavigationMenuLink asChild>
                 <Link
+                  preload={false}
                   activeOptions={item.activeOptions}
                   to={item.url}
                   className="flex"

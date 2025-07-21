@@ -26,17 +26,17 @@ export function UserDropdown() {
       <DropdownMenuContent className="min-w-40" align="center">
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link to="/account" preload="intent">
+            <Link to="/account" preload={false}>
               Profile
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link to="/account/security" preload="intent">
+            <Link to="/account/security" preload={false}>
               Security
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link to="/account/memberships" preload="intent">
+            <Link to="/account/memberships" preload={false}>
               Memberships
             </Link>
           </DropdownMenuItem>
@@ -44,7 +44,7 @@ export function UserDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link to="/account" preload="intent">
+            <Link to="/account" preload={false}>
               <CircleQuestionMarkIcon className="size-4" />
               Need help?
             </Link>

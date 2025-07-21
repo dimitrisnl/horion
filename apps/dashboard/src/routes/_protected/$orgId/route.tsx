@@ -77,7 +77,7 @@ const Navigation = () => {
   const membership = useCurrentMembership();
 
   return (
-    <NavigationMenu>
+    <NavigationMenu key={membership.organizationId}>
       <NavigationMenuList>
         {nav
           .filter((item) => item.roles.includes(membership.role))
@@ -86,6 +86,7 @@ const Navigation = () => {
               <NavigationMenuItem key={item.title + item.url}>
                 <NavigationMenuLink asChild>
                   <Link
+                    preload={false}
                     activeOptions={item.activeOptions}
                     to={item.url}
                     className="flex"
