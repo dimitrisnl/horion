@@ -1,11 +1,16 @@
 import {afterEach, describe, expect, it} from "bun:test";
 
-import {InvitationAlreadyExistsError} from "~/errors";
+import {InvitationAlreadyExistsError, InvitationNotFoundError} from "~/errors";
 import {createTestInvitation, setupTestMembership} from "~/test/fixtures";
 import {cleanupTestDatabase, createTestDatabase} from "~/test/setup";
 
 import {generateId} from "../id";
-import {createInvitation, deleteInvitation} from "./mutations";
+import {
+  createInvitation,
+  declineInvitation,
+  deleteInvitation,
+} from "./mutations";
+import {findInvitationById} from "./queries";
 
 describe("Invitation Mutations", async () => {
   const {client, db} = await createTestDatabase();
@@ -140,6 +145,38 @@ describe("Invitation Mutations", async () => {
       });
 
       expect(deletedInvitation).toBeNull();
+    });
+  });
+
+  describe("declineInvitation", async () => {
+    it("should decline an invitation", async () => {
+      const {user, org} = await setupTestMembership({db});
+      const invitation = await createTestInvitation({
+        db,
+        overrides: {inviterId: user.id, organizationId: org.id},
+      });
+
+      await declineInvitation({db, id: invitation.id});
+
+      const expectedInvitation = await findInvitationById({
+        db,
+        invitationId: invitation.id,
+      });
+
+      expect(expectedInvitation).toBeDefined();
+      expect(expectedInvitation!.id).toBe(invitation.id);
+      expect(expectedInvitation!.status).toBe("declined");
+    });
+
+    it("should throw error if the invitation doesn't exist", async () => {
+      await setupTestMembership({db});
+
+      expect(
+        declineInvitation({
+          db,
+          id: generateId(),
+        }),
+      ).rejects.toThrow(InvitationNotFoundError);
     });
   });
 });
