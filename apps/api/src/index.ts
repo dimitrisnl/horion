@@ -7,6 +7,7 @@ import {envVars} from "~/config/env";
 import {setupCrons} from "~/jobs";
 import {setupClientHints} from "~/middleware/client-hints";
 import {setupCors} from "~/middleware/cors";
+import {setupRateLimiting} from "~/middleware/rate-limit";
 import {setupRPC} from "~/middleware/rpc";
 import {restRouter} from "~/routes/rest";
 
@@ -18,6 +19,9 @@ app.use(secureHeaders());
 app.use("/*", setupClientHints());
 app.use("/*", setupCors());
 app.use("/*", timeout(5000));
+
+// Apply rate limiting to all routes
+app.use("/*", setupRateLimiting());
 
 // Configure RPC
 app.use("/rpc/*", setupRPC());

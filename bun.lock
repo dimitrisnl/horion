@@ -25,6 +25,7 @@
         "dotenv": "^17.2.0",
         "drizzle-orm": "^0.44.3",
         "hono": "^4.8.5",
+        "hono-rate-limiter": "^0.4.2",
         "nanoid": "^5.1.5",
         "pg": "^8.16.3",
         "resend": "^4.7.0",
@@ -1479,6 +1480,8 @@
     "hasown": ["hasown@2.0.2", "", { "dependencies": { "function-bind": "^1.1.2" } }, "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ=="],
 
     "hono": ["hono@4.8.5", "", {}, "sha512-Up2cQbtNz1s111qpnnECdTGqSIUIhZJMLikdKkshebQSEBcoUKq6XJayLGqSZWidiH0zfHRCJqFu062Mz5UuRA=="],
+
+    "hono-rate-limiter": ["hono-rate-limiter@0.4.2", "", { "peerDependencies": { "hono": "^4.1.1" } }, "sha512-AAtFqgADyrmbDijcRTT/HJfwqfvhalya2Zo+MgfdrMPas3zSMD8SU03cv+ZsYwRU1swv7zgVt0shwN059yzhjw=="],
 
     "hookable": ["hookable@5.5.3", "", {}, "sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ=="],
 
