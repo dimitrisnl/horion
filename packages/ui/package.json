@@ -6,6 +6,7 @@
   "type": "module",
   "exports": {
     "./alert": "./src/components/alert/index.ts",
+    "./alert-dialog": "./src/components/alert-dialog/index.ts",
     "./avatar": "./src/components/avatar/index.ts",
     "./badge": "./src/components/badge/index.ts",
     "./breadcrumb": "./src/components/breadcrumb/index.ts",

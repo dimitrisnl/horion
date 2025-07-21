@@ -1,4 +1,4 @@
-import {Suspense} from "react";
+import {Suspense, useState} from "react";
 
 import {EllipsisIcon} from "@horionos/icons";
 import {Button} from "@horionos/ui/button";
@@ -25,6 +25,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 
+import {ConfirmDialog} from "~/components/confirm-dialog";
 import {MembershipRoleBadge} from "~/components/membership-role-badge";
 import {formatDateTime} from "~/utils/date-helpers";
 import {orpc} from "~/utils/orpc";
@@ -78,20 +79,16 @@ export const InvitationsTable = () => {
 };
 
 const InvitationsTableRows = () => {
-  const queryClient = useQueryClient();
-  const {data} = useSuspenseQuery(orpc.account.getInvitations.queryOptions());
+  const {
+    data: {invitations},
+  } = useSuspenseQuery(orpc.account.getInvitations.queryOptions());
 
-  const declineInvitationMutation = useMutation(
-    orpc.account.declineInvitation.mutationOptions({
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(
-          orpc.account.getInvitations.queryOptions(),
-        );
-      },
-    }),
-  );
-
-  const {invitations} = data;
+  const [decliningInvitationId, setDecliningInvitationId] = useState<
+    string | null
+  >(null);
+  const [acceptingInvitationId, setAcceptingInvitationId] = useState<
+    string | null
+  >(null);
 
   if (!invitations || invitations.length === 0) {
     return (
@@ -105,64 +102,168 @@ const InvitationsTableRows = () => {
     );
   }
 
-  const handleDeclineInvitation = async (invitationId: string) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to decline this invitation? This action cannot be undone.",
-    );
+  return (
+    <>
+      {invitations.map((invitation) => {
+        const isExpired = new Date(invitation.expiresAt) < new Date();
+        const isPending = invitation.status === "pending" && !isExpired;
 
-    if (!confirmed) {
-      return;
-    }
+        return (
+          <TableRow
+            key={invitation.id}
+            disableHover
+            className={isExpired ? "h-14 opacity-50" : "h-14"}
+          >
+            <TableCell>{invitation.organizationName}</TableCell>
+            <TableCell>
+              <MembershipRoleBadge role={invitation.role} />
+            </TableCell>
+            <TableCell>{invitation.inviterEmail}</TableCell>
+            <TableCell>
+              {isExpired ? (
+                <span>Expired</span>
+              ) : (
+                formatDateTime(invitation.expiresAt, {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                })
+              )}
+            </TableCell>
+            <TableCell>
+              {!isPending ? null : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Button variant="ghost">
+                      <EllipsisIcon />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="min-w-44" align="center">
+                    <DropdownMenuItem
+                      onClick={() => setAcceptingInvitationId(invitation.id)}
+                    >
+                      Accept Invitation
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => setDecliningInvitationId(invitation.id)}
+                    >
+                      Decline Invitation
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </TableCell>
+          </TableRow>
+        );
+      })}
+      <ConfirmAcceptDialog
+        invitationId={acceptingInvitationId}
+        isOpen={Boolean(acceptingInvitationId)}
+        setIsOpen={(open) => {
+          if (!open) {
+            setAcceptingInvitationId(null);
+          }
+        }}
+      />
+      <ConfirmDeclineDialog
+        invitationId={decliningInvitationId}
+        isOpen={Boolean(decliningInvitationId)}
+        setIsOpen={(open) => {
+          if (!open) {
+            setDecliningInvitationId(null);
+          }
+        }}
+      />
+    </>
+  );
+};
 
-    declineInvitationMutation.mutateAsync({invitationId});
-  };
+const ConfirmAcceptDialog = ({
+  isOpen,
+  invitationId,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  invitationId: string | null;
+  setIsOpen: (open: boolean) => void;
+}) => {
+  const queryClient = useQueryClient();
 
-  return invitations.map((invitation) => {
-    const isExpired = new Date(invitation.expiresAt) < new Date();
-    const isPending = invitation.status === "pending" && !isExpired;
+  const acceptInvitationMutation = useMutation(
+    orpc.account.acceptInvitationAsUser.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          orpc.account.getInvitations.queryOptions(),
+        );
+        await queryClient.invalidateQueries(
+          orpc.account.getMemberships.queryOptions(),
+        );
+      },
+    }),
+  );
 
-    return (
-      <TableRow
-        key={invitation.id}
-        disableHover
-        className={isExpired ? "h-14 opacity-50" : "h-14"}
-      >
-        <TableCell>{invitation.organizationName}</TableCell>
-        <TableCell>
-          <MembershipRoleBadge role={invitation.role} />
-        </TableCell>
-        <TableCell>{invitation.inviterEmail}</TableCell>
-        <TableCell>
-          {isExpired ? (
-            <span>Expired</span>
-          ) : (
-            formatDateTime(invitation.expiresAt, {
-              dateStyle: "medium",
-              timeStyle: "short",
-            })
-          )}
-        </TableCell>
-        <TableCell>
-          {!isPending ? null : (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="ghost">
-                  <EllipsisIcon />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-44" align="center">
-                <DropdownMenuItem>Accept Invitation</DropdownMenuItem>
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => handleDeclineInvitation(invitation.id)}
-                >
-                  Decline Invitation
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </TableCell>
-      </TableRow>
-    );
-  });
+  return (
+    <ConfirmDialog
+      isOpen={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setIsOpen(false);
+        }
+      }}
+      trigger={<></>}
+      title="Accept Invitation"
+      description="Are you sure you want to accept this invitation? You will become a member of the organization."
+      onClose={() => setIsOpen(false)}
+      onConfirm={() => {
+        if (invitationId) {
+          acceptInvitationMutation.mutateAsync({invitationId});
+        }
+      }}
+      isPending={acceptInvitationMutation.isPending}
+    />
+  );
+};
+
+const ConfirmDeclineDialog = ({
+  isOpen,
+  invitationId,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  invitationId: string | null;
+  setIsOpen: (open: boolean) => void;
+}) => {
+  const queryClient = useQueryClient();
+
+  const declineInvitationMutation = useMutation(
+    orpc.account.declineInvitation.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          orpc.account.getInvitations.queryOptions(),
+        );
+        setIsOpen(false);
+      },
+    }),
+  );
+
+  return (
+    <ConfirmDialog
+      isOpen={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setIsOpen(false);
+        }
+      }}
+      trigger={<></>}
+      title="Decline Invitation"
+      description="Are you sure you want to decline this invitation? This action cannot be undone."
+      onClose={() => setIsOpen(false)}
+      onConfirm={() => {
+        if (invitationId) {
+          declineInvitationMutation.mutateAsync({invitationId});
+        }
+      }}
+      isPending={declineInvitationMutation.isPending}
+    />
+  );
 };
